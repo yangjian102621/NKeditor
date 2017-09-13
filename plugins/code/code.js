@@ -48,7 +48,7 @@ KindEditor.plugin('code', function(K) {
 							cls = type === '' ? '' :  ' lang-' + type,
 							html = '<pre class="prettyprint' + cls + '">\n' + K.escape(code) + '</pre> ';
 						if (K.trim(code) === '') {
-							alert(lang.pleaseInput);
+							K.options.errorMsgHandler(lang.pleaseInput, "error");
 							textarea[0].focus();
 							return;
 						}

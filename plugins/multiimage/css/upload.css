@@ -184,7 +184,8 @@
         overflow: hidden; }
         .uedbody .wrapper .wra_body .upload-panel .image-list-box .wra_bar .info {
           font-size: 14px;
-          color: #666; }
+          color: #666;
+          margin-top: 6px; }
         .uedbody .wrapper .wra_body .upload-panel .image-list-box .wra_bar .fr .btn {
           padding: 6px 15px; }
       .uedbody .wrapper .wra_body .upload-panel .image-list-box .filelist {
@@ -231,7 +232,7 @@
               background: url("images/icons.png") no-repeat;
               margin: 5px 1px 1px;
               cursor: pointer;
-              -webkit-tap-highlight-color: transparent;
+              -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
               -webkit-user-select: none;
               -moz-user-select: none;
               -ms-user-select: none;

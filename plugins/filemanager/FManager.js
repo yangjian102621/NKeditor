@@ -1,9 +1,8 @@
 /**
  * HTML5上传插件
- * url : https://git.oschina.net/blackfox/ajaxUpload
  * @author yangjian<yangjian102621@gmail.com>
  * @version 1.0.1
- * @since 2016.05.24
+ * @site https://git.oschina.net/blackfox/ajaxUpload
  */
 (function($) {
 
@@ -116,7 +115,7 @@
 		function createDialog() {
 
 			var builder = new StringBuilder();
-			builder.append('<div class="uedbody"><div class="ued_title">');
+			builder.append('<div class="uedbody-server"><div class="ued_title">');
 			builder.append('<div class="uedbar"><span>'+options.lang.title+'</span></div><div class="close_btn icon" title="'+options.lang.closeText+'"></div>');
 			builder.append('</div><div class="wrapper"><div class="wra_body">');
 			builder.append('<div class="tab-panel online"><div class="imagelist"><ul class="list clearfix"></ul><div class="no-data"></div></div></div>');
@@ -204,6 +203,7 @@
 				var extension = getFileExt(item.thumbURL);
 				if ( extension == '' ) extension = "default";
 				extension = extension.toLowerCase();
+				//如果不是图片，则根据文件的后缀名去加载对应的缩略图
 				if ( "jpg|jpeg|gif|png|bmp".indexOf(extension) == -1 ) {
 					builder.append('<span class="icon-placeholder icon-'+extension+'" data-src="'+item.oriURL+'"></span>');
 				} else {
@@ -226,9 +226,9 @@
 					// 	o.selectedList.push(src);
 					// }
 					//这里暂时改成单选
-					$('.selected:eq(0)').removeClass("selected");
-					$(this).addClass("selected");
+					$('.selected:eq(0)').removeClass("selected"); //移除之前的选中的图片
 					o.selectedList.remove(oldSrc);
+					$(this).addClass("selected");
 					o.selectedList.push(src);
 					//console.log(o.selectedList);
 				});

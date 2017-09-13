@@ -142,37 +142,37 @@ KindEditor.plugin('table', function(K) {
 							borderColor = K(colorBox[0]).html() || '',
 							bgColor = K(colorBox[1]).html() || '';
 						if (rows == 0 || !/^\d+$/.test(rows)) {
-							alert(self.lang('invalidRows'));
+							K.options.errorMsgHandler(self.lang('invalidRows'), "error");
 							rowsBox[0].focus();
 							return;
 						}
 						if (cols == 0 || !/^\d+$/.test(cols)) {
-							alert(self.lang('invalidRows'));
+							K.options.errorMsgHandler(self.lang('invalidRows'), "error");
 							colsBox[0].focus();
 							return;
 						}
 						if (!/^\d*$/.test(width)) {
-							alert(self.lang('invalidWidth'));
+							K.options.errorMsgHandler(self.lang('invalidWidth'), "error");
 							widthBox[0].focus();
 							return;
 						}
 						if (!/^\d*$/.test(height)) {
-							alert(self.lang('invalidHeight'));
+							K.options.errorMsgHandler(self.lang('invalidHeight'), "error");
 							heightBox[0].focus();
 							return;
 						}
 						if (!/^\d*$/.test(padding)) {
-							alert(self.lang('invalidPadding'));
+							K.options.errorMsgHandler(self.lang('invalidPadding'), "error");
 							paddingBox[0].focus();
 							return;
 						}
 						if (!/^\d*$/.test(spacing)) {
-							alert(self.lang('invalidSpacing'));
+							K.options.errorMsgHandler(self.lang('invalidSpacing'), "error");
 							spacingBox[0].focus();
 							return;
 						}
 						if (!/^\d*$/.test(border)) {
-							alert(self.lang('invalidBorder'));
+							K.options.errorMsgHandler(self.lang('invalidBorder'), "error");
 							borderBox[0].focus();
 							return;
 						}
@@ -410,17 +410,17 @@ KindEditor.plugin('table', function(K) {
 							borderColor = K(colorBox[0]).html() || '',
 							bgColor = K(colorBox[1]).html() || '';
 						if (!/^\d*$/.test(width)) {
-							alert(self.lang('invalidWidth'));
+							K.options.errorMsgHandler(self.lang('invalidWidth'), "error");
 							widthBox[0].focus();
 							return;
 						}
 						if (!/^\d*$/.test(height)) {
-							alert(self.lang('invalidHeight'));
+							K.options.errorMsgHandler(self.lang('invalidHeight'), "error");
 							heightBox[0].focus();
 							return;
 						}
 						if (!/^\d*$/.test(border)) {
-							alert(self.lang('invalidBorder'));
+							K.options.errorMsgHandler(self.lang('invalidBorder'), "error");
 							borderBox[0].focus();
 							return;
 						}

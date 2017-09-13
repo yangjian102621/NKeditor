@@ -1,9 +1,8 @@
 /**
- * 百度web编辑器UI的HTML5上传插件
- * url : https://git.oschina.net/blackfox/ajaxUpload
+ * HTML5上传插件
+ * @site https://git.oschina.net/blackfox/ajaxUpload
  * @author yangjian<yangjian102621@gmail.com>
  * @version 1.0.1
- * @since 2016.05.24
  */
 (function($) {
 
@@ -96,12 +95,15 @@
 			list_url : null,
 			search_url : null,
 			data_type : "json",
-			top : 50,
+			top : 20,
 			max_filesize : 2048,    //unit:KB
 			max_filenum : 20,
 			no_data_text : "(⊙o⊙)亲，没有多数据了。",
 			ext_allow : "jpg|png|gif|jpeg",
 			ext_refuse : "exe|txt",
+			errorHandler : function(messsage, type) {
+				alert(messsage);
+			},
 			callback : function(data) {
 				console.log(data);
 			}
@@ -109,10 +111,10 @@
 
 		//错误代码和提示消息
 		var codeMessageMap = {
-			'0' : '文件上传成功',
-			'1' : '文件上传失败',
-			'2' : '文件大小超出限制',
-			'3' : '非法文件名后缀'
+			'000' : '文件上传成功',
+			'001' : '文件上传失败',
+			'003' : '文件大小超出限制',
+			'004' : '非法文件名后缀'
 		};
 
 		var mimeType = {
@@ -191,25 +193,28 @@
 
 			var builder = new StringBuilder();
 			builder.append('<div class="uedbody"><div class="ued_title">');
-			builder.append('<div class="uedbar"><span>多图上传</span></div><div class="close_btn icon" title="关闭对话框"></div>');
-			builder.append('</div><div class="wrapper"><div id="wra_head" class="wra_head"><span class="tab tab-upload focus" tab="upload-panel">本地上传</span>');
+			builder.append('<div class="uedbar"><span>'+options.lang.title+'</span></div><div class="close_btn icon"' +
+				' title="'+options.lang.closeText+'"></div>');
+			builder.append('</div><div class="wrapper"><div id="wra_head" class="wra_head"><span class="tab' +
+				' tab-upload focus" tab="upload-panel">'+options.lang.localUpload+'</span>');
 			if ( options.list_url != null ) {
-				builder.append('<span class="tab tab-online" tab="online">文件服务器</span>');
+				builder.append('<span class="tab tab-online" tab="online">'+options.lang.fileServer+'</span>');
 			}
 			if ( options.search_url != null ) {
-				builder.append('<span class="tab tab-search" tab="searchbox">图片搜索</span>');
+				builder.append('<span class="tab tab-search" tab="searchbox">'+options.lang.imgSearch+'</span>');
 			}
 			builder.append('</div><div class="wra_body"><div class="tab-panel upload-panel"><div class="wra_pla"><div class="upload-image-placeholder">');
-			builder.append('<div class="btn btn-primary image-select">点击选择图片</div><input type="file" name="'+options.src+'" class="webuploader-element-invisible"' +
+			builder.append('<div class="btn btn-primary image-select">'+options.lang.selectFile+'</div><input type="file" name="'+options.src+'" class="webuploader-element-invisible"' +
 				' multiple="multiple" accept="'+getAccept()+'">');
 			builder.append('</div></div><div class="image-list-box" style="display: none;"><div class="wra_bar"><div class="info fl"></div>');
-			builder.append('<div class="fr"><span class="btn btn-default btn-continue-add">继续添加</span><span class="btn btn-primary btn-start-upload">开始上传</span></div></div>');
+			builder.append('<div class="fr"><span class="btn btn-default btn-continue-add">'+options.lang.continueAdd+'</span><span class="btn btn-primary btn-start-upload">'+options.lang.startUpload+'</span></div></div>');
 			builder.append('<ul class="filelist"></ul></div></div><div class="tab-panel online"><div class="imagelist"><ul class="list clearfix"></ul><div class="no-data"></div></div></div>');
-			builder.append('<div class="tab-panel searchbox"><div class="search-bar"><input class="searTxt" type="text" placeholder="请输入搜索关键词" />');
-			builder.append('<input value="搜索一下" class="btn btn-primary btn-search" type="button" /><input value="清空搜索" class="btn btn-default btn-reset" type="button" />');
+			builder.append('<div class="tab-panel searchbox"><div class="search-bar"><input class="searTxt"' +
+				' type="text" placeholder="'+options.lang.searchPlaceholder+'" />');
+			builder.append('<input value="'+options.lang.searchBtn+'" class="btn btn-primary btn-search" type="button" /><input value="'+options.lang.searchClear+'" class="btn btn-default btn-reset" type="button" />');
 			builder.append('</div><div class="search-imagelist-box"><ul class="search-list"></ul><div class="no-data"></div></div>');
-			builder.append('</div><div class="loading-icon"></div></div><!-- end of wrapper --></div><div class="wra-btn-group"><span class="btn btn-primary btn-confirm">确认</span>');
-			builder.append('<span class="btn btn-default btn-cancel">取消</span></div></div>');
+			builder.append('</div><div class="loading-icon"></div></div><!-- end of wrapper --></div><div class="wra-btn-group"><span class="btn btn-primary btn-confirm">'+options.lang.confirmBtnText+'</span>');
+			builder.append('<span class="btn btn-default btn-cancel">'+options.lang.cancelBtnText+'</span></div></div>');
 
 			o.dialog = $(builder.toString());
 			$("body").append(o.dialog);
@@ -257,19 +262,20 @@
 				if ( o.uploadLock ) return;
 
 				if ( o.todoList.length == 0 ) {
-					alert("请至少添加一个文件！");
+					options.errorHandler(options.lang.noFileAdded, "error");
 					return false;
 				}
-				$(this).addClass("disabled").text("正在上传");
+				$(this).addClass("disabled").text(options.lang.uploading);
 				uploadFile(o.todoList.shift());
 			});
 
 			//点击确认|取消按钮事件
 			G(".btn-confirm").on("click", function() {
 				if ( o.todoList.length > 0 ) {
-					alert("您还有文件没有上传!");
+					options.errorHandler(options.lang.fileNotUpload, "error");
 					return false;
 				}
+				//console.log(o.selectedList);
 				options.callback(o.selectedList);
 				o.close();
 			});
@@ -305,7 +311,7 @@
 			G(".btn-search").on("click", function() {
 				var text = G(".searTxt").val().trim();
 				if ( text == "" ) {
-					G(".searchbox .no-data").html('<span class="error">请输入搜索关键字.</span>').show();
+					G(".searchbox .no-data").html('<span class="error">'+options.lang.searchPlaceholder+'</span>').show();
 					G(".searTxt").focus();
 					return false;
 				}
@@ -328,7 +334,7 @@
 			for ( var i = o.addedFileNumber; i < o.addedFileNumber+files.length; i++ ) {
 
 				if ( totalFileNum > options.max_filenum ) {
-					alert("您本次最多上传"+options.max_filenum+"个文件.");
+					options.errorHandler(KindEditor.tmpl(options.lang.uploadLimit, {uploadLimit: options.max_filenum}), "error");
 					return;
 				}
 				var builder = new StringBuilder();
@@ -345,8 +351,8 @@
 					builder.append('<img src="'+window.URL.createObjectURL(tempFile)+'" border="0" />');
 				}
 
-				builder.append('</div><div class="file-opt-box clearfix"><span class="remove" index="'+i+'">删除</span><span class="rotateRight">向右旋转</span>');
-				builder.append('<span class="rotateLeft">向左旋转</span></div><div class="success"></div><div class="error"></div>');
+				builder.append('</div><div class="file-opt-box clearfix"><span class="remove" index="'+i+'">'+options.lang.remove+'</span><span class="rotateRight">'+options.lang.rotateRight+'</span>');
+				builder.append('<span class="rotateLeft">'+options.lang.rotateLeft+'</span></div><div class="success"></div><div class="error"></div>');
 				builder.append('<div class="progress"><span style="display: none; width: 0px;"></span></div></li>');
 
 				var $image = $(builder.toString());
@@ -411,8 +417,8 @@
 				if ( options.data_type == "json" ) {
 					//console.log(e);
 					var data = $.parseJSON(e.target.responseText);
-					if ( data.code == 0 ) {
-						o.selectedList.push(data.message);   //添加文件到上传文件列表
+					if ( data.code == "000" ) {
+						o.selectedList.push(data.item.url);   //添加文件到上传文件列表
 						o.uploadSuccessNum++;
 						$("#img-comtainer-"+dialogSCode+ node.index).find(".file-opt-box").remove();
 						$("#img-comtainer-"+dialogSCode+ node.index).find(".progress").remove();
@@ -431,7 +437,7 @@
 
 			//上传失败
 			xhr.addEventListener('error', function() {
-				__error__("发生异常，上传失败!", node);
+				__error__(options.lang.uploadFail, node);
 			}, false);
 
 			xhr.upload.addEventListener('progress', function(e) {
@@ -453,7 +459,7 @@
 				uploadFile(nextFile);
 			} else {
 				o.uploadLock = false; //release the upload lock
-				G(".btn-start-upload").removeClass("disabled").text("开始上传");
+				G(".btn-start-upload").removeClass("disabled").text(options.lang.startUpload);
 				//console.log(o.selectedList);
 			}
 		}
@@ -467,9 +473,8 @@
 
 		//update file info text
 		function updateInfoText(filenum, filesize) {
-
-			G(".info").text("共选择了 "+filenum+" 张图片，共 "+formatFileSize(filesize)+"," +
-				" 还可以添加 "+(options.max_filenum - filenum)+" 张图片.");
+			var text = KindEditor.tmpl(options.lang.uploadDesc, {numSelect:filenum, totalSize:formatFileSize(filesize), numLeft:(options.max_filenum - filenum)});
+			G(".info").text(text);
 		}
 
 		//format file size(格式化文件大小)
@@ -489,7 +494,7 @@
 			//检查文件大小
 			var maxsize = options.max_filesize * 1024;
 			if ( maxsize > 0 && node.file.size > maxsize ) {
-				__error__("文件大小不能超过 "+options.max_filesize + " KB", node);
+				__error__(KindEditor.tmpl(options.lang.sizeLimit, {sizeLimit:options.max_filesize}), node);
 				return false;
 			}
 
@@ -499,7 +504,7 @@
 				&& options.ext_refuse.indexOf(ext) == -1 ) {
 				return true;
 			} else {
-				__error__("非法的文件后缀 "+ext, node);
+				__error__(KindEditor.tmpl(options.lang.invalidExt, {invalidExt:ext}), node);
 				return false;
 			}
 
@@ -541,7 +546,7 @@
 		//从服务器上获取图片地址
 		function loadFilesFromServer() {
 			if ( options.list_url == null ) {
-				G(".online .no-data").html('<span class="error">无法获取图片，请先配置 list_url.</span>').show();
+				G(".online .no-data").html('<span class="error">'+options.lang.noListUrl+'</span>').show();
 				return false;
 			}
 			if ( o.noRecord ) return false;
@@ -552,9 +557,9 @@
 			}, function(res) {
 
 				G(".loading-icon").hide(); //隐藏加载图标
-				if ( res.code == "0" ) {
+				if ( res.code == "000" ) {
 					o.page++;
-					appendFiles(res.data, "online");
+					appendFiles(res.items, "online");
 				} else {
 					G(".online .no-data").text(options.no_data_text).show();
 					o.noRecord = true;
@@ -566,7 +571,7 @@
 		//图片搜索
 		function imageSearch() {
 			if ( options.search_url == null ) {
-				G(".searchbox .no-data").html('<span class="error">无法进行图片搜索，请先配置 search_url.</span>').show();
+				G(".searchbox .no-data").html('<span class="error">'+options.lang.noSearchUrl+'</span>').show();
 				return false;
 			}
 
@@ -577,10 +582,10 @@
 			}, function(res) {
 
 				G(".loading-icon").hide(); //隐藏加载图标
-				if ( res.code == "0" ) {
+				if ( res.code == "000" ) {
 					G(".searchbox .no-data").hide();
 					o.searchPage++;
-					appendFiles(res.data, "search");
+					appendFiles(res.items, "search");
 				} else {
 					G(".no-data").text(options.no_data_text).show();
 				}

@@ -13,7 +13,7 @@ _extend(KUploadButton, {
 			cls = button[0].className || '',
 			target = options.target || 'kindeditor_upload_iframe_' + new Date().getTime();
 		options.afterError = options.afterError || function(str) {
-			alert(str);
+				K.options.errorMsgHandler(str, "error");
 		};
 
 		var hiddenElements = [];

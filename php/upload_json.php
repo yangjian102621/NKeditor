@@ -13,9 +13,9 @@ $php_path = dirname(__FILE__) . '/';
 $php_url = dirname($_SERVER['PHP_SELF']) . '/';
 
 //文件保存目录路径
-$save_path = $php_path . 'attached/';
+$save_path = $php_path . 'files/';
 //文件保存目录URL
-$save_url = $php_url . 'attached/';
+$save_url = $php_url . 'files/';
 //定义允许上传的文件扩展名
 $ext_arr = array(
 	'image' => array('gif', 'jpg', 'jpeg', 'png', 'bmp'),
@@ -101,17 +101,6 @@ if (empty($_FILES) === false) {
 	if (in_array($file_ext, $ext_arr[$dir_name]) === false) {
 		alert("上传文件扩展名是不允许的扩展名。\n只允许" . implode(",", $ext_arr[$dir_name]) . "格式。");
 	}
-	//创建文件夹
-	if ($dir_name !== '') {
-		$save_path .= $dir_name . "/";
-		$save_url .= $dir_name . "/";
-		if (!file_exists($save_path)) {
-			mkdir($save_path);
-		}
-	}
-	$ymd = date("Ymd");
-	$save_path .= $ymd . "/";
-	$save_url .= $ymd . "/";
 	if (!file_exists($save_path)) {
 		mkdir($save_path);
 	}
@@ -126,7 +115,7 @@ if (empty($_FILES) === false) {
 	$file_url = $save_url . $new_file_name;
 
 	$json = new JsonResult(JsonResult::CODE_SUCCESS, "上传成功");
-	$json->setItem($file_url);
+	$json->setItem(array('url' => $file_url));
 	$json->output();
 }
 

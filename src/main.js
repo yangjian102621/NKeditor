@@ -1022,6 +1022,11 @@ function _create(expr, options) {
 	options.themesPath = _undef(options.themesPath, options.basePath + 'themes/');
 	options.langPath = _undef(options.langPath, options.basePath + 'lang/');
 	options.pluginsPath = _undef(options.pluginsPath, options.basePath + 'plugins/');
+
+	// 注入自定义错误处理 handler
+	if (typeof options.errorMsgHandler == "function") {
+		K.options.errorMsgHandler = options.errorMsgHandler;
+	}
 	// 自动加载CSS文件
 	if (_undef(options.loadStyleMode, K.options.loadStyleMode)) {
 		var themeType = _undef(options.themeType, K.options.themeType);
@@ -1312,7 +1317,7 @@ _plugin('core', function(K) {
 			try {
 				self.exec(name, null);
 			} catch(e) {
-				alert(self.lang(name + 'Error'));
+				K.options.errorMsgHandler(self.lang(name + 'Error'), "error");
 			}
 		});
 	});

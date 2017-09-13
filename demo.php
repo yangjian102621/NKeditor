@@ -16,15 +16,20 @@
 	<link rel="stylesheet" href="themes/default/default.css" />
 	<script charset="utf-8" src="kindeditor-all.js"></script>
 	<script charset="utf-8" src="lang/zh-CN.js"></script>
+
+	<!-- 下面是外部插件不是必须引入的 -->
 	<script charset="utf-8" src="libs/jquery.min.js"></script>
+	<link rel="stylesheet" href="libs/JDialog/css/JDialog.css" />
+	<script charset="utf-8" src="libs/JDialog/JDialog.js"></script>
 	<script>
 		KindEditor.ready(function(K) {
 			var editor1 = K.create('textarea[name="content1"]', {
 				uploadJson : 'php/upload_json.php',
 				fileManagerJson : 'php/file_manager_json.php',
+				imageSearchJson : 'php/image_search_json.php',
 				allowFileManager : true,
 				allowImageUpload : true,
-				//allowMediaUpload : true,
+				allowMediaUpload : true,
 				afterCreate : function() {
 					var self = this;
 					K.ctrl(document, 13, function() {
@@ -35,6 +40,10 @@
 						self.sync();
 						K('form[name=example]')[0].submit();
 					});
+				},
+				//错误处理 handler
+				errorMsgHandler : function(message, type) {
+					JDialog.msg({type:type, content:message, timer:2000, container:".ke-dialog-content"});
 				}
 			});
 

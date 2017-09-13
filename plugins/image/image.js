@@ -105,7 +105,7 @@ KindEditor.plugin('image', function(K) {
 					// insert local image
 					if (showLocal && showRemote && tabs && tabs.selectedIndex === 1 || !showRemote) {
 						if (uploadbutton.fileBox.val() == '') {
-							K.options.errorMsgHandler(self.lang('pleaseSelectFile'));
+							K.options.errorMsgHandler(self.lang('pleaseSelectFile'), "error");
 							return;
 						}
 						dialog.showLoading(self.lang('uploadLoading'));
@@ -126,17 +126,17 @@ KindEditor.plugin('image', function(K) {
 						}
 					});
 					if (url == 'http://' || K.invalidUrl(url)) {
-						K.options.errorMsgHandler(self.lang('invalidUrl'));
+						K.options.errorMsgHandler(self.lang('invalidUrl'), "error");
 						urlBox[0].focus();
 						return;
 					}
 					if (!/^\d*$/.test(width)) {
-						K.options.errorMsgHandler(self.lang('invalidWidth'));
+						K.options.errorMsgHandler(self.lang('invalidWidth'), "error");
 						widthBox[0].focus();
 						return;
 					}
 					if (!/^\d*$/.test(height)) {
-						K.options.errorMsgHandler(self.lang('invalidHeight'));
+						K.options.errorMsgHandler(self.lang('invalidHeight'), "error");
 						heightBox[0].focus();
 						return;
 					}
@@ -189,15 +189,12 @@ KindEditor.plugin('image', function(K) {
 			target : target,
 			width: 60,
 			afterUpload : function(data) {
-				console.log(data);
+
 				dialog.hideLoading();
 				if (data.code == "000") {
-					var url = data.item;
+					var url = data.item.url;
 					if (formatUploadUrl) {
 						url = K.formatUrl(url, 'absolute');
-					}
-					if (self.afterUpload) {
-						self.afterUpload.call(self, url, data, name);
 					}
 					if (!fillDescAfterUploadImage) {
 						clickFn.call(self, url, data.title, data.width, data.height, data.border, data.align);

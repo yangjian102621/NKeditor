@@ -1,12 +1,9 @@
-/*******************************************************************************
-* KindEditor - WYSIWYG HTML Editor for Internet
-* Copyright (C) 2006-2011 kindsoft.net
-*
-* @author Roddy <luolonghao@gmail.com>
-* @site http://www.kindsoft.net/
-* @licence http://www.kindsoft.net/license.php
-*******************************************************************************/
-
+/**
+ * 文件服务器管理
+ * @author yangjian <yangjian102621@gmail.com>
+ * @since v4.1.12(2017-09-12)
+ * @site http://git.oschina.net/blackfox/kindeditor
+ */
 KindEditor.plugin('filemanager', function(K) {
 	var self = this;
 	var fileManagerJson = K.undef(self.fileManagerJson, self.basePath + 'php/file_manager_json.php');

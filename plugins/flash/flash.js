@@ -53,17 +53,17 @@ KindEditor.plugin('flash', function(K) {
 							width = widthBox.val(),
 							height = heightBox.val();
 						if (url == 'http://' || K.invalidUrl(url)) {
-							alert(self.lang('invalidUrl'));
+							K.options.errorMsgHandler(self.lang('invalidUrl'), "error");
 							urlBox[0].focus();
 							return;
 						}
 						if (!/^\d*$/.test(width)) {
-							alert(self.lang('invalidWidth'));
+							K.options.errorMsgHandler(self.lang('invalidWidth'), "error");
 							widthBox[0].focus();
 							return;
 						}
 						if (!/^\d*$/.test(height)) {
-							alert(self.lang('invalidHeight'));
+							K.options.errorMsgHandler(self.lang('invalidHeight'), "error");
 							heightBox[0].focus();
 							return;
 						}
@@ -93,8 +93,8 @@ KindEditor.plugin('flash', function(K) {
 					url : K.addParam(uploadJson, 'dir=flash'),
 					afterUpload : function(data) {
 						dialog.hideLoading();
-						if (data.error === 0) {
-							var url = data.url;
+						if (data.code === "000") {
+							var url = data.item.url;
 							if (formatUploadUrl) {
 								url = K.formatUrl(url, 'absolute');
 							}
@@ -102,9 +102,9 @@ KindEditor.plugin('flash', function(K) {
 							if (self.afterUpload) {
 								self.afterUpload.call(self, url, data, name);
 							}
-							alert(self.lang('uploadSuccess'));
+							K.options.errorMsgHandler(self.lang('uploadSuccess'), "ok");
 						} else {
-							alert(data.message);
+							K.options.errorMsgHandler(data.message, "error");
 						}
 					},
 					afterError : function(html) {

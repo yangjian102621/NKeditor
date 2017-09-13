@@ -50,7 +50,7 @@ KindEditor.plugin('insertfile', function(K) {
 					var url = K.trim(urlBox.val()),
 						title = titleBox.val();
 					if (url == 'http://' || K.invalidUrl(url)) {
-						alert(self.lang('invalidUrl'));
+						K.options.errorMsgHandler(self.lang('invalidUrl'), "error");
 						urlBox[0].focus();
 						return;
 					}
@@ -75,8 +75,8 @@ KindEditor.plugin('insertfile', function(K) {
 				extraParams : extraParams,
 				afterUpload : function(data) {
 					dialog.hideLoading();
-					if (data.error === 0) {
-						var url = data.url;
+					if (data.code === "000") {
+						var url = data.item.url;
 						if (formatUploadUrl) {
 							url = K.formatUrl(url, 'absolute');
 						}
@@ -84,9 +84,9 @@ KindEditor.plugin('insertfile', function(K) {
 						if (self.afterUpload) {
 							self.afterUpload.call(self, url, data, name);
 						}
-						alert(self.lang('uploadSuccess'));
+						K.options.errorMsgHandler(self.lang('uploadSuccess'), "ok");
 					} else {
-						alert(data.message);
+						K.options.errorMsgHandler(data.message, "error");
 					}
 				},
 				afterError : function(html) {

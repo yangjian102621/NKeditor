@@ -1,5 +1,5 @@
 @charset "UTF-8";
-.uedbody {
+.uedbody-server {
   box-sizing: content-box !important;
   -webkit-box-sizing: content-box !important;
   -moz-box-sizing: content-box !important;
@@ -14,72 +14,72 @@
   font-family: "微软雅黑";
   font-size: 12px;
   margin: 0px auto; }
-  .uedbody div, .uedbody dl, .uedbody dt, .uedbody dd, .uedbody ul, .uedbody li, .uedbody ol, .uedbody h1, .uedbody h2, .uedbody h3, .uedbody h4, .uedbody h5, .uedbody h6, .uedbody pre, .uedbody code, .uedbody form, .uedbody fieldset, .uedbody legend, .uedbody button, .uedbody textarea, .uedbody blockquote, .uedbody p {
+  .uedbody-server div, .uedbody-server dl, .uedbody-server dt, .uedbody-server dd, .uedbody-server ul, .uedbody-server li, .uedbody-server ol, .uedbody-server h1, .uedbody-server h2, .uedbody-server h3, .uedbody-server h4, .uedbody-server h5, .uedbody-server h6, .uedbody-server pre, .uedbody-server code, .uedbody-server form, .uedbody-server fieldset, .uedbody-server legend, .uedbody-server button, .uedbody-server textarea, .uedbody-server blockquote, .uedbody-server p {
     margin: 0;
     padding: 0; }
-  .uedbody h1, .uedbody h2, .uedbody h3, .uedbody h4, .uedbody h5, .uedbody h6 {
+  .uedbody-server h1, .uedbody-server h2, .uedbody-server h3, .uedbody-server h4, .uedbody-server h5, .uedbody-server h6 {
     font-weight: normal; }
-  .uedbody li {
+  .uedbody-server li {
     list-style-type: none; }
-  .uedbody ol, .uedbody ul, .uedbody dl {
+  .uedbody-server ol, .uedbody-server ul, .uedbody-server dl {
     list-style: none; }
-  .uedbody em {
+  .uedbody-server em {
     font-style: normal; }
-  .uedbody img {
+  .uedbody-server img {
     border: none;
     vertical-align: middle; }
-  .uedbody select, .uedbody label, .uedbody input {
+  .uedbody-server select, .uedbody-server label, .uedbody-server input {
     vertical-align: middle;
     padding: 0;
     margin: 0;
     outline: medium;
     font-size: 12px; }
-  .uedbody textarea {
+  .uedbody-server textarea {
     resize: none;
     line-height: 18px; }
-  .uedbody table {
+  .uedbody-server table {
     border-collapse: collapse;
     border-spacing: 0;
     empty-cell: show; }
-  .uedbody a {
+  .uedbody-server a {
     text-decoration: none;
     color: #333;
     outline: none;
     cursor: pointer; }
-  .uedbody a:hover {
+  .uedbody-server a:hover {
     cursor: pointer;
     blr: expression(this.onFocus=this.blur()); }
-  .uedbody * {
+  .uedbody-server * {
     padding: 0;
     margin: 0;
     box-sizing: content-box !important;
     -webkit-box-sizing: content-box !important;
     -moz-box-sizing: content-box !important; }
-  .uedbody .clearfix:before, .uedbody .clearfix:after {
+  .uedbody-server .clearfix:before, .uedbody-server .clearfix:after {
     content: "";
     display: table; }
-  .uedbody .clearfix:after {
+  .uedbody-server .clearfix:after {
     clear: both; }
-  .uedbody .clearfix {
+  .uedbody-server .clearfix {
     *zoom: 1; }
-  .uedbody .fr {
+  .uedbody-server .fr {
     float: right; }
-  .uedbody .fl {
+  .uedbody-server .fl {
     float: left; }
-  .uedbody .ued_title {
+  .uedbody-server .ued_title {
     height: 26px;
     border-bottom: 1px solid #C6C6C6;
     background: transparent url("images/dialog-title-bg.png") repeat-x scroll 0% 0%;
     position: relative;
     cursor: move; }
-    .uedbody .ued_title .icon {
+    .uedbody-server .ued_title .icon {
       background: url("images/icons-all.gif") no-repeat center; }
-    .uedbody .ued_title .uedbar span {
+    .uedbody-server .ued_title .uedbar span {
       font-weight: bold;
       font-size: 12px;
       line-height: 26px;
       padding-left: 5px; }
-    .uedbody .ued_title .close_btn {
+    .uedbody-server .ued_title .close_btn {
       height: 20px;
       width: 20px;
       cursor: pointer;
@@ -87,9 +87,9 @@
       position: absolute;
       right: 5px;
       top: 3px; }
-      .uedbody .ued_title .close_btn:hover {
+      .uedbody-server .ued_title .close_btn:hover {
         background-position: 0px -89px; }
-  .uedbody .btn {
+  .uedbody-server .btn {
     display: inline-block;
     margin-bottom: 0px;
     margin-right: 5px;
@@ -104,30 +104,30 @@
     -moz-user-select: none;
     box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
     padding: 5px 14px; }
-  .uedbody .btn-default {
+  .uedbody-server .btn-default {
     border: 1px solid #CFCFCF;
     color: #565656;
     background: #ffffff; }
-    .uedbody .btn-default:hover {
+    .uedbody-server .btn-default:hover {
       background: #f0f0f0; }
-  .uedbody .btn-primary {
+  .uedbody-server .btn-primary {
     background: #00b7ee;
     color: #ffffff; }
-    .uedbody .btn-primary:hover {
+    .uedbody-server .btn-primary:hover {
       background: #00a2d4; }
-  .uedbody .btn.disabled {
+  .uedbody-server .btn.disabled {
     cursor: not-allowed;
     opacity: .65; }
-    .uedbody .btn.disabled:hover {
+    .uedbody-server .btn.disabled:hover {
       background: #00b7ee; }
-  .uedbody .wrapper {
+  .uedbody-server .wrapper {
     width: 630px;
     height: 345px;
     margin: 0px auto;
     padding: 10px;
     position: relative;
     font-family: sans-serif; }
-    .uedbody .wrapper .wra_head span {
+    .uedbody-server .wrapper .wra_head span {
       float: left;
       padding: 0px 5px;
       margin-right: 3px;
@@ -138,13 +138,13 @@
       line-height: 30px;
       cursor: pointer;
       position: relative; }
-    .uedbody .wrapper .wra_head span.focus {
+    .uedbody-server .wrapper .wra_head span.focus {
       height: 31px;
       border-bottom: medium none;
       background: #FFF none repeat scroll 0% 0%;
       position: relative;
       z-index: 2; }
-    .uedbody .wrapper .wra_body {
+    .uedbody-server .wrapper .wra_body {
       width: 100%;
       height: 346px;
       clear: both;
@@ -155,18 +155,18 @@
       overflow: hidden;
       top: -1px;
       position: relative; }
-      .uedbody .wrapper .wra_body .online {
+      .uedbody-server .wrapper .wra_body .online {
         width: 100%;
         height: 336px;
         padding: 10px 0px 0px;
         display: block; }
-        .uedbody .wrapper .wra_body .online .imagelist {
+        .uedbody-server .wrapper .wra_body .online .imagelist {
           width: 100%;
           height: 100%;
           overflow-x: hidden;
           overflow-y: auto;
           position: relative; }
-          .uedbody .wrapper .wra_body .online .imagelist .list li {
+          .uedbody-server .wrapper .wra_body .online .imagelist .list li {
             float: left;
             display: block;
             list-style: outside none none;
@@ -178,41 +178,41 @@
             overflow: hidden;
             cursor: pointer;
             position: relative; }
-            .uedbody .wrapper .wra_body .online .imagelist .list li img {
+            .uedbody-server .wrapper .wra_body .online .imagelist .list li img {
               cursor: pointer; }
-            .uedbody .wrapper .wra_body .online .imagelist .list li span.ic {
+            .uedbody-server .wrapper .wra_body .online .imagelist .list li span.ic {
               position: absolute;
               top: 0px;
               left: 0px;
               cursor: pointer;
               width: 113px;
               height: 113px; }
-              .uedbody .wrapper .wra_body .online .imagelist .list li span.ic .img-size {
+              .uedbody-server .wrapper .wra_body .online .imagelist .list li span.ic .img-size {
                 font-size: 12px;
                 padding: 5px;
                 background: rgba(0, 0, 0, 0.6);
                 display: none;
                 color: #ffffff; }
-              .uedbody .wrapper .wra_body .online .imagelist .list li span.ic:hover {
+              .uedbody-server .wrapper .wra_body .online .imagelist .list li span.ic:hover {
                 width: 107px;
                 height: 107px;
                 border: 3px solid #1094FA;
                 background-position: 72px 72px; }
-                .uedbody .wrapper .wra_body .online .imagelist .list li span.ic:hover .img-size {
+                .uedbody-server .wrapper .wra_body .online .imagelist .list li span.ic:hover .img-size {
                   display: inline-block;
                   width: 97px; }
-            .uedbody .wrapper .wra_body .online .imagelist .list li span.selected {
+            .uedbody-server .wrapper .wra_body .online .imagelist .list li span.selected {
               background: url("images/success.png") no-repeat 75px 75px; }
-      .uedbody .wrapper .wra_body .no-data {
+      .uedbody-server .wrapper .wra_body .no-data {
         line-height: 40px;
         height: 40px;
         font-size: 14px;
         color: #999999;
         text-align: center;
         display: none; }
-        .uedbody .wrapper .wra_body .no-data .error {
+        .uedbody-server .wrapper .wra_body .no-data .error {
           color: #cc0000; }
-      .uedbody .wrapper .wra_body .loading-icon {
+      .uedbody-server .wrapper .wra_body .loading-icon {
         background: rgba(0, 0, 0, 0.4) url("images/loader.gif") no-repeat center center;
         position: absolute;
         width: 100%;
@@ -220,95 +220,95 @@
         top: 0;
         left: 0;
         display: none; }
-      .uedbody .wrapper .wra_body .icon-placeholder {
+      .uedbody-server .wrapper .wra_body .icon-placeholder {
         background-size: 113px 113px;
         display: block;
         width: 113px;
         height: 113px; }
-      .uedbody .wrapper .wra_body .icon-aep, .uedbody .wrapper .wra_body .icon-aepx {
+      .uedbody-server .wrapper .wra_body .icon-aep, .uedbody-server .wrapper .wra_body .icon-aepx {
         background-image: url("icons/aep.png"); }
-      .uedbody .wrapper .wra_body .icon-asp {
+      .uedbody-server .wrapper .wra_body .icon-asp {
         background-image: url("icons/asp.png"); }
-      .uedbody .wrapper .wra_body .icon-avi {
+      .uedbody-server .wrapper .wra_body .icon-avi {
         background-image: url("icons/avi.png"); }
-      .uedbody .wrapper .wra_body .icon-c, .uedbody .wrapper .wra_body .icon-cpp {
+      .uedbody-server .wrapper .wra_body .icon-c, .uedbody-server .wrapper .wra_body .icon-cpp {
         background-image: url("icons/c.png"); }
-      .uedbody .wrapper .wra_body .icon-conf {
+      .uedbody-server .wrapper .wra_body .icon-conf {
         background-image: url("icons/conf.png"); }
-      .uedbody .wrapper .wra_body .icon-css {
+      .uedbody-server .wrapper .wra_body .icon-css {
         background-image: url("icons/css.png"); }
-      .uedbody .wrapper .wra_body .icon-default {
+      .uedbody-server .wrapper .wra_body .icon-default {
         background-image: url("icons/default.png"); }
-      .uedbody .wrapper .wra_body .icon-doc, .uedbody .wrapper .wra_body .icon-docx {
+      .uedbody-server .wrapper .wra_body .icon-doc, .uedbody-server .wrapper .wra_body .icon-docx {
         background-image: url("icons/doc.png"); }
-      .uedbody .wrapper .wra_body .icon-eps {
+      .uedbody-server .wrapper .wra_body .icon-eps {
         background-image: url("icons/eps.png"); }
-      .uedbody .wrapper .wra_body .icon-fla, .uedbody .wrapper .wra_body .icon-swf {
+      .uedbody-server .wrapper .wra_body .icon-fla, .uedbody-server .wrapper .wra_body .icon-swf {
         background-image: url("icons/fla.png"); }
-      .uedbody .wrapper .wra_body .icon-idn {
+      .uedbody-server .wrapper .wra_body .icon-idn {
         background-image: url("icons/idn.png"); }
-      .uedbody .wrapper .wra_body .icon-ini {
+      .uedbody-server .wrapper .wra_body .icon-ini {
         background-image: url("icons/ini.png"); }
-      .uedbody .wrapper .wra_body .icon-java, .uedbody .wrapper .wra_body .icon-jar, .uedbody .wrapper .wra_body .icon-war {
+      .uedbody-server .wrapper .wra_body .icon-java, .uedbody-server .wrapper .wra_body .icon-jar, .uedbody-server .wrapper .wra_body .icon-war {
         background-image: url("icons/java.png"); }
-      .uedbody .wrapper .wra_body .icon-jsf {
+      .uedbody-server .wrapper .wra_body .icon-jsf {
         background-image: url("icons/jsf.png"); }
-      .uedbody .wrapper .wra_body .icon-md, .uedbody .wrapper .wra_body .icon-markdown {
+      .uedbody-server .wrapper .wra_body .icon-md, .uedbody-server .wrapper .wra_body .icon-markdown {
         background-image: url("icons/markdown.png"); }
-      .uedbody .wrapper .wra_body .icon-mdb {
+      .uedbody-server .wrapper .wra_body .icon-mdb {
         background-image: url("icons/mdb.png"); }
-      .uedbody .wrapper .wra_body .icon-midi {
+      .uedbody-server .wrapper .wra_body .icon-midi {
         background-image: url("icons/midi.png"); }
-      .uedbody .wrapper .wra_body .icon-mov {
+      .uedbody-server .wrapper .wra_body .icon-mov {
         background-image: url("icons/mov.png"); }
-      .uedbody .wrapper .wra_body .icon-mp3 {
+      .uedbody-server .wrapper .wra_body .icon-mp3 {
         background-image: url("icons/mp3.png"); }
-      .uedbody .wrapper .wra_body .icon-mpeg {
+      .uedbody-server .wrapper .wra_body .icon-mpeg {
         background-image: url("icons/mpeg.png"); }
-      .uedbody .wrapper .wra_body .icon-pdf {
+      .uedbody-server .wrapper .wra_body .icon-pdf {
         background-image: url("icons/pdf.png"); }
-      .uedbody .wrapper .wra_body .icon-php {
+      .uedbody-server .wrapper .wra_body .icon-php {
         background-image: url("icons/php.png"); }
-      .uedbody .wrapper .wra_body .icon-ppt, .uedbody .wrapper .wra_body .icon-pptx {
+      .uedbody-server .wrapper .wra_body .icon-ppt, .uedbody-server .wrapper .wra_body .icon-pptx {
         background-image: url("icons/ppt.png"); }
-      .uedbody .wrapper .wra_body .icon-psd {
+      .uedbody-server .wrapper .wra_body .icon-psd {
         background-image: url("icons/psd.png"); }
-      .uedbody .wrapper .wra_body .icon-pst {
+      .uedbody-server .wrapper .wra_body .icon-pst {
         background-image: url("icons/pst.png"); }
-      .uedbody .wrapper .wra_body .icon-pub {
+      .uedbody-server .wrapper .wra_body .icon-pub {
         background-image: url("icons/pub.png"); }
-      .uedbody .wrapper .wra_body .icon-py {
+      .uedbody-server .wrapper .wra_body .icon-py {
         background-image: url("icons/py.png"); }
-      .uedbody .wrapper .wra_body .icon-rb {
+      .uedbody-server .wrapper .wra_body .icon-rb {
         background-image: url("icons/rb.png"); }
-      .uedbody .wrapper .wra_body .icon-rm, .uedbody .wrapper .wra_body .icon-rmvb {
+      .uedbody-server .wrapper .wra_body .icon-rm, .uedbody-server .wrapper .wra_body .icon-rmvb {
         background-image: url("icons/rmvb.png"); }
-      .uedbody .wrapper .wra_body .icon-scss {
+      .uedbody-server .wrapper .wra_body .icon-scss {
         background-image: url("icons/scss.png"); }
-      .uedbody .wrapper .wra_body .icon-tif {
+      .uedbody-server .wrapper .wra_body .icon-tif {
         background-image: url("icons/tif.png"); }
-      .uedbody .wrapper .wra_body .icon-txt {
+      .uedbody-server .wrapper .wra_body .icon-txt {
         background-image: url("icons/txt.png"); }
-      .uedbody .wrapper .wra_body .icon-vsd {
+      .uedbody-server .wrapper .wra_body .icon-vsd {
         background-image: url("icons/vsd.png"); }
-      .uedbody .wrapper .wra_body .icon-wav {
+      .uedbody-server .wrapper .wra_body .icon-wav {
         background-image: url("icons/wav.png"); }
-      .uedbody .wrapper .wra_body .icon-wma {
+      .uedbody-server .wrapper .wra_body .icon-wma {
         background-image: url("icons/wma.png"); }
-      .uedbody .wrapper .wra_body .icon-wmv {
+      .uedbody-server .wrapper .wra_body .icon-wmv {
         background-image: url("icons/wmv.png"); }
-      .uedbody .wrapper .wra_body .icon-xls, .uedbody .wrapper .wra_body .icon-xlsx {
+      .uedbody-server .wrapper .wra_body .icon-xls, .uedbody-server .wrapper .wra_body .icon-xlsx {
         background-image: url("icons/xls.png"); }
-      .uedbody .wrapper .wra_body .icon-xml {
+      .uedbody-server .wrapper .wra_body .icon-xml {
         background-image: url("icons/xml.png"); }
-      .uedbody .wrapper .wra_body .icon-zip, .uedbody .wrapper .wra_body .icon-rar, .uedbody .wrapper .wra_body .icon-tgz, .uedbody .wrapper .wra_body .icon-gz, .uedbody .wrapper .wra_body .icon-tar, .uedbody .wrapper .wra_body .icon-7z {
+      .uedbody-server .wrapper .wra_body .icon-zip, .uedbody-server .wrapper .wra_body .icon-rar, .uedbody-server .wrapper .wra_body .icon-tgz, .uedbody-server .wrapper .wra_body .icon-gz, .uedbody-server .wrapper .wra_body .icon-tar, .uedbody-server .wrapper .wra_body .icon-7z {
         background-image: url("icons/zip.png"); }
-  .uedbody .wra-btn-group {
+  .uedbody-server .wra-btn-group {
     clear: both;
     zoom: 1;
     text-align: right;
     padding: 10px 20px 20px 0px; }
-    .uedbody .wra-btn-group .tip-text {
+    .uedbody-server .wra-btn-group .tip-text {
       float: left;
       padding: 5px 10px;
       color: #999;

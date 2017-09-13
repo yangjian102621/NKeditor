@@ -1,23 +1,39 @@
 <?php
 /**
- * KindEditorX PHP 文件管理演示程序
- * @author yangjian
- * @since 4.1.12 (2017-09-12)
- *
+ * 获取图片服务器上已上传的图片列表
+ * @author yangjian<yangjian102621@gmail.com>
  */
 error_reporting(0);
 require_once 'JsonResult.php';
-$page = intval($_GET['page']);
-$url = "http://localhost/javascript/AjaxUpload/image_list.php?page=".$page;
-$json = file_get_contents($url);
-$data = json_decode($json, true);
-if (empty($data)) {
-    JsonResult::fail("没有获取到数据");
+sleep(1);
+$page = intval($_GET["page"]);
+$offset = ($page - 1) * 15;
+$image_dir = __DIR__."/files";
+$files = array();
+$handler = opendir($image_dir);
+if ( $handler != false ) {
+    $i = 0;
+    while ( $filename = readdir($handler) ) {
+        if ( $filename != "." && $filename != ".." ) {
+            if ( $i < $offset ) {
+                $i++;
+                continue;
+            }
+            $size = getimagesize("files/".$filename);
+            array_push($files, array("thumbURL" => dirname($_SERVER['PHP_SELF'])."/files/".$filename, "oriURL" =>
+                dirname($_SERVER['PHP_SELF'])."/files/"
+                .$filename,
+                "width" => intval($size[0]), "height" => intval($size[1])));
+            $i++;
+            if ( $i > $offset + 15 ) break;
+        }
+    }
+    closedir($handler);
 }
 $result = new JsonResult();
-if ($data['code'] == 0) {
+if (!empty($files)) {
     $result->setCode(JsonResult::CODE_SUCCESS);
-    $result->setItems($data['data']);
+    $result->setItems($files);
 } else {
     $result->setCode(JsonResult::CODE_FAIL);
 }
