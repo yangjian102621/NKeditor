@@ -93,6 +93,7 @@
 			lang : {},
 			list_url : null,
 			data_type : "json",
+			fileType : "image", //文件类型，默认是图片，可选flash,media,file
 			top : 20,
 			callback : function(data) {
 				console.log(data);
@@ -170,7 +171,7 @@
 
 		//从服务器上获取图片地址
 		function loadFilesFromServer() {
-			if ( options.list_url == null ) {
+			if ( !options.list_url ) {
 				G(".online .no-data").html('<span class="error">'+options.lang.noListUrl+'</span>').show();
 				return false;
 			}
@@ -178,12 +179,14 @@
 
 			G(".loading-icon").show(); //显示加载图标
 			$.get(options.list_url, {
-				page : o.page
+				page : o.page,
+				fileType : options.fileType
 			}, function(res) {
 
 				G(".loading-icon").hide(); //隐藏加载图标
 				if ( res.code == "000" ) {
 					o.page++;
+					console.log(res.items);
 					appendFiles(res.items);
 				} else {
 					G(".online .no-data").text(options.lang.noDataText).show();
@@ -204,13 +207,15 @@
 				if ( extension == '' ) extension = "default";
 				extension = extension.toLowerCase();
 				//如果不是图片，则根据文件的后缀名去加载对应的缩略图
+				var imgSize = item.width+'x'+item.height; //图片尺寸
 				if ( "jpg|jpeg|gif|png|bmp".indexOf(extension) == -1 ) {
+					imgSize = formatFileSize(item.filesize); //如果是文件则显示文件大小
 					builder.append('<span class="icon-placeholder icon-'+extension+'" data-src="'+item.oriURL+'"></span>');
 				} else {
 					builder.append('<img src="'+item.thumbURL+'" data-src="'+item.oriURL+'" border="0">');
 				}
 
-				builder.append('<span class="ic"><em class="img-size">'+item.width+'x'+item.height+'</em></span></li>');
+				builder.append('<span class="ic"><em class="img-size">'+imgSize+'</em></span></li>');
 				var $image = $(builder.toString());
 
 				//绑定选择图片事件
@@ -249,6 +254,16 @@
 			return false;
 		}
 
+		//format file size(格式化文件大小)
+		function formatFileSize(size) {
+
+			if ( size/1048576 > 1 ) {
+				return (size/1048576).toFixed(2)+"MB";
+			} else {
+				return (size/1024).toFixed(2)+"KB";
+			}
+
+		}
 		//initialize dialog
 		createDialog();
 		bindEvent();

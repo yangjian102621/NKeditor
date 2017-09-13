@@ -26,7 +26,8 @@
 			var editor1 = K.create('textarea[name="content1"]', {
 				uploadJson : 'php/upload_json.php',
 				fileManagerJson : 'php/file_manager_json.php',
-				imageSearchJson : 'php/image_search_json.php',
+				imageSearchJson : 'php/image_search_json.php', //图片搜索url
+				imageGrapJson : 'php/image_grap_json.php', //抓取选中的搜索图片地址
 				allowFileManager : true,
 				allowImageUpload : true,
 				allowMediaUpload : true,
@@ -43,7 +44,7 @@
 				},
 				//错误处理 handler
 				errorMsgHandler : function(message, type) {
-					JDialog.msg({type:type, content:message, timer:2000, container:".ke-dialog-content"});
+					JDialog.msg({type:type, content:message, timer:2000, offset:60});
 				}
 			});
 

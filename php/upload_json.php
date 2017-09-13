@@ -23,8 +23,8 @@ $ext_arr = array(
 	'media' => array('swf', 'flv', 'mp3', 'wav', 'wma', 'wmv', 'mid', 'avi', 'mpg', 'asf', 'rm', 'rmvb'),
 	'file' => array('doc', 'docx', 'xls', 'xlsx', 'ppt', 'htm', 'html', 'txt', 'zip', 'rar', 'gz', 'bz2'),
 );
-//最大文件大小
-$max_size = 1000000;
+//最大文件大小 2MB
+$max_size = 2*1024*1024;
 if (!file_exists($save_path)) {
     mkdir($save_path);
 }

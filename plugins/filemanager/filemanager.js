@@ -22,6 +22,7 @@ KindEditor.plugin('filemanager', function(K) {
 		new FManager({
 			list_url : fileManagerJson,	//图片列表数据获取url
 			lang : lang, //语言包
+			fileType : options.dirName,
 			callback : function(data) {
 				//console.log(data);
 				clickFn.call(this, data[0]);

@@ -9,7 +9,8 @@ KindEditor.plugin('multiimage', function(K) {
 	var self = this, name = 'multiimage',
 		uploadJson = K.undef(self.uploadJson, self.basePath + 'php/upload_json.php'),
 		fileManagerJson = K.undef(self.fileManagerJson, self.basePath + 'php/file_manager_json.php'),
-		imageSearchJson = K.undef(self.imageSearchJson, self.basePath + 'php/img_search_json.php'),
+		imageSearchJson = K.undef(self.imageSearchJson, self.basePath + 'php/image_search_json.php'),
+		imageGrapJson = K.undef(self.imageGrapJson, self.basePath + 'php/image_grap_json.php'),
 		imageSizeLimit = K.undef(self.imageSizeLimit, 2048), //单位KB
 		imageFileTypes = K.undef(self.imageFileTypes, 'jpg|png|gif|jpeg'),
 		imageUploadLimit = K.undef(self.imageUploadLimit, 20),
@@ -37,10 +38,13 @@ KindEditor.plugin('multiimage', function(K) {
 			upload_url : uploadJson,
 			list_url : fileManagerJson,	//图片列表数据获取url
 			search_url : imageSearchJson,	//图片搜索页面url
+			grap_url : imageGrapJson,	//网络图片抓取页面url
 			max_filesize : imageSizeLimit,
 			max_filenum : imageUploadLimit,
 			ext_allow : imageFileTypes,
 			lang : lang,
+			fileType : "image",
+			errorHandler : K.options.errorMsgHandler,
 			callback : function(data) {
 				//console.log(data);
 				clickFn.call(this, data);

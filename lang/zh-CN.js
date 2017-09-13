@@ -173,6 +173,7 @@ KindEditor.lang({
 	'multiimage.rotateRight' : '向右旋转',
 	'multiimage.rotateLeft' : '向左旋转',
 	'multiimage.uploadFail' : '发生异常，上传失败!',
+	'multiimage.noFileSelected' : '请至少选择一个文件或一张图片.',
 
 	'filemanager.noDataText' : '(⊙o⊙)亲，没有多数据了。',
 	'filemanager.title' : '文件服务器',

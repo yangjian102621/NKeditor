@@ -96,6 +96,7 @@
 			search_url : null,
 			data_type : "json",
 			top : 20,
+			fileType : "image", //文件类型，默认是图片，可选flash,media,file
 			max_filesize : 2048,    //unit:KB
 			max_filenum : 20,
 			no_data_text : "(⊙o⊙)亲，没有多数据了。",
@@ -180,6 +181,7 @@
 		o.searchPage = 1; //图片搜索页码
 		o.searchText = null; //搜索文字
 		o.noRecord = false;
+		o.searchList = []; //选中的搜索图片
 		var dialogSCode = Math.ceil(Math.random() * 1000000000000); //对话框的令牌，如果创建多个BUpload上传对象用来保持唯一性
 
 		//close the dialog
@@ -275,9 +277,31 @@
 					options.errorHandler(options.lang.fileNotUpload, "error");
 					return false;
 				}
+				if (o.selectedList.length == 0) {
+					options.errorHandler(options.lang.noFileSelected, "error");
+					return false;
+				}
 				//console.log(o.selectedList);
-				options.callback(o.selectedList);
-				o.close();
+				if (o.searchList.length > 0) {
+					var $message = $('<span class="loading-message">正在抓取网络图片……</span>')
+					G(".loading-icon").show().html($message); //显示加载图标
+					$.get(options.grap_url, {
+						act : "grapImage",
+						urls : encodeURI(o.searchList.join(","))
+					}, function (res) {
+						if (res.code != "000") {
+							options.errorHandler(res.message, "error");
+						} else {
+							options.callback(o.selectedList);
+							o.close();
+						}
+						G(".loading-icon").hide().empty();
+					}, "json");
+				} else {
+					options.callback(o.selectedList);
+					o.close();
+				}
+
 			});
 			G(".btn-cancel").on("click", function() {
 				o.close();
@@ -545,7 +569,7 @@
 
 		//从服务器上获取图片地址
 		function loadFilesFromServer() {
-			if ( options.list_url == null ) {
+			if ( !options.list_url ) {
 				G(".online .no-data").html('<span class="error">'+options.lang.noListUrl+'</span>').show();
 				return false;
 			}
@@ -553,7 +577,8 @@
 
 			G(".loading-icon").show(); //显示加载图标
 			$.get(options.list_url, {
-				page : o.page
+				page : o.page,
+				fileType : options.fileType,
 			}, function(res) {
 
 				G(".loading-icon").hide(); //隐藏加载图标
@@ -570,7 +595,7 @@
 
 		//图片搜索
 		function imageSearch() {
-			if ( options.search_url == null ) {
+			if ( !options.search_url ) {
 				G(".searchbox .no-data").html('<span class="error">'+options.lang.noSearchUrl+'</span>').show();
 				return false;
 			}
@@ -603,24 +628,34 @@
 				var extension = getFileExt(item.thumbURL);
 				if ( extension == '' ) extension = "default";
 				extension = extension.toLowerCase();
+				//如果不是图片，则根据文件的后缀名去加载对应的缩略图
+				var imgSize = item.width+'x'+item.height; //图片尺寸
 				if ( "jpg|jpeg|gif|png|bmp".indexOf(extension) == -1 ) {
+					imgSize = formatFileSize(item.filesize); //如果是文件则显示文件大小
 					builder.append('<span class="icon-placeholder icon-'+extension+'" data-src="'+item.oriURL+'"></span>');
 				} else {
 					builder.append('<img src="'+item.thumbURL+'" data-src="'+item.oriURL+'" border="0">');
 				}
 
-				builder.append('<span class="ic"><em class="img-size">'+item.width+'x'+item.height+'</em></span></li>');
+				builder.append('<span class="ic" data-module="'+module+'"><em class="img-size">'+imgSize+'</em></span></li>');
 				var $image = $(builder.toString());
 
 				//绑定选择图片事件
 				$image.find(".ic").on("click", function() {
-					var src = $(this).prev().attr("data-src");
+					var src = $(this).prev().data("src");
+					var module = $(this).data("module");
 					if ( $(this).hasClass("selected") ) {
 						$(this).removeClass("selected");
 						o.selectedList.remove(src);
+						if (module == "search") {
+							o.searchList.remove(src);
+						}
 					} else {
 						$(this).addClass("selected");
 						o.selectedList.push(src);
+						if (module == "search") {
+							o.searchList.push(src);
+						}
 					}
 					//console.log(o.selectedList);
 				});

@@ -13,5 +13,6 @@ Thumbs.db
 dist/
 node_modules/
 _build/
-php/attached 
+php/files
+php/tmp
 .idea

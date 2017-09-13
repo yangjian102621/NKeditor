@@ -5,7 +5,7 @@
 * @author Roddy <luolonghao@gmail.com>
 * @website http://www.kindsoft.net/
 * @licence http://www.kindsoft.net/license.php
-* @version 4.1.12 (2017-09-13)
+* @version 4.1.12 (2017-09-14)
 *******************************************************************************/
 (function (window, undefined) {
 	if (window.KindEditor) {
@@ -19,7 +19,7 @@ if (!window.console) {
 if (!console.log) {
 	console.log = function () {};
 }
-var _VERSION = '4.1.12 (2017-09-13)',
+var _VERSION = '4.1.12 (2017-09-14)',
 	_ua = navigator.userAgent.toLowerCase(),
 	_IE = _ua.indexOf('msie') > -1 && _ua.indexOf('opera') == -1,
 	_NEWIE = _ua.indexOf('msie') == -1 && _ua.indexOf('trident') > -1,
@@ -6832,6 +6832,7 @@ KindEditor.plugin('filemanager', function(K) {
 		new FManager({
 			list_url : fileManagerJson,
 			lang : lang,
+			fileType : options.dirName,
 			callback : function(data) {
 				clickFn.call(this, data[0]);
 			}
@@ -7690,7 +7691,8 @@ KindEditor.plugin('multiimage', function(K) {
 	var self = this, name = 'multiimage',
 		uploadJson = K.undef(self.uploadJson, self.basePath + 'php/upload_json.php'),
 		fileManagerJson = K.undef(self.fileManagerJson, self.basePath + 'php/file_manager_json.php'),
-		imageSearchJson = K.undef(self.imageSearchJson, self.basePath + 'php/img_search_json.php'),
+		imageSearchJson = K.undef(self.imageSearchJson, self.basePath + 'php/image_search_json.php'),
+		imageGrapJson = K.undef(self.imageGrapJson, self.basePath + 'php/image_grap_json.php'),
 		imageSizeLimit = K.undef(self.imageSizeLimit, 2048),
 		imageFileTypes = K.undef(self.imageFileTypes, 'jpg|png|gif|jpeg'),
 		imageUploadLimit = K.undef(self.imageUploadLimit, 20),
@@ -7714,10 +7716,13 @@ KindEditor.plugin('multiimage', function(K) {
 			upload_url : uploadJson,
 			list_url : fileManagerJson,
 			search_url : imageSearchJson,
+			grap_url : imageGrapJson,
 			max_filesize : imageSizeLimit,
 			max_filenum : imageUploadLimit,
 			ext_allow : imageFileTypes,
 			lang : lang,
+			fileType : "image",
+			errorHandler : K.options.errorMsgHandler,
 			callback : function(data) {
 				clickFn.call(this, data);
 			}

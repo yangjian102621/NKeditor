@@ -7,6 +7,7 @@ error_reporting(0);
 require_once 'JsonResult.php';
 sleep(1);
 $page = intval($_GET["page"]);
+$fileType = trim($_GET['fileType']);
 $offset = ($page - 1) * 15;
 $image_dir = __DIR__."/files";
 $files = array();
@@ -20,10 +21,19 @@ if ( $handler != false ) {
                 continue;
             }
             $size = getimagesize("files/".$filename);
+            //过滤掉非图片文件
+            if ($fileType == "image" && empty($size)) {
+                continue;
+            }
+            if ($fileType != "image" && !empty($size)) {
+                continue;
+            }
+            $filesize = filesize("files/".$filename);
             array_push($files, array("thumbURL" => dirname($_SERVER['PHP_SELF'])."/files/".$filename, "oriURL" =>
-                dirname($_SERVER['PHP_SELF'])."/files/"
-                .$filename,
-                "width" => intval($size[0]), "height" => intval($size[1])));
+                dirname($_SERVER['PHP_SELF'])."/files/".$filename,
+                "filesize" => $filesize,
+                "width" => intval($size[0]),
+                "height" => intval($size[1])));
             $i++;
             if ( $i > $offset + 15 ) break;
         }
