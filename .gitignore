@@ -1,0 +1,17 @@
+*~
+~*
+*.diff
+*.patch
+*.bak
+.DS_Store
+Thumbs.db
+.sass-cache
+.project
+.*proj
+.svn/
+*.swp
+dist/
+node_modules/
+_build/
+php/attached 
+.idea
