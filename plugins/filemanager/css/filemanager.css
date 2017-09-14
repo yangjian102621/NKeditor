@@ -76,9 +76,10 @@
       background: url("images/icons-all.gif") no-repeat center; }
     .uedbody-server .ued_title .uedbar span {
       font-weight: bold;
-      font-size: 12px;
+      font-size: 14px;
       line-height: 26px;
-      padding-left: 5px; }
+      padding-left: 5px;
+      color: #444444; }
     .uedbody-server .ued_title .close_btn {
       height: 20px;
       width: 20px;

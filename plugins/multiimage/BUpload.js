@@ -178,6 +178,7 @@
 		o.totalFilesize = 0; //total file size
 		o.uploadLock = false; //upload thread lock
 		o.page = 1; //服务器图片列表页码
+		o.marker = null, //七牛云上传的分页标识
 		o.searchPage = 1; //图片搜索页码
 		o.searchText = null; //搜索文字
 		o.noRecord = false;
@@ -187,7 +188,6 @@
 		//close the dialog
 		o.close = function () {
 			o.dialog.remove();
-			try {JDialog.lock.hide();} catch (e) {}
 		}
 
 		//create dialog
@@ -282,6 +282,7 @@
 					return false;
 				}
 				//console.log(o.selectedList);
+				//抓取网络图片，并更新图片链接
 				if (o.searchList.length > 0) {
 					var $message = $('<span class="loading-message">正在抓取网络图片……</span>')
 					G(".loading-icon").show().html($message); //显示加载图标
@@ -292,6 +293,14 @@
 						if (res.code != "000") {
 							options.errorHandler(res.message, "error");
 						} else {
+							//删除之前的 url
+							$.each(o.searchList, function(idx, item) {
+								o.selectedList.remove(item);
+							});
+							//更新成新的 url
+							$.each(res.items, function(idx, item) {
+								o.selectedList.push(item);
+							});
 							options.callback(o.selectedList);
 							o.close();
 						}
@@ -578,15 +587,22 @@
 			G(".loading-icon").show(); //显示加载图标
 			$.get(options.list_url, {
 				page : o.page,
+				marker : o.marker,
 				fileType : options.fileType,
 			}, function(res) {
 
 				G(".loading-icon").hide(); //隐藏加载图标
 				if ( res.code == "000" ) {
+
+					if (!res.items[0]) { //没有加载到数据
+						G(".online .no-data").text(options.lang.noDataText).show();
+						return;
+					}
+					o.marker = res.item; //存储marker
 					o.page++;
 					appendFiles(res.items, "online");
 				} else {
-					G(".online .no-data").text(options.no_data_text).show();
+					G(".online .no-data").text(options.lang.noDataText).show();
 					o.noRecord = true;
 				}
 

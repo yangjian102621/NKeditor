@@ -71,7 +71,7 @@ KindEditor.plugin('insertfile', function(K) {
 			var uploadbutton = K.uploadbutton({
 				button : K('.ke-upload-button', div)[0],
 				fieldName : filePostName,
-				url : K.addParam(uploadJson, 'dir=file'),
+				url : K.addParam(uploadJson, 'fileType=file'),
 				extraParams : extraParams,
 				afterUpload : function(data) {
 					dialog.hideLoading();

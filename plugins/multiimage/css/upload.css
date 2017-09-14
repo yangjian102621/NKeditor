@@ -76,7 +76,8 @@
       background: url("images/icons-all.gif") no-repeat center; }
     .uedbody .ued_title .uedbar span {
       font-weight: bold;
-      font-size: 12px;
+      font-size: 14px;
+      color: #444;
       line-height: 26px;
       padding-left: 5px; }
     .uedbody .ued_title .close_btn {
@@ -232,7 +233,7 @@
               background: url("images/icons.png") no-repeat;
               margin: 5px 1px 1px;
               cursor: pointer;
-              -webkit-tap-highlight-color: transparent;
+              -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
               -webkit-user-select: none;
               -moz-user-select: none;
               -ms-user-select: none;

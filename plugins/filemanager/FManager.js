@@ -104,6 +104,7 @@
 		o.dialog = null;
 		o.selectedList = new Array(); //the file queue upload successfully
 		o.page = 1; //服务器图片列表页码
+		o.marker = null, //七牛云上传的分页标识
 		o.noRecord = false;
 
 		//close the dialog
@@ -180,13 +181,18 @@
 			G(".loading-icon").show(); //显示加载图标
 			$.get(options.list_url, {
 				page : o.page,
+				marker : o.marker,
 				fileType : options.fileType
 			}, function(res) {
 
 				G(".loading-icon").hide(); //隐藏加载图标
 				if ( res.code == "000" ) {
+					if (!res.items[0]) {
+						G(".online .no-data").html(options.lang.noDataText).show();
+						return;
+					}
 					o.page++;
-					console.log(res.items);
+					o.marker = res.item; //存储marker
 					appendFiles(res.items);
 				} else {
 					G(".online .no-data").text(options.lang.noDataText).show();

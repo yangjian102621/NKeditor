@@ -6926,7 +6926,7 @@ KindEditor.plugin('flash', function(K) {
 					button : K('.ke-upload-button', div)[0],
 					fieldName : filePostName,
 					extraParams : extraParams,
-					url : K.addParam(uploadJson, 'dir=flash'),
+					url : K.addParam(uploadJson, 'fileType=flash'),
 					afterUpload : function(data) {
 						dialog.hideLoading();
 						if (data.code === "000") {
@@ -7057,7 +7057,7 @@ KindEditor.plugin('image', function(K) {
 			'</div>',
 			'<div class="tab2" style="display:none;">',
 			'<iframe name="' + target + '" style="display:none;"></iframe>',
-			'<form class="ke-upload-area ke-form" method="post" enctype="multipart/form-data" target="' + target + '" action="' + K.addParam(uploadJson, 'dir=image') + '">',
+			'<form class="ke-upload-area ke-form" method="post" enctype="multipart/form-data" target="' + target + '" action="' + K.addParam(uploadJson, 'fileType=image') + '">',
 			'<div class="ke-dialog-row">',
 			hiddenElements.join(''),
 			'<label style="width:60px;">' + lang.localUrl + '</label>',
@@ -7166,6 +7166,7 @@ KindEditor.plugin('image', function(K) {
 			afterUpload : function(data) {
 				dialog.hideLoading();
 				if (data.code == "000") {
+					K.options.errorMsgHandler(self.lang('uploadSuccess'), "ok");
 					var url = data.item.url;
 					if (formatUploadUrl) {
 						url = K.formatUrl(url, 'absolute');
@@ -7361,7 +7362,7 @@ KindEditor.plugin('insertfile', function(K) {
 			var uploadbutton = K.uploadbutton({
 				button : K('.ke-upload-button', div)[0],
 				fieldName : filePostName,
-				url : K.addParam(uploadJson, 'dir=file'),
+				url : K.addParam(uploadJson, 'fileType=file'),
 				extraParams : extraParams,
 				afterUpload : function(data) {
 					dialog.hideLoading();
@@ -7620,7 +7621,7 @@ KindEditor.plugin('media', function(K) {
 					button : K('.ke-upload-button', div)[0],
 					fieldName : filePostName,
 					extraParams : extraParams,
-					url : K.addParam(uploadJson, 'dir=media'),
+					url : K.addParam(uploadJson, 'fileType=media'),
 					afterUpload : function(data) {
 						dialog.hideLoading();
 						if (data.code == "000") {

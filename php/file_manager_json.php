@@ -5,7 +5,7 @@
  */
 error_reporting(0);
 require_once 'JsonResult.php';
-sleep(1);
+usleep(500000);
 $page = intval($_GET["page"]);
 $fileType = trim($_GET['fileType']);
 $offset = ($page - 1) * 15;

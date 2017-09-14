@@ -3,12 +3,17 @@
  * 抓取百度搜索图片服务器上的防盗链图片
  * @author yangjian<yangjian102621@gmail.com>
  */
+use Qiniu\Auth;
+use Qiniu\Storage\UploadManager;
+
 error_reporting(0);
-require "JsonResult.php";
+require_once "vendor/autoload.php";
+require_once "../JsonResult.php";
+require_once "config.php";
 
 $img_url = trim($_GET["img_url"]);
-$tmp_dir = dirname(__FILE__)."/tmp";
-$dist_dir = dirname(__FILE__)."/files";
+$tmp_dir = dirname(__DIR__)."/tmp";
+
 if (!file_exists($tmp_dir)) {
     mkdir($tmp_dir);
 }
@@ -16,13 +21,25 @@ $act = trim($_GET['act']);
 if ($act == "grapImage") { //抓取图片
     $urls = explode(",", $_GET["urls"]);
     if (empty($urls)) {
+
         JsonResult::fail("抓取图片失败");
-    } else {
-        $res = true;
+
+    } else { //抓取图片上传到七牛空间
+        $res = false;
+        // 构建鉴权对象
+        $auth = new Auth(QINIU_ACCESS_KEY, QINIU_SECRET_KEY);
+        $token = $auth->uploadToken(QINIU_TEST_BUCKET);
         $newUrls = [];
         foreach ($urls as $value) {
-            $res = $res && copy($tmp_dir."/".basename($value), $dist_dir."/".basename($value));
-            array_push($newUrls, $value);
+            $filePath = $tmp_dir."/".basename($value);
+            $fileExt = getFileExt($value);
+            $key = "image-".time().mt_rand(1000,9999).".{$fileExt}";
+            $uploadMgr = new UploadManager();
+            list($ret, $err) = $uploadMgr->putFile($token, $key, $filePath);
+            $res = $ret || ($err === null); //只要一个抓取成功就代表操作成功
+            if ($err === null) {
+                array_push($newUrls, QINIU_BUCKET_DOMAIN.$ret['key']);
+            }
         }
         if ($res) {
             $jsonResult = new JsonResult(JsonResult::CODE_SUCCESS, "抓取图片成功");

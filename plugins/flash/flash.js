@@ -90,7 +90,7 @@ KindEditor.plugin('flash', function(K) {
 					button : K('.ke-upload-button', div)[0],
 					fieldName : filePostName,
 					extraParams : extraParams,
-					url : K.addParam(uploadJson, 'dir=flash'),
+					url : K.addParam(uploadJson, 'fileType=flash'),
 					afterUpload : function(data) {
 						dialog.hideLoading();
 						if (data.code === "000") {

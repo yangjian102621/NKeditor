@@ -15,4 +15,5 @@ node_modules/
 _build/
 php/files
 php/tmp
+php/qiniu/vendor
 .idea
