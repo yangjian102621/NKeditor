@@ -13,7 +13,7 @@ NKeditor 沿用了 kindeditor 最后发布的版本号 v4.1.11，所以NKeditor 
 
 # 在线演示
 
-### http://d.r9it.com/kindeditorx/
+### http://d.r9it.com/nkeditor/
 
 # 使用说明
 1. 批量图片上传的插件依赖 jQuery-1.7 以上的版本，jquery需要自己手动引入，编辑器没有默认引入的，这样避免加载了你不需要的脚本库导致页面加载变慢
