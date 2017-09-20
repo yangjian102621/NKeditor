@@ -143,12 +143,13 @@ grunt.initConfig({
 				{src: ['asp.net/**'], dest: '<%= pkg.name %>/'},
 				{src: ['attached'], dest: '<%= pkg.name %>/'},
 				{src: ['jsp/**'], dest: '<%= pkg.name %>/'},
+				{src: ['libs/**'], dest: '<%= pkg.name %>/'},
 				{src: ['lang/**'], dest: '<%= pkg.name %>/'},
 				{src: ['php/**'], dest: '<%= pkg.name %>/'},
 				{src: ['plugins/**'], dest: '<%= pkg.name %>/'},
 				{src: ['themes/**'], dest: '<%= pkg.name %>/'},
-				{src: ['<%= pkg.filename %>*.js'], dest: '<%= pkg.name %>/'},
-				{src: ['license.txt'], dest: '<%= pkg.name %>/'},
+				{src: ['<%= pkg.filename %>*-all-min.js'], dest: '<%= pkg.name %>/'},
+				{src: ['index.php'], dest: '<%= pkg.name %>/'},
 			]
 		}
 	}
