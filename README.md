@@ -24,16 +24,15 @@ NKeditor 沿用了 kindeditor 最后发布的版本号 v4.1.11，所以NKeditor 
 
 NKeditor 更新记录
 ========
+### version 4.2.1
+* 修改语言包的加载方式，默认加载中文语言包，不用再手动通过 script 去加载，现在使用 NKeditor 只需要引入一个 NKeditor-all-min.js 就可以了
+* 精简资源，比较大的插件js，css 代码全部压缩，加载 min 版的静态资源。
+* 新增 [YYGraft](https://gitee.com/blackfox/scrawl)在线涂鸦工具插件，可以愉快的添加涂鸦了。
+* 修改图片上传类，支持 base64 图片上传
 
 ### version 4.2.0(接原来kindeditor版本)
 * 调整了编辑器和弹出 dialog 的样式，美化了UI
 * 重写了图片上传和批量图片上传插件，使用 html5 上传代替了 flash,实现了待上传图片预览，优化用户体验
 * 添加七牛云上传支持，并封装了上传工具
 * 修复了一些已知的bug，如 ajax 提交无法获取内容等
-
-### version 4.2.1
-* 修改语言包的加载方式，默认加载中文语言包，不用再手动通过 script 去加载，现在使用 NKeditor 只需要引入一个 NKeditor-all-min.js 就可以了
-* 精简资源，比较大的插件js，css 代码全部压缩，加载 min 版的静态资源。
-* 新增 [YYGraft](https://gitee.com/blackfox/scrawl)在线涂鸦工具插件，可以愉快的添加涂鸦了。
-* 修改图片上传类，支持 base64 图片上传
 
