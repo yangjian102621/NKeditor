@@ -58,7 +58,7 @@ K.options = {
 		'justifyfull', 'insertorderedlist', 'insertunorderedlist', 'indent', 'outdent', 'subscript',
 		'superscript', 'clearhtml', 'quickformat', 'selectall', '|', 'link', 'unlink','fullscreen', '/',
 		'formatblock', 'fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold',
-		'italic', 'underline', 'strikethrough', 'lineheight', 'removeformat', '|', 'image', 'multiimage',
+		'italic', 'underline', 'strikethrough', 'lineheight', 'removeformat', '|', 'image', 'multiimage','graft',
 		'flash', 'media', 'insertfile', 'table', 'hr', 'emoticons', 'baidumap', 'pagebreak',
 		'anchor', 'about'
 	],
@@ -113,5 +113,9 @@ K.options = {
 		console.log(message);
 		console.log(type);
 		alert(message);
+	},
+	allowUploadGraft : true, //是否允许保存涂鸦
+	resLoadCache : { //静态资源加载缓存
+
 	}
 };

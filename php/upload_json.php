@@ -59,7 +59,27 @@ if (!empty($_FILES['imgFile']['error'])) {
 	alert($error);
 }
 
-//有上传文件时
+//base64 文件上传
+$base64 = trim($_POST['base64']);
+if ($base64) {
+	$imgData = $_POST['img_base64_data'];
+
+	$json = new JsonResult();
+	if ($imgData && preg_match('/^(data:\s*image\/(\w+);base64,)/', $imgData, $match)){
+		$type = $match[2];
+		$filename = date("YmdHis") . '_' . rand(10000, 99999) . '.png';
+		if (file_put_contents($save_path.$filename, base64_decode(str_replace($match[1], '', $imgData)))){
+			$json->setCode(JsonResult::CODE_SUCCESS);
+			$json->setItem($save_url.$filename);
+			$json->output();
+		}
+	}
+	$json->setCode(JsonResult::CODE_FAIL);
+	$json->setMessage("涂鸦保存失败.");
+	$json->output();
+}
+
+// input 文件上传
 if (empty($_FILES) === false) {
 	//原文件名
 	$file_name = $_FILES['imgFile']['name'];

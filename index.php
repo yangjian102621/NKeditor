@@ -12,16 +12,13 @@
 <html>
 <head>
 	<meta charset="utf-8" />
-	<title>KindEditorX PHP demo</title>
+	<title>NKeditor 在线编辑器 PHP demo</title>
 
-	<link rel="stylesheet" href="themes/default/default.css" />
-	<script charset="utf-8" src="kindeditor-all.js"></script>
-	<script charset="utf-8" src="lang/zh-CN.js"></script>
+	<script charset="utf-8" src="NKeditor-all.js"></script>
 
 	<!-- 下面是外部插件不是必须引入的 -->
 	<script charset="utf-8" src="libs/jquery.min.js"></script>
-	<link rel="stylesheet" href="libs/JDialog/css/JDialog.css" />
-	<script charset="utf-8" src="libs/JDialog/JDialog.js"></script>
+	<script charset="utf-8" src="libs/JDialog/JDialog.min.js"></script>
 
 	<style>
 		.box {clear: both;}

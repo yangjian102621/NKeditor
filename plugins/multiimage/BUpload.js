@@ -379,7 +379,7 @@
 				if ( extension == '' ) extension = "default";
 				extension = extension.toLowerCase();
 				if ( "jpg|jpeg|gif|png|bmp".indexOf(extension) == -1 ) {
-					builder.append('<span class="icon-placeholder icon-'+extension+'"></span>');
+					builder.append('<span class="icon-placeholder icon-default icon-'+extension+'"></span>');
 				} else {
 					builder.append('<img src="'+window.URL.createObjectURL(tempFile)+'" border="0" />');
 				}

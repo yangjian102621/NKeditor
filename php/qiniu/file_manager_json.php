@@ -17,6 +17,9 @@ require_once "config.php";
 
 $page = intval($_GET["page"]);
 $fileType = trim($_GET['fileType']);
+if ($fileType == '') {
+    $fileType = "image";
+}
 $marker = trim($_GET['marker']); //上次列举返回的位置标记，作为本次列举的起点信息。
 
 if ($marker == "no_records") {

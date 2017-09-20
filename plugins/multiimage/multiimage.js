@@ -21,8 +21,8 @@ KindEditor.plugin('multiimage', function(K) {
 		K.options.errorMsgHandler(lang.depJQueryError, "error");
 		return;
 	} else {
-		K.loadScript(K.options.pluginsPath+name+"/BUpload.js");
-		K.loadStyle(K.options.pluginsPath+name+"/css/upload.css");
+		K.loadScript(K.options.pluginsPath+name+"/BUpload.min.js");
+		K.loadStyle(K.options.pluginsPath+name+"/css/upload.min.css");
 	}
 
 	self.plugin.multiImageDialog = function(options) {

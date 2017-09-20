@@ -216,7 +216,7 @@
 				var imgSize = item.width+'x'+item.height; //图片尺寸
 				if ( "jpg|jpeg|gif|png|bmp".indexOf(extension) == -1 ) {
 					imgSize = formatFileSize(item.filesize); //如果是文件则显示文件大小
-					builder.append('<span class="icon-placeholder icon-'+extension+'" data-src="'+item.oriURL+'"></span>');
+					builder.append('<span class="icon-placeholder icon-default icon-'+extension+'" data-src="'+item.oriURL+'"></span>');
 				} else {
 					builder.append('<img src="'+item.thumbURL+'" data-src="'+item.oriURL+'" border="0">');
 				}

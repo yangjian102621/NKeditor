@@ -40,6 +40,7 @@ KindEditor.lang({
 	removeformat : '删除格式',
 	image : '图片',
 	multiimage : '批量图片上传',
+	graft : '涂鸦',
 	flash : 'Flash',
 	media : '视音频',
 	table : '表格',
@@ -184,6 +185,11 @@ KindEditor.lang({
 	'filemanager.loadMoreData' : '往下拉动滚动条可以加载更多数据.',
 	'filemanager.depJQueryError' : '文件管理插件依赖 jQuery, 请先引入 jQuery.',
 	'filemanager.fileType' : '类型',
+
+	'graft.btnText' : '保存并插入涂鸦',
+	'graft.uploadSuccess' : '涂鸦上传成功',
+	'graft.uploadFaild' : '涂鸦上传失败',
+	'graft.empty' : '您没有在画布上绘制任何图像',
 
 	'insertfile.url' : 'URL',
 	'insertfile.title' : '文件说明',

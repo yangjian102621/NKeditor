@@ -1,8 +1,14 @@
 
 function _loadScript(url, fn) {
+
+	//检查资源是否已经被加载，防止重复加载，浪费资源
+	if (K.options.resLoadCache[url]) {
+		return;
+	}
 	var head = document.getElementsByTagName('head')[0] || (_QUIRKS ? document.body : document.documentElement),
 		script = document.createElement('script');
 	head.appendChild(script);
+	K.options.resLoadCache[url] = 1;
 	script.src = url;
 	script.charset = 'utf-8';
 	script.onload = script.onreadystatechange = function() {
@@ -23,6 +29,12 @@ function _chopQuery(url) {
 }
 
 function _loadStyle(url) {
+
+	//检查资源是否已经被加载，防止重复加载，浪费资源
+	if (K.options.resLoadCache[url]) {
+		return;
+	}
+
 	var head = document.getElementsByTagName('head')[0] || (_QUIRKS ? document.body : document.documentElement),
 		link = document.createElement('link'),
 		absoluteUrl = _chopQuery(_formatUrl(url, 'absolute'));
@@ -33,6 +45,7 @@ function _loadStyle(url) {
 		}
 	}
 	head.appendChild(link);
+	K.options.resLoadCache[url] = 1;
 	link.href = url;
 	link.rel = 'stylesheet';
 }

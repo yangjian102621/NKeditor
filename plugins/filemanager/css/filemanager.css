@@ -241,7 +241,7 @@
       .uedbody-server .wrapper .wra_body .icon-htm, .uedbody-server .wrapper .wra_body .icon-html {
         background-image: url("icons/htm.png"); }
       .uedbody-server .wrapper .wra_body .icon-default {
-        background-image: url("icons/default.png"); }
+        background-image: url("icons/txt.png"); }
       .uedbody-server .wrapper .wra_body .icon-doc, .uedbody-server .wrapper .wra_body .icon-docx {
         background-image: url("icons/doc.png"); }
       .uedbody-server .wrapper .wra_body .icon-eps {
@@ -256,6 +256,8 @@
         background-image: url("icons/java.png"); }
       .uedbody-server .wrapper .wra_body .icon-jsf {
         background-image: url("icons/jsf.png"); }
+      .uedbody-server .wrapper .wra_body .icon-js {
+        background-image: url("icons/js.png"); }
       .uedbody-server .wrapper .wra_body .icon-md, .uedbody-server .wrapper .wra_body .icon-markdown {
         background-image: url("icons/markdown.png"); }
       .uedbody-server .wrapper .wra_body .icon-mdb {

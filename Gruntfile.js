@@ -1,7 +1,8 @@
 
 module.exports = function(grunt) {
 
-var BANNER = '/* <%= pkg.name %> <%= pkg.version %> (<%= grunt.template.today("yyyy-mm-dd") %>), Copyright (C) kindsoft.net, Licence: http://kindeditor.net/license.php */\r\n';
+var BANNER = '/* <%= pkg.name %> <%= pkg.version %> (<%= grunt.template.today("yyyy-mm-dd") %>), Copyright (C)' +
+	' r9it.com,*/\r\n';
 
 var SRC_FILES = [
 	'src/header.js',
@@ -43,6 +44,7 @@ var PLUGIN_FILES = [
 	'plugins/map/map.js',
 	'plugins/media/media.js',
 	'plugins/multiimage/multiimage.js',
+	'plugins/graft/graft.js',
 	'plugins/pagebreak/pagebreak.js',
 	'plugins/plainpaste/plainpaste.js',
 	'plugins/preview/preview.js',
@@ -55,7 +57,7 @@ var PLUGIN_FILES = [
 
 var pkg = grunt.file.readJSON('package.json');
 
-var lang = grunt.option('lang') || 'en';
+var lang = grunt.option('lang') || 'zh-CN';
 
 grunt.initConfig({
 	pkg : pkg,
@@ -74,34 +76,79 @@ grunt.initConfig({
 		},
 		build : {
 			src : SRC_FILES.concat('lang/' + lang + '.js').concat(PLUGIN_FILES),
-			dest : 'kindeditor-all.js'
+			dest : '<%= pkg.filename %>-all.js'
 		}
 	},
+
 	uglify : {
 		options : {
 			banner : BANNER,
 		},
+		//压缩js
 		build : {
-			src : '<%= pkg.filename %>-all.js',
-			dest : '<%= pkg.filename %>-all-min.js'
+
+			files: [
+				{
+					src : '<%= pkg.filename %>-all.js',
+					dest : '<%= pkg.filename %>-all-min.js'
+				},
+				{
+					src : 'plugins/multiimage/BUpload.js',
+					dest : 'plugins/multiimage/BUpload.min.js'
+				},
+				{
+					src : 'plugins/filemanager/FManager.js',
+					dest : 'plugins/filemanager/FManager.min.js'
+				}
+			]
+
 		}
 	},
+
+	//压缩css
+	cssmin : {
+		options: {
+			banner : BANNER,
+			beautify: {
+				//中文ascii化
+				ascii_only: true
+			}
+		},
+		build : {
+			files: [
+				{
+					src: 'themes/default/editor.css',
+					dest: 'themes/default/editor.min.css'
+				},
+				{
+					src : 'plugins/multiimage/css/upload.css',
+					dest : 'plugins/multiimage/css/upload.min.css'
+				},
+				{
+					src : 'plugins/filemanager/css/filemanager.css',
+					dest : 'plugins/filemanager/css/filemanager.min.css'
+				}
+			]
+		}
+	},
+
+	// 打包压缩文件
 	compress : {
 		main : {
 			options: {
 				archive: 'dist/<%= pkg.filename %>-<%= pkg.version %>-' + lang + '.zip',
 			},
 			files: [
-				{src: ['asp/**'], dest: 'kindeditor/'},
-				{src: ['asp.net/**'], dest: 'kindeditor/'},
-				{src: ['attached'], dest: 'kindeditor/'},
-				{src: ['jsp/**'], dest: 'kindeditor/'},
-				{src: ['lang/**'], dest: 'kindeditor/'},
-				{src: ['php/**'], dest: 'kindeditor/'},
-				{src: ['plugins/**'], dest: 'kindeditor/'},
-				{src: ['themes/**'], dest: 'kindeditor/'},
-				{src: ['kindeditor*.js'], dest: 'kindeditor/'},
-				{src: ['license.txt'], dest: 'kindeditor/'},
+				{src: ['asp/**'], dest: '<%= pkg.name %>/'},
+				{src: ['asp.net/**'], dest: '<%= pkg.name %>/'},
+				{src: ['attached'], dest: '<%= pkg.name %>/'},
+				{src: ['jsp/**'], dest: '<%= pkg.name %>/'},
+				{src: ['lang/**'], dest: '<%= pkg.name %>/'},
+				{src: ['php/**'], dest: '<%= pkg.name %>/'},
+				{src: ['plugins/**'], dest: '<%= pkg.name %>/'},
+				{src: ['themes/**'], dest: '<%= pkg.name %>/'},
+				{src: ['<%= pkg.filename %>*.js'], dest: '<%= pkg.name %>/'},
+				{src: ['license.txt'], dest: '<%= pkg.name %>/'},
 			]
 		}
 	}
@@ -110,8 +157,9 @@ grunt.initConfig({
 grunt.loadNpmTasks('grunt-contrib-concat');
 grunt.loadNpmTasks('grunt-contrib-uglify');
 grunt.loadNpmTasks('grunt-contrib-compress');
+grunt.loadNpmTasks('grunt-contrib-cssmin');
 
-grunt.registerTask('build', ['concat', 'uglify']);
+grunt.registerTask('build', ['concat', 'uglify', 'cssmin']);
 grunt.registerTask('zip', ['build', 'compress']);
 
 grunt.registerTask('default', 'build');

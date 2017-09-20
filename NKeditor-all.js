@@ -5,7 +5,7 @@
 * @author Roddy <luolonghao@gmail.com>
 * @website http://www.kindsoft.net/
 * @licence http://www.kindsoft.net/license.php
-* @version 4.2.0 (2017-09-14)
+* @version 4.2.1 (2017-09-20)
 *******************************************************************************/
 (function (window, undefined) {
 	if (window.KindEditor) {
@@ -19,7 +19,7 @@ if (!window.console) {
 if (!console.log) {
 	console.log = function () {};
 }
-var _VERSION = '4.2.0 (2017-09-14)',
+var _VERSION = '4.2.1 (2017-09-20)',
 	_ua = navigator.userAgent.toLowerCase(),
 	_IE = _ua.indexOf('msie') > -1 && _ua.indexOf('opera') == -1,
 	_NEWIE = _ua.indexOf('msie') == -1 && _ua.indexOf('trident') > -1,
@@ -272,7 +272,7 @@ K.options = {
 		'justifyfull', 'insertorderedlist', 'insertunorderedlist', 'indent', 'outdent', 'subscript',
 		'superscript', 'clearhtml', 'quickformat', 'selectall', '|', 'link', 'unlink','fullscreen', '/',
 		'formatblock', 'fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold',
-		'italic', 'underline', 'strikethrough', 'lineheight', 'removeformat', '|', 'image', 'multiimage',
+		'italic', 'underline', 'strikethrough', 'lineheight', 'removeformat', '|', 'image', 'multiimage','graft',
 		'flash', 'media', 'insertfile', 'table', 'hr', 'emoticons', 'baidumap', 'pagebreak',
 		'anchor', 'about'
 	],
@@ -326,6 +326,9 @@ K.options = {
 		console.log(message);
 		console.log(type);
 		alert(message);
+	},
+	allowUploadGraft : true,
+	resLoadCache : {
 	}
 };
 
@@ -4475,9 +4478,13 @@ K.tabs = _tabs;
 
 
 function _loadScript(url, fn) {
+	if (K.options.resLoadCache[url]) {
+		return;
+	}
 	var head = document.getElementsByTagName('head')[0] || (_QUIRKS ? document.body : document.documentElement),
 		script = document.createElement('script');
 	head.appendChild(script);
+	K.options.resLoadCache[url] = 1;
 	script.src = url;
 	script.charset = 'utf-8';
 	script.onload = script.onreadystatechange = function() {
@@ -4496,6 +4503,9 @@ function _chopQuery(url) {
 	return index > 0 ? url.substr(0, index) : url;
 }
 function _loadStyle(url) {
+	if (K.options.resLoadCache[url]) {
+		return;
+	}
 	var head = document.getElementsByTagName('head')[0] || (_QUIRKS ? document.body : document.documentElement),
 		link = document.createElement('link'),
 		absoluteUrl = _chopQuery(_formatUrl(url, 'absolute'));
@@ -4506,6 +4516,7 @@ function _loadStyle(url) {
 		}
 	}
 	head.appendChild(link);
+	K.options.resLoadCache[url] = 1;
 	link.href = url;
 	link.rel = 'stylesheet';
 }
@@ -5487,8 +5498,7 @@ function _create(expr, options) {
 	}
 	if (_undef(options.loadStyleMode, K.options.loadStyleMode)) {
 		var themeType = _undef(options.themeType, K.options.themeType);
-		_loadStyle(options.themesPath + 'default/default.css');
-		_loadStyle(options.themesPath + themeType + '/' + themeType + '.css');
+		_loadStyle(options.themesPath + themeType + '/editor.min.css');
 	}
 	function create(editor) {
 		_each(_plugins, function(name, fn) {
@@ -6054,233 +6064,257 @@ _plugin('core', function(K) {
 * @licence http://www.kindsoft.net/license.php
 *******************************************************************************/
 KindEditor.lang({
-	source : 'Source',
-	preview : 'Preview',
-	undo : 'Undo(Ctrl+Z)',
-	redo : 'Redo(Ctrl+Y)',
-	cut : 'Cut(Ctrl+X)',
-	copy : 'Copy(Ctrl+C)',
-	paste : 'Paste(Ctrl+V)',
-	plainpaste : 'Paste as plain text',
-	wordpaste : 'Paste from Word',
-	selectall : 'Select all',
-	justifyleft : 'Align left',
-	justifycenter : 'Align center',
-	justifyright : 'Align right',
-	justifyfull : 'Align full',
-	insertorderedlist : 'Ordered list',
-	insertunorderedlist : 'Unordered list',
-	indent : 'Increase indent',
-	outdent : 'Decrease indent',
-	subscript : 'Subscript',
-	superscript : 'Superscript',
-	formatblock : 'Paragraph format',
-	fontname : 'Font family',
-	fontsize : 'Font size',
-	forecolor : 'Text color',
-	hilitecolor : 'Highlight color',
-	bold : 'Bold(Ctrl+B)',
-	italic : 'Italic(Ctrl+I)',
-	underline : 'Underline(Ctrl+U)',
-	strikethrough : 'Strikethrough',
-	removeformat : 'Remove format',
-	image : 'Image',
-	multiimage : 'Multi image',
+	source : 'HTML代码',
+	preview : '预览',
+	undo : '后退(Ctrl+Z)',
+	redo : '前进(Ctrl+Y)',
+	cut : '剪切(Ctrl+X)',
+	copy : '复制(Ctrl+C)',
+	paste : '粘贴(Ctrl+V)',
+	plainpaste : '粘贴为无格式文本',
+	wordpaste : '从Word粘贴',
+	selectall : '全选(Ctrl+A)',
+	justifyleft : '左对齐',
+	justifycenter : '居中',
+	justifyright : '右对齐',
+	justifyfull : '两端对齐',
+	insertorderedlist : '编号',
+	insertunorderedlist : '项目符号',
+	indent : '增加缩进',
+	outdent : '减少缩进',
+	subscript : '下标',
+	superscript : '上标',
+	formatblock : '段落',
+	fontname : '字体',
+	fontsize : '文字大小',
+	forecolor : '文字颜色',
+	hilitecolor : '文字背景',
+	bold : '粗体(Ctrl+B)',
+	italic : '斜体(Ctrl+I)',
+	underline : '下划线(Ctrl+U)',
+	strikethrough : '删除线',
+	removeformat : '删除格式',
+	image : '图片',
+	multiimage : '批量图片上传',
+	graft : '涂鸦',
 	flash : 'Flash',
-	media : 'Embeded media',
-	table : 'Table',
-	tablecell : 'Cell',
-	hr : 'Insert horizontal line',
-	emoticons : 'Insert emoticon',
-	link : 'Link',
-	unlink : 'Unlink',
-	fullscreen : 'Toggle fullscreen mode',
-	about : 'About',
-	print : 'Print',
-	filemanager : 'File Manager',
-	code : 'Insert code',
-	map : 'Google Maps',
-	baidumap : 'Baidu Maps',
-	lineheight : 'Line height',
-	clearhtml : 'Clear HTML code',
-	pagebreak : 'Insert Page Break',
-	quickformat : 'Quick Format',
-	insertfile : 'Insert file',
-	template : 'Insert Template',
-	anchor : 'Anchor',
-	yes : 'OK',
-	no : 'Cancel',
-	close : 'Close',
-	editImage : 'Image properties',
-	deleteImage : 'Delete image',
-	editFlash : 'Flash properties',
-	deleteFlash : 'Delete flash',
-	editMedia : 'Media properties',
-	deleteMedia : 'Delete media',
-	editLink : 'Link properties',
-	deleteLink : 'Unlink',
-	editAnchor : 'Anchor properties',
-	deleteAnchor : 'Delete Anchor',
-	tableprop : 'Table properties',
-	tablecellprop : 'Cell properties',
-	tableinsert : 'Insert table',
-	tabledelete : 'Delete table',
-	tablecolinsertleft : 'Insert column left',
-	tablecolinsertright : 'Insert column right',
-	tablerowinsertabove : 'Insert row above',
-	tablerowinsertbelow : 'Insert row below',
-	tablerowmerge : 'Merge down',
-	tablecolmerge : 'Merge right',
-	tablerowsplit : 'Split row',
-	tablecolsplit : 'Split column',
-	tablecoldelete : 'Delete column',
-	tablerowdelete : 'Delete row',
-	noColor : 'Default',
-	pleaseSelectFile : 'Please select file.',
-	invalidImg : "Please type valid URL.\nAllowed file extension: jpg,gif,bmp,png",
-	invalidMedia : "Please type valid URL.\nAllowed file extension: swf,flv,mp3,wav,wma,wmv,mid,avi,mpg,asf,rm,rmvb",
-	invalidWidth : "The width must be number.",
-	invalidHeight : "The height must be number.",
-	invalidBorder : "The border must be number.",
-	invalidUrl : "Please type valid URL.",
-	invalidRows : 'Invalid rows.',
-	invalidCols : 'Invalid columns.',
-	invalidPadding : 'The padding must be number.',
-	invalidSpacing : 'The spacing must be number.',
-	invalidJson : 'Invalid JSON string.',
-	uploadSuccess : 'Upload success.',
-	cutError : 'Currently not supported by your browser, use keyboard shortcut(Ctrl+X) instead.',
-	copyError : 'Currently not supported by your browser, use keyboard shortcut(Ctrl+C) instead.',
-	pasteError : 'Currently not supported by your browser, use keyboard shortcut(Ctrl+V) instead.',
-	ajaxLoading : 'Loading ...',
-	uploadLoading : 'Uploading ...',
-	uploadError : 'Upload Error',
-	'plainpaste.comment' : 'Use keyboard shortcut(Ctrl+V) to paste the text into the window.',
-	'wordpaste.comment' : 'Use keyboard shortcut(Ctrl+V) to paste the text into the window.',
-	'code.pleaseInput' : 'Please input code.',
+	media : '视音频',
+	table : '表格',
+	tablecell : '单元格',
+	hr : '插入横线',
+	emoticons : '插入表情',
+	link : '超级链接',
+	unlink : '取消超级链接',
+	fullscreen : '全屏显示',
+	about : '关于',
+	print : '打印(Ctrl+P)',
+	filemanager : '文件空间',
+	code : '插入程序代码',
+	map : 'Google地图',
+	baidumap : '百度地图',
+	lineheight : '行距',
+	clearhtml : '清理HTML代码',
+	pagebreak : '插入分页符',
+	quickformat : '一键排版',
+	insertfile : '插入文件',
+	template : '插入模板',
+	anchor : '锚点',
+	yes : '确定',
+	no : '取消',
+	close : '关闭',
+	editImage : '图片属性',
+	deleteImage : '删除图片',
+	editFlash : 'Flash属性',
+	deleteFlash : '删除Flash',
+	editMedia : '视音频属性',
+	deleteMedia : '删除视音频',
+	editLink : '超级链接属性',
+	deleteLink : '取消超级链接',
+	editAnchor : '锚点属性',
+	deleteAnchor : '删除锚点',
+	tableprop : '表格属性',
+	tablecellprop : '单元格属性',
+	tableinsert : '插入表格',
+	tabledelete : '删除表格',
+	tablecolinsertleft : '左侧插入列',
+	tablecolinsertright : '右侧插入列',
+	tablerowinsertabove : '上方插入行',
+	tablerowinsertbelow : '下方插入行',
+	tablerowmerge : '向下合并单元格',
+	tablecolmerge : '向右合并单元格',
+	tablerowsplit : '拆分行',
+	tablecolsplit : '拆分列',
+	tablecoldelete : '删除列',
+	tablerowdelete : '删除行',
+	noColor : '无颜色',
+	pleaseSelectFile : '请选择文件。',
+	invalidImg : "请输入有效的URL地址。\n只允许jpg,gif,bmp,png格式。",
+	invalidMedia : "请输入有效的URL地址。\n只允许swf,flv,mp3,wav,wma,wmv,mid,avi,mpg,asf,rm,rmvb格式。",
+	invalidWidth : "宽度必须为数字。",
+	invalidHeight : "高度必须为数字。",
+	invalidBorder : "边框必须为数字。",
+	invalidUrl : "请输入有效的URL地址。",
+	invalidRows : '行数为必选项，只允许输入大于0的数字。',
+	invalidCols : '列数为必选项，只允许输入大于0的数字。',
+	invalidPadding : '边距必须为数字。',
+	invalidSpacing : '间距必须为数字。',
+	invalidJson : '服务器发生故障。',
+	uploadSuccess : '上传成功。',
+	cutError : '您的浏览器安全设置不允许使用剪切操作，请使用快捷键(Ctrl+X)来完成。',
+	copyError : '您的浏览器安全设置不允许使用复制操作，请使用快捷键(Ctrl+C)来完成。',
+	pasteError : '您的浏览器安全设置不允许使用粘贴操作，请使用快捷键(Ctrl+V)来完成。',
+	ajaxLoading : '加载中，请稍候 ...',
+	uploadLoading : '上传中，请稍候 ...',
+	uploadError : '上传错误',
+	'plainpaste.comment' : '请使用快捷键(Ctrl+V)把内容粘贴到下面的方框里。',
+	'wordpaste.comment' : '请使用快捷键(Ctrl+V)把内容粘贴到下面的方框里。',
+	'code.pleaseInput' : '请输入程序代码。',
 	'link.url' : 'URL',
-	'link.linkType' : 'Target',
-	'link.newWindow' : 'New window',
-	'link.selfWindow' : 'Same window',
+	'link.linkType' : '打开类型',
+	'link.newWindow' : '新窗口',
+	'link.selfWindow' : '当前窗口',
 	'flash.url' : 'URL',
-	'flash.width' : 'Width',
-	'flash.height' : 'Height',
-	'flash.upload' : 'Upload',
-	'flash.viewServer' : 'Browse',
+	'flash.width' : '宽度',
+	'flash.height' : '高度',
+	'flash.upload' : '上传',
+	'flash.viewServer' : '文件空间',
 	'media.url' : 'URL',
-	'media.width' : 'Width',
-	'media.height' : 'Height',
-	'media.autostart' : 'Auto start',
-	'media.upload' : 'Upload',
-	'media.viewServer' : 'Browse',
-	'image.remoteImage' : 'Insert URL',
-	'image.localImage' : 'Upload',
-	'image.remoteUrl' : 'URL',
-	'image.localUrl' : 'File',
-	'image.size' : 'Size',
-	'image.width' : 'Width',
-	'image.height' : 'Height',
-	'image.resetSize' : 'Reset dimensions',
-	'image.align' : 'Align',
-	'image.defaultAlign' : 'Default',
-	'image.leftAlign' : 'Left',
-	'image.rightAlign' : 'Right',
-	'image.imgTitle' : 'Title',
-	'image.upload' : 'Browse',
-	'image.viewServer' : 'Browse',
-	'multiimage.uploadDesc' : 'Allows users to upload <%=uploadLimit%> images, single image size not exceeding <%=sizeLimit%>',
-	'multiimage.startUpload' : 'Start upload',
-	'multiimage.clearAll' : 'Clear all',
-	'multiimage.insertAll' : 'Insert all',
-	'multiimage.queueLimitExceeded' : 'Queue limit exceeded.',
-	'multiimage.fileExceedsSizeLimit' : 'File exceeds size limit.',
-	'multiimage.zeroByteFile' : 'Zero byte file.',
-	'multiimage.invalidFiletype' : 'Invalid file type.',
-	'multiimage.unknownError' : 'Unknown upload error.',
-	'multiimage.pending' : 'Pending ...',
-	'multiimage.uploadError' : 'Upload error',
-	'filemanager.emptyFolder' : 'Blank',
-	'filemanager.moveup' : 'Parent folder',
-	'filemanager.viewType' : 'Display: ',
-	'filemanager.viewImage' : 'Thumbnails',
-	'filemanager.listImage' : 'List',
-	'filemanager.orderType' : 'Sorting: ',
-	'filemanager.fileName' : 'By name',
-	'filemanager.fileSize' : 'By size',
-	'filemanager.fileType' : 'By type',
+	'media.width' : '宽度',
+	'media.height' : '高度',
+	'media.autostart' : '自动播放',
+	'media.upload' : '上传',
+	'media.viewServer' : '文件空间',
+	'image.remoteImage' : '网络图片',
+	'image.localImage' : '本地上传',
+	'image.remoteUrl' : '图片地址',
+	'image.localUrl' : '上传文件',
+	'image.size' : '图片大小',
+	'image.width' : '宽',
+	'image.height' : '高',
+	'image.resetSize' : '重置大小',
+	'image.align' : '对齐方式',
+	'image.defaultAlign' : '默认方式',
+	'image.leftAlign' : '左对齐',
+	'image.rightAlign' : '右对齐',
+	'image.imgTitle' : '图片说明',
+	'image.upload' : '浏览...',
+	'image.viewServer' : '图片空间',
+	'multiimage.title' : '多图上传',
+	'multiimage.uploadDesc' : '共选择了 <%=numSelect%> 张图片，共 <%=totalSize%>, 还可以添加 <%=numLeft%> 张图片.',
+	'multiimage.startUpload' : '开始上传',
+	'multiimage.noListUrl' : '无法获取图片，请先配置 fileManagerJson.',
+	'multiimage.noSearchUrl' : '无法进行图片搜索，请先配置 imageSearchJson.',
+	'multiimage.noDataText' : '(⊙o⊙)亲，没有多数据了。',
+	'multiimage.colseText' : '关闭对话框',
+	'multiimage.confirmBtnText' : '确定',
+	'multiimage.cancelBtnText' : '取消',
+	'multiimage.loadMoreData' : '往下拉动滚动条可以加载更多数据.',
+	'multiimage.depJQueryError' : '文件管理插件依赖 jQuery, 请先引入 jQuery.',
+	'multiimage.localUpload' : '本地上传',
+	'multiimage.fileServer' : '文件服务器',
+	'multiimage.imgSearch' : '图片搜索',
+	'multiimage.selectFile' : '点击选择图片',
+	'multiimage.continueAdd' : '继续添加',
+	'multiimage.searchBtn' : '搜索一下',
+	'multiimage.searchPlaceholder' : '请输入搜索关键词',
+	'multiimage.searchClear' : '清空搜索',
+	'multiimage.noFileAdded' : '请至少添加一个文件！',
+	'multiimage.uploading' : '正在上传',
+	'multiimage.fileNotUpload' : '您还有文件没有上传!',
+	'multiimage.uploadLimit' : '您本次最多上传 <%=uploadLimit%> 个文件.',
+	'multiimage.sizeLimit' : '文件大小不能超过 <%=sizeLimit%> KB.',
+	'multiimage.invalidExt' : '非法的文件后缀 <%=invalidExt%>.',
+	'multiimage.remove' : '删除',
+	'multiimage.rotateRight' : '向右旋转',
+	'multiimage.rotateLeft' : '向左旋转',
+	'multiimage.uploadFail' : '发生异常，上传失败!',
+	'multiimage.noFileSelected' : '请至少选择一个文件或一张图片.',
+	'filemanager.noDataText' : '(⊙o⊙)亲，没有多数据了。',
+	'filemanager.title' : '文件服务器',
+	'filemanager.noListUrl' : '无法获取图片，请先配置 fileManagerJson.',
+	'filemanager.colseText' : '关闭对话框',
+	'filemanager.confirmBtnText' : '确定',
+	'filemanager.cancelBtnText' : '取消',
+	'filemanager.loadMoreData' : '往下拉动滚动条可以加载更多数据.',
+	'filemanager.depJQueryError' : '文件管理插件依赖 jQuery, 请先引入 jQuery.',
+	'filemanager.fileType' : '类型',
+	'graft.btnText' : '保存并插入涂鸦',
+	'graft.uploadSuccess' : '涂鸦上传成功',
+	'graft.uploadFaild' : '涂鸦上传失败',
+	'graft.empty' : '您没有在画布上绘制任何图像',
 	'insertfile.url' : 'URL',
-	'insertfile.title' : 'Title',
-	'insertfile.upload' : 'Upload',
-	'insertfile.viewServer' : 'Browse',
-	'table.cells' : 'Cells',
-	'table.rows' : 'Rows',
-	'table.cols' : 'Columns',
-	'table.size' : 'Dimensions',
-	'table.width' : 'Width',
-	'table.height' : 'Height',
+	'insertfile.title' : '文件说明',
+	'insertfile.upload' : '上传',
+	'insertfile.viewServer' : '文件空间',
+	'table.cells' : '单元格数',
+	'table.rows' : '行数',
+	'table.cols' : '列数',
+	'table.size' : '大小',
+	'table.width' : '宽度',
+	'table.height' : '高度',
 	'table.percent' : '%',
 	'table.px' : 'px',
-	'table.space' : 'Space',
-	'table.padding' : 'Padding',
-	'table.spacing' : 'Spacing',
-	'table.align' : 'Align',
-	'table.textAlign' : 'Horizontal',
-	'table.verticalAlign' : 'Vertical',
-	'table.alignDefault' : 'Default',
-	'table.alignLeft' : 'Left',
-	'table.alignCenter' : 'Center',
-	'table.alignRight' : 'Right',
-	'table.alignTop' : 'Top',
-	'table.alignMiddle' : 'Middle',
-	'table.alignBottom' : 'Bottom',
-	'table.alignBaseline' : 'Baseline',
-	'table.border' : 'Border',
-	'table.borderWidth' : 'Width',
-	'table.borderColor' : 'Color',
-	'table.backgroundColor' : 'Background',
-	'map.address' : 'Address: ',
-	'map.search' : 'Search',
-	'baidumap.address' : 'Address: ',
-	'baidumap.search' : 'Search',
-	'baidumap.insertDynamicMap' : 'Dynamic Map',
-	'anchor.name' : 'Anchor name',
+	'table.space' : '边距间距',
+	'table.padding' : '边距',
+	'table.spacing' : '间距',
+	'table.align' : '对齐方式',
+	'table.textAlign' : '水平对齐',
+	'table.verticalAlign' : '垂直对齐',
+	'table.alignDefault' : '默认',
+	'table.alignLeft' : '左对齐',
+	'table.alignCenter' : '居中',
+	'table.alignRight' : '右对齐',
+	'table.alignTop' : '顶部',
+	'table.alignMiddle' : '中部',
+	'table.alignBottom' : '底部',
+	'table.alignBaseline' : '基线',
+	'table.border' : '边框',
+	'table.borderWidth' : '边框',
+	'table.borderColor' : '颜色',
+	'table.backgroundColor' : '背景颜色',
+	'map.address' : '地址: ',
+	'map.search' : '搜索',
+	'baidumap.address' : '地址: ',
+	'baidumap.search' : '搜索',
+	'baidumap.insertDynamicMap' : '插入动态地图',
+	'anchor.name' : '锚点名称',
 	'formatblock.formatBlock' : {
-		h1 : 'Heading 1',
-		h2 : 'Heading 2',
-		h3 : 'Heading 3',
-		h4 : 'Heading 4',
-		p : 'Normal'
+		h1 : '标题 1',
+		h2 : '标题 2',
+		h3 : '标题 3',
+		h4 : '标题 4',
+		p : '正 文'
 	},
 	'fontname.fontName' : {
+		'SimSun' : '宋体',
+		'NSimSun' : '新宋体',
+		'FangSong_GB2312' : '仿宋_GB2312',
+		'KaiTi_GB2312' : '楷体_GB2312',
+		'SimHei' : '黑体',
+		'Microsoft YaHei' : '微软雅黑',
 		'Arial' : 'Arial',
 		'Arial Black' : 'Arial Black',
-		'Comic Sans MS' : 'Comic Sans MS',
-		'Courier New' : 'Courier New',
-		'Garamond' : 'Garamond',
-		'Georgia' : 'Georgia',
-		'Tahoma' : 'Tahoma',
 		'Times New Roman' : 'Times New Roman',
-		'Trebuchet MS' : 'Trebuchet MS',
+		'Courier New' : 'Courier New',
+		'Tahoma' : 'Tahoma',
 		'Verdana' : 'Verdana'
 	},
 	'lineheight.lineHeight' : [
-		{'1' : 'Line height 1'},
-		{'1.5' : 'Line height 1.5'},
-		{'2' : 'Line height 2'},
-		{'2.5' : 'Line height 2.5'},
-		{'3' : 'Line height 3'}
+		{'1' : '单倍行距'},
+		{'1.5' : '1.5倍行距'},
+		{'2' : '2倍行距'},
+		{'2.5' : '2.5倍行距'},
+		{'3' : '3倍行距'}
 	],
-	'template.selectTemplate' : 'Template',
-	'template.replaceContent' : 'Replace current content',
+	'template.selectTemplate' : '可选模板',
+	'template.replaceContent' : '替换当前内容',
 	'template.fileList' : {
-		'1.html' : 'Image and Text',
-		'2.html' : 'Table',
-		'3.html' : 'List'
+		'1.html' : '图片和文字',
+		'2.html' : '表格',
+		'3.html' : '项目编号'
 	}
-}, 'en');
-
-KindEditor.options.langType = 'en';
-
+}, 'zh-CN');
+KindEditor.options.langType = 'zh-CN';
 /*******************************************************************************
 * KindEditor - WYSIWYG HTML Editor for Internet
 * Copyright (C) 2006-2011 kindsoft.net
@@ -6824,8 +6858,8 @@ KindEditor.plugin('filemanager', function(K) {
 		K.options.errorMsgHandler(lang.depJQueryError, "error");
 		return;
 	} else {
-		K.loadScript(K.options.pluginsPath+"filemanager/FManager.js");
-		K.loadStyle(K.options.pluginsPath+"filemanager/css/filemanager.css");
+		K.loadScript(K.options.pluginsPath+"filemanager/FManager.min.js");
+		K.loadStyle(K.options.pluginsPath+"filemanager/css/filemanager.min.css");
 	}
 	self.plugin.filemanagerDialog = function(options) {
 		var clickFn = options.clickFn;
@@ -7703,8 +7737,8 @@ KindEditor.plugin('multiimage', function(K) {
 		K.options.errorMsgHandler(lang.depJQueryError, "error");
 		return;
 	} else {
-		K.loadScript(K.options.pluginsPath+name+"/BUpload.js");
-		K.loadStyle(K.options.pluginsPath+name+"/css/upload.css");
+		K.loadScript(K.options.pluginsPath+name+"/BUpload.min.js");
+		K.loadStyle(K.options.pluginsPath+name+"/css/upload.min.css");
 	}
 	self.plugin.multiImageDialog = function(options) {
 		if ( !window.applicationCache ) {
@@ -7745,6 +7779,166 @@ KindEditor.plugin('multiimage', function(K) {
 				setTimeout(function() {
 					self.hideDialog().focus();
 				}, 0);
+			}
+		});
+	});
+});
+
+/*******************************************************************************
+* KindEditor - WYSIWYG HTML Editor for Internet
+* Copyright (C) 2006-2011 kindsoft.net
+*
+* @author Roddy <luolonghao@gmail.com>
+* @site http://www.kindsoft.net/
+* @licence http://www.kindsoft.net/license.php
+*******************************************************************************/
+KindEditor.plugin('graft', function(K) {
+	var self = this, name = 'graft',
+		uploadJson = K.undef(self.uploadJson, self.basePath + 'php/upload_json.php'),
+		allowUploadGraft = K.undef(self.allowUploadGraft, true),
+		lang = self.lang(name + '.');
+	if(typeof jQuery == 'undefined') {
+		K.options.errorMsgHandler(lang.depJQueryError, "error");
+		return;
+	} else {
+		K.loadStyle(K.options.pluginsPath+"graft/css/scrawl.css");
+		K.loadScript(K.options.pluginsPath+"graft/scrawl.js");
+	}
+	self.plugin.graftDialog = function(options) {
+		var clickFn = options.clickFn;
+		var html = [
+			'<div class="scrawl-main" id="scrawl-main">',
+			'<div class="hot">',
+			'<div class="drawBoard border_style">',
+			'<canvas id="canvas-borad" class="brushBorad">你的浏览器不支持 canvas 绘图</canvas>',
+			'<div class="picBoard" id="picBoard" style=""></div>',
+			'</div>',
+			'<div class="operateBar">',
+			'<button id="J_prevStep" class="prevStep" title="上一步">',
+			'<em class="icon"></em>',
+			'</button>',
+			'<button id="J_nextStep" class="nextStep" title="下一步">',
+			'<em class="icon"></em>',
+			'</button>',
+			'<button id="J_clearBoard" class="clearBoard" title="清空">',
+			'<em class="icon"></em>',
+			'</button>',
+			'</div>',
+			'</div>',
+			'<div class="drawToolbar border_style">',
+			'<div class="colorBar">',
+			'<span data-color="#0099CC" style="background:#0099CC;" class="active"></span>',
+			'<span data-color="#003366" style="background:#003366;"></span>',
+			'<span data-color="#993333" style="background:#993333;"></span>',
+			'<span data-color="#FF9900" style="background:#FF9900;"></span>',
+			'<span data-color="#0000CC" style="background:#0000CC;"></span>',
+			'<span data-color="#CC3333" style="background:#CC3333;"></span>',
+			'<span data-color="#F4D03F" style="background:#641E16;"></span>',
+			'<span data-color="#4A235A" style="background:#4A235A;"></span>',
+			'<span data-color="#009966" style="background:#009966;"></span>',
+			'<span data-color="#ffff00" style="background:#ffff00;"></span>',
+			'<span data-color="#7D6608" style="background:#7D6608;"></span>',
+			'<span data-color="#FF33CC" style="background:#FF33CC;"></span>',
+			'<span data-color="#990066" style="background:#990066;"></span>',
+			'<span data-color="#ffffff" style="background:#ffffff;"></span>',
+			'<span data-color="#9bbb59" style="background:#9bbb59;"></span>',
+			'<span data-color="#CCFFFF" style="background:#CCFFFF;"></span>',
+			'<span data-color="#FFCCCC" style="background:#FFCCCC;"></span>',
+			'<span data-color="#CC99CC" style="background:#CC99CC;"></span>',
+			'</div>',
+			'<div class="sectionBar">',
+			'<em class="brushIcon"></em>',
+			'<a href="javascript:void(0)" class="brush-size size1">1</a>',
+			'<a href="javascript:void(0)" class="brush-size size2">3</a>',
+			'<a href="javascript:void(0)" class="brush-size size3">5</a>',
+			'<a href="javascript:void(0)" class="brush-size size4">7</a>',
+			'</div>',
+			'<div class="sectionBar">',
+			'<em class="eraserIcon"></em>',
+			'<a href="javascript:void(0)" class="eraser-size size1">5</a>',
+			'<a href="javascript:void(0)" class="eraser-size size2">10</a>',
+			'<a href="javascript:void(0)" class="eraser-size size3">15</a>',
+			'<a href="javascript:void(0)" class="eraser-size size4">20</a>',
+			'</div>',
+			'<div class="sectionBar">',
+			'<em class="blurIcon"></em>',
+			'<a href="javascript:void(0)" class="blur-size size1">2</a>',
+			'<a href="javascript:void(0)" class="blur-size size2">4</a>',
+			'<a href="javascript:void(0)" class="blur-size size3">6</a>',
+			'<a href="javascript:void(0)" class="blur-size size4">8</a>',
+			'</div>',
+			'<div class="sectionBar">',
+			'<span id="clearSetting" class="clearSetting">',
+			'<em class="icon"></em>',
+			'<em class="text">初始化设置</em>',
+			'</span>',
+			'</div>',
+			'<div class="sectionBar">',
+			'<div id="J_addImg" class="addImgH">',
+			'<em class="icon"></em>',
+			'<em class="text">添加背景</em>',
+			'<input type="file" class="upload" id="J_canvas_bg" accept="image/gif,image/jpeg,image/png,image/jpg,image/bmp"/>',
+			'</div>',
+			'</div>',
+			'<div class="sectionBar">',
+			'<span id="J_removeImg" class="removeImg">',
+			'<em class="icon"></em>',
+			'<em class="text">删除背景</em>',
+			'</span>',
+			'</div>',
+			'</div>'
+		].join('');
+		var dialog = self.createDialog({
+				name : name,
+				width : 750,
+				height : 440,
+				title : self.lang(name),
+				body : html,
+				yesBtn : {
+					name : lang.btnText,
+					click : function(e) {
+						if (dialog.isLoading) {
+							return;
+						}
+						if (canvas.isEmpty()) {
+							K.options.errorMsgHandler(lang.empty, "error");
+							return;
+						}
+						canvas.save(function(data) {
+							if (allowUploadGraft) {
+								dialog.showLoading(self.lang('uploadLoading'));
+								$.post(uploadJson, {
+									img_base64_data : data,
+									fileType : "image",
+									base64 : 1
+								}, function(res) {
+									dialog.hideLoading();
+									if (res.code == "000") {
+										K.options.errorMsgHandler(lang.uploadSuccess, "ok");
+										clickFn.call(self, res.item);
+										self.hideDialog().focus();
+									} else {
+										K.options.errorMsgHandler(lang.uploadFaild, "error");
+									}
+								}, "json");
+							} else {
+								clickFn.call(self, data);
+								self.hideDialog().focus();
+							}
+						});
+					}
+				}
+			});
+		var canvas = new Canvas({
+			canvasId : "canvas-borad",
+			width : 600,
+			height : 320
+		});
+	};
+	self.clickToolbar(name, function() {
+		self.plugin.graftDialog({
+			clickFn : function(url) {
+				self.exec('insertimage', url);
 			}
 		});
 	});

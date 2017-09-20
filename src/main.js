@@ -1030,8 +1030,7 @@ function _create(expr, options) {
 	// 自动加载CSS文件
 	if (_undef(options.loadStyleMode, K.options.loadStyleMode)) {
 		var themeType = _undef(options.themeType, K.options.themeType);
-		_loadStyle(options.themesPath + 'default/default.css');
-		_loadStyle(options.themesPath + themeType + '/' + themeType + '.css');
+		_loadStyle(options.themesPath + themeType + '/editor.min.css');
 	}
 	function create(editor) {
 		_each(_plugins, function(name, fn) {
