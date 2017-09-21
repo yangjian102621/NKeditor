@@ -24,6 +24,11 @@ NKeditor 沿用了 kindeditor 最后发布的版本号 v4.1.11，所以NKeditor 
 
 NKeditor 更新记录
 ========
+### version 4.2.2
+* 修复在有滚动条的时候，批量文件上传的弹框定位到不可见区域的bug
+* 给弹框新增 css3 animation 动画特效
+* 优化 loadStyle(), loadScript() 方法，新增缓存，避免同样的css和js资源被多次加载
+
 ### version 4.2.1
 * 修改语言包的加载方式，默认加载中文语言包，不用再手动通过 script 去加载，现在使用 NKeditor 只需要引入一个 NKeditor-all-min.js 就可以了
 * 精简资源，比较大的插件js，css 代码全部压缩，加载 min 版的静态资源。

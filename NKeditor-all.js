@@ -231,7 +231,7 @@ function _getBasePath() {
 	var els = document.getElementsByTagName('script'), src;
 	for (var i = 0, len = els.length; i < len; i++) {
 		src = els[i].src || '';
-		if (/NKeditor[\w\-\.]*\.js/.test(src)) {
+		if (/Nkeditor[\w\-\.]*\.js/.test(src)) {
 			return src.substring(0, src.lastIndexOf('/') + 1);
 		}
 	}
@@ -260,7 +260,7 @@ K.options = {
 	fullscreenShortcut : false,
 	bodyClass : 'ke-content',
 	indentChar : '\t',
-	cssPath : K.basePath+'plugins/code/prettify.css',
+	cssPath : '',
 	cssData : '',
 	minWidth : 650,
 	minHeight : 300,
@@ -4318,7 +4318,7 @@ _extend(KDialog, KWidget, {
 			noBtn = options.noBtn,
 			closeBtn = options.closeBtn,
 			showMask = _undef(options.showMask, true);
-		self.div.addClass('ke-dialog').bind('click,mousedown', function(e){
+		self.div.addClass('ke-dialog ke-animated').bind('click,mousedown', function(e){
 			e.stopPropagation();
 		});
 		var contentDiv = K('<div class="ke-dialog-content"></div>').appendTo(self.div);
@@ -5499,6 +5499,7 @@ function _create(expr, options) {
 	if (_undef(options.loadStyleMode, K.options.loadStyleMode)) {
 		var themeType = _undef(options.themeType, K.options.themeType);
 		_loadStyle(options.themesPath + themeType + '/editor.min.css');
+		_loadStyle(options.pluginsPath + 'code/prettify.css');
 	}
 	function create(editor) {
 		_each(_plugins, function(name, fn) {
@@ -6859,7 +6860,7 @@ KindEditor.plugin('filemanager', function(K) {
 		return;
 	} else {
 		K.loadScript(K.options.pluginsPath+"filemanager/FManager.min.js");
-		K.loadStyle(K.options.pluginsPath+"filemanager/css/filemanager.min.css");
+		K.loadStyle(K.options.pluginsPath+"multiimage/css/upload.min.css");
 	}
 	self.plugin.filemanagerDialog = function(options) {
 		var clickFn = options.clickFn;

@@ -117,9 +117,9 @@
 		function createDialog() {
 
 			var builder = new StringBuilder();
-			builder.append('<div class="uedbody-server"><div class="ued_title">');
+			builder.append('<div class="uedbody ke-animated"><div class="ued_title">');
 			builder.append('<div class="uedbar"><span>'+options.lang.title+'</span></div><div class="close_btn icon" title="'+options.lang.closeText+'"></div>');
-			builder.append('</div><div class="wrapper"><div class="wra_body">');
+			builder.append('</div><div class="wrapper"><div class="wra_body wra_body_server">');
 			builder.append('<div class="tab-panel online"><div class="imagelist"><ul class="list clearfix"></ul><div class="no-data"></div></div></div>');
 			builder.append('<div class="loading-icon"></div></div></div><div class="wra-btn-group">');
 			builder.append('<div class="tip-text">'+options.lang.loadMoreData+'</div>')
@@ -130,7 +130,7 @@
 			$("body").append(o.dialog);
 			o.dialog.css({
 				left : ($(window).width() - o.dialog.width())/2 + "px",
-				top : options.top + "px"
+				top : getScrollTop() + options.top + "px"
 			});
 			//给对话框添加拖拽事件
 			o.dialog.draggable({handler : o.dialog.find(".ued_title")});
@@ -168,6 +168,11 @@
 		//query
 		function G(query) {
 			return o.dialog.find(query);
+		}
+
+		//获取滚动条的高度
+		function getScrollTop() {
+			return window.document.body.scrollTop || window.document.documentElement.scrollTop;
 		}
 
 		//从服务器上获取图片地址

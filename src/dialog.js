@@ -28,7 +28,7 @@ _extend(KDialog, KWidget, {
 			closeBtn = options.closeBtn,
 			showMask = _undef(options.showMask, true);
 
-		self.div.addClass('ke-dialog').bind('click,mousedown', function(e){
+		self.div.addClass('ke-dialog ke-animated').bind('click,mousedown', function(e){
 			e.stopPropagation();
 		});
 		var contentDiv = K('<div class="ke-dialog-content"></div>').appendTo(self.div);

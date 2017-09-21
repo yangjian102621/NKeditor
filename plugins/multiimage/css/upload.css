@@ -532,8 +532,20 @@
         background-image: url("icons/xml.png"); }
       .uedbody .wrapper .wra_body .icon-zip, .uedbody .wrapper .wra_body .icon-rar, .uedbody .wrapper .wra_body .icon-tgz, .uedbody .wrapper .wra_body .icon-gz, .uedbody .wrapper .wra_body .icon-tar, .uedbody .wrapper .wra_body .icon-7z {
         background-image: url("icons/zip.png"); }
+    .uedbody .wrapper .wra_body_server {
+      height: 380px; }
+      .uedbody .wrapper .wra_body_server .online {
+        display: block !important;
+        height: 365px; }
   .uedbody .wra-btn-group {
+    clear: both;
+    zoom: 1;
     text-align: right;
     padding: 10px 20px 20px 0px; }
+    .uedbody .wra-btn-group .tip-text {
+      float: left;
+      padding: 5px 10px;
+      color: #999;
+      font-size: 14px; }
 
 /*# sourceMappingURL=upload.css.map */

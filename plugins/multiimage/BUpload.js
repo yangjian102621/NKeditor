@@ -194,7 +194,7 @@
 		function createDialog() {
 
 			var builder = new StringBuilder();
-			builder.append('<div class="uedbody"><div class="ued_title">');
+			builder.append('<div class="uedbody ke-animated"><div class="ued_title">');
 			builder.append('<div class="uedbar"><span>'+options.lang.title+'</span></div><div class="close_btn icon"' +
 				' title="'+options.lang.closeText+'"></div>');
 			builder.append('</div><div class="wrapper"><div id="wra_head" class="wra_head"><span class="tab' +
@@ -222,7 +222,7 @@
 			$("body").append(o.dialog);
 			o.dialog.css({
 				left : ($(window).width() - o.dialog.width())/2 + "px",
-				top : options.top + "px"
+				top : getScrollTop() + options.top + "px"
 			});
 			//给对话框添加拖拽事件
 			o.dialog.draggable({handler : o.dialog.find(".ued_title")})
@@ -569,6 +569,11 @@
 		//显示上传错误信息
 		function __error__(message, node) {
 			G("#img-comtainer-"+dialogSCode+ node.index).find(".error").show().text(message);
+		}
+
+		//获取滚动条的高度
+		function getScrollTop() {
+			return window.document.body.scrollTop || window.document.documentElement.scrollTop;
 		}
 
 		//query

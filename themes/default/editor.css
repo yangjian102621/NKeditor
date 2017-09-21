@@ -1,4 +1,16 @@
 /* common */
+.ke-animated {
+	animation: zoomIn;
+	animation-duration: 0.3s;
+	animation-fill-mode: both; }
+
+@keyframes zoomIn {
+	from {
+		opacity: 0;
+		transform: scale3d(0.3, 0.3, 0.3); }
+	50% {
+		opacity: 1; } }
+
 .ke-inline-block {
 	display: -moz-inline-stack;
 	display: inline-block;

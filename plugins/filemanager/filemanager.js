@@ -13,7 +13,7 @@ KindEditor.plugin('filemanager', function(K) {
 		return;
 	} else {
 		K.loadScript(K.options.pluginsPath+"filemanager/FManager.min.js");
-		K.loadStyle(K.options.pluginsPath+"filemanager/css/filemanager.min.css");
+		K.loadStyle(K.options.pluginsPath+"multiimage/css/upload.min.css");
 	}
 
 	self.plugin.filemanagerDialog = function(options) {

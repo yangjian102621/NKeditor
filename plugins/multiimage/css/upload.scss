@@ -614,10 +614,28 @@ $fontsize:14px;
 
 		}//end of wra_body
 
+		.wra_body_server {
+			height: 380px;
+
+			.online {
+				display: block !important;
+				height: 365px;
+			}
+		}
+
 	}//start of wrapper
 
 	.wra-btn-group {
+		clear: both;
+		zoom: 1;
 		text-align: right;
 		padding: 10px 20px 20px 0px;
+
+		.tip-text {
+			float: left;
+			padding: 5px 10px;
+			color: #999;
+			font-size: 14px;
+		}
 	}
 }
