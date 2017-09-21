@@ -24,6 +24,9 @@ NKeditor 沿用了 kindeditor 最后发布的版本号 v4.1.11，所以NKeditor 
 
 NKeditor 更新记录
 ========
+### version 4.2.3
+* 修复切换源代码再返回就看不到图标了的bug， 感谢开源中国用户 “吴小华” 同学的反馈
+
 ### version 4.2.2
 * 修复在有滚动条的时候，批量文件上传的弹框定位到不可见区域的bug
 * 给弹框新增 css3 animation 动画特效
