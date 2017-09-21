@@ -28,6 +28,8 @@ NKeditor 更新记录
 * 修复在有滚动条的时候，批量文件上传的弹框定位到不可见区域的bug
 * 给弹框新增 css3 animation 动画特效
 * 优化 loadStyle(), loadScript() 方法，新增缓存，避免同样的css和js资源被多次加载
+* 精简了项目，将类似的css的css，js合并复用，减少资源加载
+* 修复在伪静态php框架中，获取js相对路径出错而导致资源加载失败的bug
 
 ### version 4.2.1
 * 修改语言包的加载方式，默认加载中文语言包，不用再手动通过 script 去加载，现在使用 NKeditor 只需要引入一个 NKeditor-all-min.js 就可以了
