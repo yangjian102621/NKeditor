@@ -1,8 +1,8 @@
 {
-	"name" : "NKEditor",
+	"name" : "NKeditor",
 	"version" : "4.2.1",
 	"filename" : "NKeditor",
-	"repository" : "blackfox/kindeditor",
+	"repository" : "blackfox/NKeditor",
 	"devDependencies" : {
 		"grunt": "~0.4.1",
 		"grunt-contrib-concat": "~0.3.0",

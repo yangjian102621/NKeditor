@@ -3,7 +3,7 @@ function _getBasePath() {
 	var els = document.getElementsByTagName('script'), src;
 	for (var i = 0, len = els.length; i < len; i++) {
 		src = els[i].src || '';
-		if (/kindeditor[\w\-\.]*\.js/.test(src)) {
+		if (/Nkeditor[\w\-\.]*\.js/.test(src)) {
 			return src.substring(0, src.lastIndexOf('/') + 1);
 		}
 	}
@@ -35,7 +35,7 @@ K.options = {
 	bodyClass : 'ke-content',
 	indentChar : '\t', // \t, "  "
 	//设置默认的css路径
-	cssPath : 'plugins/code/prettify.css', //String or Array
+	cssPath : K.basePath+'plugins/code/prettify.css', //String or Array
 	cssData : '',
 	minWidth : 650,
 	minHeight : 300,

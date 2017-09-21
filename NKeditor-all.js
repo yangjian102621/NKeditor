@@ -5,7 +5,7 @@
 * @author Roddy <luolonghao@gmail.com>
 * @website http://www.kindsoft.net/
 * @licence http://www.kindsoft.net/license.php
-* @version 4.2.1 (2017-09-20)
+* @version 4.2.1 (2017-09-21)
 *******************************************************************************/
 (function (window, undefined) {
 	if (window.KindEditor) {
@@ -19,7 +19,7 @@ if (!window.console) {
 if (!console.log) {
 	console.log = function () {};
 }
-var _VERSION = '4.2.1 (2017-09-20)',
+var _VERSION = '4.2.1 (2017-09-21)',
 	_ua = navigator.userAgent.toLowerCase(),
 	_IE = _ua.indexOf('msie') > -1 && _ua.indexOf('opera') == -1,
 	_NEWIE = _ua.indexOf('msie') == -1 && _ua.indexOf('trident') > -1,
@@ -231,7 +231,7 @@ function _getBasePath() {
 	var els = document.getElementsByTagName('script'), src;
 	for (var i = 0, len = els.length; i < len; i++) {
 		src = els[i].src || '';
-		if (/kindeditor[\w\-\.]*\.js/.test(src)) {
+		if (/NKeditor[\w\-\.]*\.js/.test(src)) {
 			return src.substring(0, src.lastIndexOf('/') + 1);
 		}
 	}
@@ -260,7 +260,7 @@ K.options = {
 	fullscreenShortcut : false,
 	bodyClass : 'ke-content',
 	indentChar : '\t',
-	cssPath : 'plugins/code/prettify.css',
+	cssPath : K.basePath+'plugins/code/prettify.css',
 	cssData : '',
 	minWidth : 650,
 	minHeight : 300,
