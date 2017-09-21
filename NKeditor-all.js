@@ -231,7 +231,7 @@ function _getBasePath() {
 	var els = document.getElementsByTagName('script'), src;
 	for (var i = 0, len = els.length; i < len; i++) {
 		src = els[i].src || '';
-		if (/Nkeditor[\w\-\.]*\.js/.test(src)) {
+		if (/NKeditor[\w\-\.]*\.js/i.test(src)) {
 			return src.substring(0, src.lastIndexOf('/') + 1);
 		}
 	}
