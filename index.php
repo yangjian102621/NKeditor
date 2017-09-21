@@ -30,10 +30,10 @@
 				/**
 				 * 七牛云上传 API
 				 */
-				uploadJson : 'php/qiniu/upload_json.php',
-				fileManagerJson : 'php/qiniu/file_manager_json.php',
-				imageSearchJson : 'php/qiniu/image_search_json.php', //图片搜索url
-				imageGrapJson : 'php/qiniu/image_grap_json.php', //抓取选中的搜索图片地址
+				uploadJson : K.basePath+'php/qiniu/upload_json.php',
+				fileManagerJson : K.basePath+'php/qiniu/file_manager_json.php',
+				imageSearchJson : K.basePath+'php/qiniu/image_search_json.php', //图片搜索url
+				imageGrapJson : K.basePath+'php/qiniu/image_grap_json.php', //抓取选中的搜索图片地址
 
 				/**
 				 * 通用上传 API
@@ -75,10 +75,10 @@
 				/**
 				 * 通用上传 API
 				 */
-				uploadJson : 'php/upload_json.php',
-				fileManagerJson : 'php/file_manager_json.php',
-				imageSearchJson : 'php/image_search_json.php', //图片搜索url
-				imageGrapJson : 'php/image_grap_json.php', //抓取选中的搜索图片地址
+				uploadJson : K.basePath+'php/upload_json.php',
+				fileManagerJson : K.basePath+'php/file_manager_json.php',
+				imageSearchJson : K.basePath+'php/image_search_json.php', //图片搜索url
+				imageGrapJson : K.basePath+'php/image_grap_json.php', //抓取选中的搜索图片地址
 				allowFileManager : true,
 				allowImageUpload : true,
 				allowMediaUpload : true,
