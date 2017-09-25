@@ -188,6 +188,9 @@
 		//close the dialog
 		o.close = function () {
 			o.dialog.remove();
+			if (typeof options.close == 'function') {
+				options.close();
+			}
 		}
 
 		//create dialog
@@ -220,9 +223,12 @@
 
 			o.dialog = $(builder.toString());
 			$("body").append(o.dialog);
+			if (options.top == 0) {
+				options.top = ($(window).height() - o.dialog.height())/2;
+			}
 			o.dialog.css({
 				left : ($(window).width() - o.dialog.width())/2 + "px",
-				top : getScrollTop() + options.top + "px"
+				top : options.top + "px"
 			});
 			//给对话框添加拖拽事件
 			o.dialog.draggable({handler : o.dialog.find(".ued_title")})
@@ -569,11 +575,6 @@
 		//显示上传错误信息
 		function __error__(message, node) {
 			G("#img-comtainer-"+dialogSCode+ node.index).find(".error").show().text(message);
-		}
-
-		//获取滚动条的高度
-		function getScrollTop() {
-			return window.document.body.scrollTop || window.document.documentElement.scrollTop;
 		}
 
 		//query

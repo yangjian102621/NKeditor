@@ -11,9 +11,9 @@ KindEditor.plugin('anchor', function(K) {
 	var self = this, name = 'anchor', lang = self.lang(name + '.');
 	self.plugin.anchor = {
 		edit : function() {
-			var html = ['<div style="padding:20px;">',
-					'<div class="ke-dialog-row">',
-					'<label for="keName">' + lang.name + '</label>',
+			var html = ['<div class="ke-dialog-content-inner">',
+					'<div class="ke-dialog-row ke-clearfix">',
+					'<label for="keName">' + lang.name + '：</label>',
 					'<input class="ke-input-text" type="text" id="keName" name="name" value="" style="width:100px;" />',
 					'</div>',
 					'</div>'].join('');

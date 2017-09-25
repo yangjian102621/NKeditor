@@ -183,10 +183,12 @@ _extend(KWidget, {
 		} else {
 			var docEl = _docElement(self.doc);
 			x = _round(scrollPos.x + (docEl.clientWidth - w) / 2);
-			//y = _round(scrollPos.y + (docEl.clientHeight - h) / 2);
+			y = _round(scrollPos.y + (docEl.clientHeight - h) / 2);
 		}
 		//强制定位到顶部居中，不采用中部居中(By yangjian 2017-09-09)
-		y = scrollPos.y + 20;
+		if (K.options.dialogOffset > 0) {
+			y = scrollPos.y + 20;
+		}
 		// 用position:fixed后不需要添加scroll坐标
 		if (!(_IE && _V < 7 || _QUIRKS)) {
 			x -= scrollPos.x;

@@ -47,6 +47,28 @@ if ($base64) {
     $filePath = $_FILES['imgFile']['tmp_name'];
     $fileExt = getFileExt($_FILES['imgFile']['name']);
 
+    // 返回结果
+    $json = new \JsonResult();
+    //定义允许上传的文件扩展名
+    $extArr = array(
+        'image' => array('gif', 'jpg', 'jpeg', 'png', 'bmp'),
+        'flash' => array('swf', 'flv'),
+        'media' => array('swf', 'flv', 'mp3', 'wav', 'wma', 'wmv', 'mid', 'avi', 'mpg', 'asf', 'rm', 'rmvb'),
+        'file' => array('doc', 'docx', 'xls', 'xlsx', 'ppt', 'htm', 'html', 'txt', 'zip', 'rar', 'gz', 'bz2'),
+    );
+    //最大文件大小 2MB
+    $maxSize = 2*1024*1024;
+    if (!in_array($fileExt, $extArr[$fileType])) {
+        $json->setCode(\JsonResult::CODE_FAIL);
+        $json->setMessage("非法的文件后缀名.");
+        $json->output();
+    }
+    if (filesize($filePath) > $maxSize) {
+        $json->setCode(\JsonResult::CODE_FAIL);
+        $json->setMessage("文件大小超出限制 2MB.");
+        $json->output();
+    }
+
     // 上传到七牛后保存的文件名
     $key = $fileType . "-" . time() . mt_rand(1000, 9999) . ".{$fileExt}";
 
@@ -55,8 +77,6 @@ if ($base64) {
 
     // 调用 UploadManager 的 putFile 方法进行文件的上传。
     list($ret, $err) = $uploadMgr->putFile($token, $key, $filePath);
-    // 返回结果
-    $json = new \JsonResult();
     if ($err !== null) {
         $json->setCode(\JsonResult::CODE_FAIL);
         $json->setMessage("上传失败.");

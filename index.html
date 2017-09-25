@@ -12,7 +12,7 @@
 
 	<script>
 		KindEditor.ready(function(K) {
-			var editor1 = K.create('textarea[name="content1"]', {
+			K.create('textarea[name="content1"]', {
 
 				/**
 				 * 七牛云上传 API
@@ -21,14 +21,7 @@
 				fileManagerJson : K.basePath+'php/qiniu/file_manager_json.php',
 				imageSearchJson : K.basePath+'php/qiniu/image_search_json.php', //图片搜索url
 				imageGrapJson : K.basePath+'php/qiniu/image_grap_json.php', //抓取选中的搜索图片地址
-
-				/**
-				 * 通用上传 API
-				 */
-//				uploadJson : 'php/upload_json.php',
-//				fileManagerJson : 'php/file_manager_json.php',
-//				imageSearchJson : 'php/image_search_json.php', //图片搜索url
-//				imageGrapJson : 'php/image_grap_json.php', //抓取选中的搜索图片地址
+				dialogOffset : 0, //对话框距离页面顶部的位置，默认为0居中，
 				allowFileManager : true,
 				allowImageUpload : true,
 				allowMediaUpload : true,
@@ -43,22 +36,14 @@
 						K('form[name=example]')[0].submit();
 					});
 				},
+				themeType : "grey", //主题
 				//错误处理 handler
 				errorMsgHandler : function(message, type) {
-					JDialog.msg({type:type, content:message, timer:2000, offset:60});
+					JDialog.msg({type:type, content:message, timer:2000});
 				}
 			});
 
-			var editor2 = K.create('textarea[name="content2"]', {
-
-//				/**
-//				 * 七牛云上传 API
-//				 */
-//				uploadJson : 'php/qiniu/upload_json.php',
-//				fileManagerJson : 'php/qiniu/file_manager_json.php',
-//				imageSearchJson : 'php/qiniu/image_search_json.php', //图片搜索url
-//				imageGrapJson : 'php/qiniu/image_grap_json.php', //抓取选中的搜索图片地址
-
+			K.create('textarea[name="content2"]', {
 				/**
 				 * 通用上传 API
 				 */
@@ -69,9 +54,28 @@
 				allowFileManager : true,
 				allowImageUpload : true,
 				allowMediaUpload : true,
+				themeType : "default", //主题
 				//错误处理 handler
 				errorMsgHandler : function(message, type) {
-					JDialog.msg({type:type, content:message, timer:2000, offset:60});
+					JDialog.msg({type:type, content:message, timer:2000});
+				}
+			});
+
+			K.create('textarea[name="content3"]', {
+				/**
+				 * 通用上传 API
+				 */
+				uploadJson : K.basePath+'php/upload_json.php',
+				fileManagerJson : K.basePath+'php/file_manager_json.php',
+				imageSearchJson : K.basePath+'php/image_search_json.php', //图片搜索url
+				imageGrapJson : K.basePath+'php/image_grap_json.php', //抓取选中的搜索图片地址
+				allowFileManager : true,
+				allowImageUpload : true,
+				allowMediaUpload : true,
+				themeType : "blue", //主题
+				//错误处理 handler
+				errorMsgHandler : function(message, type) {
+					JDialog.msg({type:type, content:message, timer:2000});
 				}
 			});
 
@@ -79,19 +83,27 @@
 	</script>
 </head>
 <body>
-	<div class="box">
+	<div style="padding-bottom: 100px;">
 		<?php echo $htmlData; ?>
 		<div style="">
-			<h1>七牛云上传 API 版</h1>
+			<h1>七牛云上传 API 版（灰色主题）</h1>
 			<form name="example" method="post">
-				<textarea name="content1" id="content" style="width:900px;height:200px;visibility:hidden;"></textarea>
+				<textarea name="content1" style="width:900px;height:200px;visibility:hidden;"></textarea>
 			</form>
 		</div>
 
 		<div style="">
-			<h1>通用php文件上传 API 版</h1>
+			<h1>通用php文件上传 API 版（黑色主题，默认）</h1>
 			<form name="example" method="post">
-				<textarea name="content2" id="content" style="width:900px;height:200px;visibility:hidden;"></textarea>
+				<textarea name="content2" style="width:900px;height:200px;visibility:hidden;"></textarea>
+
+			</form>
+		</div>
+
+		<div style="">
+			<h1>通用php文件上传 API 版（蓝色主题）</h1>
+			<form name="example" method="post">
+				<textarea name="content3" style="width:900px;height:200px;visibility:hidden;"></textarea>
 
 			</form>
 		</div>

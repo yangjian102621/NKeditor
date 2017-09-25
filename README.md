@@ -24,8 +24,13 @@ NKeditor 沿用了 kindeditor 最后发布的版本号 v4.1.11，所以NKeditor 
 
 NKeditor 更新记录
 ========
-### version 4.2.3
+### version 5.0.0
+大版本更新，使用 sass 重写了全部的 css 代码，方便维护了，重写了皮肤，而且提供了5套皮肤供自由选择，修复了 N 个bug。 
 * 修复切换源代码再返回就看不到图标了的bug， 感谢开源中国用户 “吴小华” 同学的反馈
+* 修复 [#IFA3P](https://gitee.com/blackfox/kindeditor/issues/IFA3P) 提出的bug，弹出框和语言包的问题，提供新的 options 参数 dialogOffset 用来设置弹出框的位置。默认为 0 ，即居中显示。
+* 应广大网友的强烈要求，紧急更新了一套皮肤，默认使用了 svg 矢量图标，对于IE浏览器，使用 png 图标进行了兼容，不过清晰度没有 svg 那么高（这个是必须要的）
+* 新增 tableBorderColor 配置选项，设置表格的默认边框，并把表格的默认边框颜色设置为 #cccccc
+
 
 ### version 4.2.2
 * 修复在有滚动条的时候，批量文件上传的弹框定位到不可见区域的bug

@@ -1,5 +1,5 @@
 $dialogWidth:652px;
-$dialogZindex:999999;
+$dialogZindex:811213;
 $fontsize:14px;
 .uedbody{
 	div, dl, dt, dd, ul, li,ol, h1, h2, h3, h4, h5, h6, pre, code, form, fieldset, legend, button, textarea, blockquote,p{margin:0; padding:0;}
@@ -39,7 +39,7 @@ $fontsize:14px;
 	.fl{float: left;}
 
 	width: $dialogWidth;
-	position: absolute;
+	position: fixed;
 	padding: 2px 0px 0px 2px;
 	background-color: #FFF;
 	border: 1px solid rgba(0, 0, 0, 0.2);

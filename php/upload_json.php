@@ -7,6 +7,8 @@
  *
  */
 error_reporting(0);
+sleep(100);
+die();
 require_once 'JsonResult.php';
 
 $php_path = dirname(__FILE__) . '/';

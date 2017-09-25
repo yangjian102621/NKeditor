@@ -25,6 +25,18 @@ KindEditor.plugin('multiimage', function(K) {
 		K.loadStyle(K.options.pluginsPath+name+"/css/upload.min.css");
 	}
 
+	//锁屏插件
+	K.locker = function () {
+		var docWidth = Math.max(document.documentElement.clientWidth, document.body.clientWidth);
+		var docHeight = Math.max(document.documentElement.clientHeight, document.body.clientHeight, $(document).height()) + document.documentElement.scrollTop;
+		return K.widget({
+			x : 0,
+			y : 0,
+			cls : 'ke-dialog-lock',
+			width : docWidth,
+			height : docHeight
+		});
+	}
 	self.plugin.multiImageDialog = function(options) {
 
 		if ( !window.applicationCache ) {
@@ -32,6 +44,8 @@ KindEditor.plugin('multiimage', function(K) {
 			return;
 		}
 		var clickFn = options.clickFn;
+		var locker = K.locker();
+		locker.show();
 
 		var dialog = new BUpload({
 			src : filePostName,
@@ -43,11 +57,15 @@ KindEditor.plugin('multiimage', function(K) {
 			max_filenum : imageUploadLimit,
 			ext_allow : imageFileTypes,
 			lang : lang,
+			top : self.dialogOffset,
 			fileType : "image",
 			errorHandler : K.options.errorMsgHandler,
 			callback : function(data) {
 				//console.log(data);
 				clickFn.call(this, data);
+			},
+			close : function () {
+				locker.remove();
 			}
 		});
 

@@ -4,13 +4,13 @@
   -webkit-box-sizing: content-box !important;
   -moz-box-sizing: content-box !important;
   width: 652px;
-  position: absolute;
+  position: fixed;
   padding: 2px 0px 0px 2px;
   background-color: #FFF;
   border: 1px solid rgba(0, 0, 0, 0.2);
   border-radius: 6px;
   box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
-  z-index: 999999;
+  z-index: 811213;
   font-family: "微软雅黑";
   font-size: 12px;
   margin: 0px auto; }
@@ -233,7 +233,7 @@
               background: url("images/icons.png") no-repeat;
               margin: 5px 1px 1px;
               cursor: pointer;
-              -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+              -webkit-tap-highlight-color: transparent;
               -webkit-user-select: none;
               -moz-user-select: none;
               -ms-user-select: none;

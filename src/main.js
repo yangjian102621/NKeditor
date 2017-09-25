@@ -1031,7 +1031,6 @@ function _create(expr, options) {
 	if (_undef(options.loadStyleMode, K.options.loadStyleMode)) {
 		var themeType = _undef(options.themeType, K.options.themeType);
 		_loadStyle(options.themesPath + themeType + '/editor.min.css');
-		_loadStyle(options.pluginsPath + 'code/prettify.css');
 	}
 	function create(editor) {
 		_each(_plugins, function(name, fn) {
@@ -1269,6 +1268,7 @@ _plugin('core', function(K) {
 				name : 'fontname',
 				width : 150
 			});
+		console
 		_each(self.lang('fontname.fontName'), function(key, val) {
 			menu.addItem({
 				title : '<span style="font-family: ' + key + ';" unselectable="on">' + val + '</span>',

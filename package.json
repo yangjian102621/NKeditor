@@ -1,6 +1,6 @@
 {
 	"name" : "NKeditor",
-	"version" : "4.2.1",
+	"version" : "5.0.0",
 	"filename" : "NKeditor",
 	"repository" : "blackfox/NKeditor",
 	"devDependencies" : {

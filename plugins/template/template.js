@@ -15,22 +15,22 @@ KindEditor.plugin('template', function(K) {
 	}
 	self.clickToolbar(name, function() {
 		var lang = self.lang(name + '.'),
-			arr = ['<div style="padding:10px 20px;">',
-				'<div class="ke-header">',
+			arr = ['<div class="ke-dialog-content-inner" style="padding-top:0">',
+				'<div class="ke-dialog-row ke-clearfix">',
+				'<div class="ke-header" style="height: 32px;">',
 				// left start
-				'<div class="ke-left">',
-				lang. selectTemplate + ' <select>'];
+				lang. selectTemplate + ' <select class="ke-select">'];
 			K.each(lang.fileList, function(key, val) {
 				arr.push('<option value="' + key + '">' + val + '</option>');
 			});
 			html = [arr.join(''),
-				'</select></div>',
+				'</select>',
 				// right start
-				'<div class="ke-right">',
-				'<input type="checkbox" id="keReplaceFlag" name="replaceFlag" value="1" /> <label for="keReplaceFlag">' + lang.replaceContent + '</label>',
+				'<input type="checkbox" id="keReplaceFlag" class="checkbox" name="replaceFlag" value="1" /> <label for="keReplaceFlag">' + lang.replaceContent + '</label>',
 				'</div>',
-				'<div class="ke-clearfix"></div>',
 				'</div>',
+
+				//template iframe
 				'<iframe class="ke-textarea" frameborder="0" style="width:458px;height:260px;background-color:#FFF;"></iframe>',
 				'</div>'].join('');
 		var dialog = self.createDialog({

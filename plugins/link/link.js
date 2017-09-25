@@ -12,17 +12,22 @@ KindEditor.plugin('link', function(K) {
 	self.plugin.link = {
 		edit : function() {
 			var lang = self.lang(name + '.'),
-				html = '<div style="padding:20px;">' +
-					//url
-					'<div class="ke-dialog-row">' +
-					'<label for="keUrl" style="width:60px;">' + lang.url + '</label>' +
-					'<input class="ke-input-text" type="text" id="keUrl" name="url" value="" style="width:260px;" /></div>' +
-					//type
-					'<div class="ke-dialog-row"">' +
-					'<label for="keType" style="width:60px;">' + lang.linkType + '</label>' +
-					'<select id="keType" name="type"></select>' +
-					'</div>' +
-					'</div>',
+				html = ['<div class="ke-dialog-content-inner">',
+				//url
+				'<div class="ke-dialog-row ke-clearfix">',
+				'<label for="keUrl" class="row-left">' + lang.url + '：</label>',
+				'<div class="row-right">',
+				'<input class="ke-input-text" type="text" id="keUrl" name="url" value="" style="width:260px;" />',
+				'</div>',
+				'</div>',
+				//type
+				'<div class="ke-dialog-row ke-clearfix"">',
+				'<label for="keType" class="row-left">' + lang.linkType + '：</label>',
+				'<div class="row-right">',
+				'<select id="keType" class="ke-select" name="type"></select>',
+				'</div>',
+				'</div>',
+				'</div>'].join(""),
 				dialog = self.createDialog({
 					name : name,
 					width : 450,

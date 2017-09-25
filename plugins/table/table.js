@@ -9,6 +9,7 @@
 
 KindEditor.plugin('table', function(K) {
 	var self = this, name = 'table', lang = self.lang(name + '.'), zeroborder = 'ke-zeroborder';
+	var borderColor = K.undef(self.options.tableBorderColor, '#cccccc');
 	// 设置颜色
 	function _setColor(box, color) {
 		color = color.toUpperCase();
@@ -67,53 +68,65 @@ KindEditor.plugin('table', function(K) {
 		//insert or modify table
 		prop : function(isInsert) {
 			var html = [
-				'<div style="padding:20px;">',
+				'<div class="ke-dialog-content-inner">',
 				//rows, cols
-				'<div class="ke-dialog-row">',
-				'<label for="keRows" style="width:90px;">' + lang.cells + '</label>',
+				'<div class="ke-dialog-row ke-clearfix">',
+				'<label for="keRows" class="row-left">' + lang.cells + '：</label>',
+				'<div class="row-right">',
 				lang.rows + ' <input type="text" id="keRows" class="ke-input-text ke-input-number" name="rows" value="" maxlength="4" /> &nbsp; ',
 				lang.cols + ' <input type="text" class="ke-input-text ke-input-number" name="cols" value="" maxlength="4" />',
 				'</div>',
+				'</div>',
 				//width, height
-				'<div class="ke-dialog-row">',
-				'<label for="keWidth" style="width:90px;">' + lang.size + '</label>',
+				'<div class="ke-dialog-row ke-clearfix">',
+				'<label for="keWidth" class="row-left">' + lang.size + '：</label>',
+				'<div class="row-right">',
 				lang.width + ' <input type="text" id="keWidth" class="ke-input-text ke-input-number" name="width" value="" maxlength="4" /> &nbsp; ',
-				'<select name="widthType">',
+				'<select name="widthType" class="ke-select">',
 				'<option value="%">' + lang.percent + '</option>',
 				'<option value="px">' + lang.px + '</option>',
 				'</select> &nbsp; ',
 				lang.height + ' <input type="text" class="ke-input-text ke-input-number" name="height" value="" maxlength="4" /> &nbsp; ',
-				'<select name="heightType">',
+				'<select name="heightType" class="ke-select">',
 				'<option value="%">' + lang.percent + '</option>',
 				'<option value="px">' + lang.px + '</option>',
 				'</select>',
 				'</div>',
+				'</div>',
 				//space, padding
-				'<div class="ke-dialog-row">',
-				'<label for="kePadding" style="width:90px;">' + lang.space + '</label>',
+				'<div class="ke-dialog-row ke-clearfix">',
+				'<label for="kePadding" class="row-left">' + lang.space + '：</label>',
+				'<div class="row-right">',
 				lang.padding + ' <input type="text" id="kePadding" class="ke-input-text ke-input-number" name="padding" value="" maxlength="4" /> &nbsp; ',
 				lang.spacing + ' <input type="text" class="ke-input-text ke-input-number" name="spacing" value="" maxlength="4" />',
 				'</div>',
+				'</div>',
 				//align
-				'<div class="ke-dialog-row">',
-				'<label for="keAlign" style="width:90px;">' + lang.align + '</label>',
-				'<select id="keAlign" name="align">',
+				'<div class="ke-dialog-row ke-clearfix">',
+				'<label for="keAlign" class="row-left">' + lang.align + '：</label>',
+				'<div class="row-right">',
+				'<select id="keAlign" class="ke-select" name="align">',
 				'<option value="">' + lang.alignDefault + '</option>',
 				'<option value="left">' + lang.alignLeft + '</option>',
 				'<option value="center">' + lang.alignCenter + '</option>',
 				'<option value="right">' + lang.alignRight + '</option>',
 				'</select>',
 				'</div>',
+				'</div>',
 				//border
-				'<div class="ke-dialog-row">',
-				'<label for="keBorder" style="width:90px;">' + lang.border + '</label>',
+				'<div class="ke-dialog-row ke-clearfix">',
+				'<label for="keBorder" class="row-left">' + lang.border + '：</label>',
+				'<div class="row-right">',
 				lang.borderWidth + ' <input type="text" id="keBorder" class="ke-input-text ke-input-number" name="border" value="" maxlength="4" /> &nbsp; ',
 				lang.borderColor + ' <span class="ke-inline-block ke-input-color"></span>',
 				'</div>',
+				'</div>',
 				//background color
-				'<div class="ke-dialog-row">',
-				'<label for="keBgColor" style="width:90px;">' + lang.backgroundColor + '</label>',
+				'<div class="ke-dialog-row ke-clearfix">',
+				'<label for="keBgColor" class="row-left">' + lang.backgroundColor + '：</label>',
+				'<div class="row-right">',
 				'<span class="ke-inline-block ke-input-color"></span>',
+				'</div>',
 				'</div>',
 				'</div>'
 			].join('');
@@ -299,7 +312,7 @@ KindEditor.plugin('table', function(K) {
 			colorBox = K('.ke-input-color', div);
 			_initColorPicker(div, colorBox.eq(0));
 			_initColorPicker(div, colorBox.eq(1));
-			_setColor(colorBox.eq(0), '#000000');
+			_setColor(colorBox.eq(0), borderColor);
 			_setColor(colorBox.eq(1), '');
 			// foucs and select
 			rowsBox[0].focus();
@@ -343,7 +356,7 @@ KindEditor.plugin('table', function(K) {
 			var html = [
 				'<div style="padding:20px;">',
 				//width, height
-				'<div class="ke-dialog-row">',
+				'<div class="ke-dialog-row ke-clearfix">',
 				'<label for="keWidth" style="width:90px;">' + lang.size + '</label>',
 				lang.width + ' <input type="text" id="keWidth" class="ke-input-text ke-input-number" name="width" value="" maxlength="4" /> &nbsp; ',
 				'<select name="widthType">',
@@ -357,7 +370,7 @@ KindEditor.plugin('table', function(K) {
 				'</select>',
 				'</div>',
 				//align
-				'<div class="ke-dialog-row">',
+				'<div class="ke-dialog-row ke-clearfix">',
 				'<label for="keAlign" style="width:90px;">' + lang.align + '</label>',
 				lang.textAlign + ' <select id="keAlign" name="textAlign">',
 				'<option value="">' + lang.alignDefault + '</option>',
@@ -374,13 +387,13 @@ KindEditor.plugin('table', function(K) {
 				'</select>',
 				'</div>',
 				//border
-				'<div class="ke-dialog-row">',
+				'<div class="ke-dialog-row ke-clearfix">',
 				'<label for="keBorder" style="width:90px;">' + lang.border + '</label>',
 				lang.borderWidth + ' <input type="text" id="keBorder" class="ke-input-text ke-input-number" name="border" value="" maxlength="4" /> &nbsp; ',
 				lang.borderColor + ' <span class="ke-inline-block ke-input-color"></span>',
 				'</div>',
 				//background color
-				'<div class="ke-dialog-row">',
+				'<div class="ke-dialog-row ke-clearfix">',
 				'<label for="keBgColor" style="width:90px;">' + lang.backgroundColor + '</label>',
 				'<span class="ke-inline-block ke-input-color"></span>',
 				'</div>',

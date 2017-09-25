@@ -35,33 +35,33 @@ K.options = {
 	bodyClass : 'ke-content',
 	indentChar : '\t', // \t, "  "
 	//设置默认的css路径
-	cssPath : '', //String or Array
+	cssPath : 'plugins/code/prettify.css', //String or Array
 	cssData : '',
 	minWidth : 650,
 	minHeight : 300,
 	minChangeSize : 50,
 	zIndex : 811213,
+	items : [
+		'source', 'undo', 'redo',  'preview', 'print', 'template', 'code', 'cut', 'copy', 'paste',
+		'plainpaste', 'wordpaste', 'justifyleft', 'justifycenter', 'justifyright',
+		'justifyfull', 'insertorderedlist', 'insertunorderedlist', 'indent', 'outdent', 'subscript',
+		'superscript', 'clearhtml', 'quickformat', 'selectall', 'fullscreen', '/',
+		'formatblock', 'fontname', 'fontsize', 'forecolor', 'hilitecolor', 'bold',
+		'italic', 'underline', 'strikethrough', 'lineheight', 'removeformat', 'image', 'multiimage','graft',
+		'flash', 'media', 'insertfile', 'table', 'hr', 'emoticons', 'baidumap', 'pagebreak',
+		'anchor', 'link', 'unlink', 'about'
+	],
+
 	// items : [
-	// 	'source', '|', 'undo', 'redo', '|', 'preview', 'print', 'template', 'code', 'cut', 'copy', 'paste',
+	// 	'source', '|', 'undo', 'redo', '|', 'preview', 'print', 'template', 'code',
 	// 	'plainpaste', 'wordpaste', '|', 'justifyleft', 'justifycenter', 'justifyright',
 	// 	'justifyfull', 'insertorderedlist', 'insertunorderedlist', 'indent', 'outdent', 'subscript',
-	// 	'superscript', 'clearhtml', 'quickformat', 'selectall', '|', 'fullscreen', '/',
+	// 	'superscript', 'clearhtml', 'quickformat', 'selectall', '|', 'link', 'unlink','fullscreen', '/',
 	// 	'formatblock', 'fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold',
-	// 	'italic', 'underline', 'strikethrough', 'lineheight', 'removeformat', '|', 'image', 'multiimage',
+	// 	'italic', 'underline', 'strikethrough', 'lineheight', 'removeformat', '|', 'image', 'multiimage','graft',
 	// 	'flash', 'media', 'insertfile', 'table', 'hr', 'emoticons', 'baidumap', 'pagebreak',
-	// 	'anchor', 'link', 'unlink', '|', 'about'
+	// 	'anchor', 'about'
 	// ],
-
-	items : [
-		'source', '|', 'undo', 'redo', '|', 'preview', 'print', 'template', 'code',
-		'plainpaste', 'wordpaste', '|', 'justifyleft', 'justifycenter', 'justifyright',
-		'justifyfull', 'insertorderedlist', 'insertunorderedlist', 'indent', 'outdent', 'subscript',
-		'superscript', 'clearhtml', 'quickformat', 'selectall', '|', 'link', 'unlink','fullscreen', '/',
-		'formatblock', 'fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold',
-		'italic', 'underline', 'strikethrough', 'lineheight', 'removeformat', '|', 'image', 'multiimage','graft',
-		'flash', 'media', 'insertfile', 'table', 'hr', 'emoticons', 'baidumap', 'pagebreak',
-		'anchor', 'about'
-	],
 	noDisableItems : ['source', 'fullscreen'],
 	colorTable : [
 		['#E53333', '#E56600', '#FF9900', '#64451D', '#DFC5A4', '#FFE500'],
@@ -114,8 +114,10 @@ K.options = {
 		console.log(type);
 		alert(message);
 	},
+	dialogOffset : 0, //对话框距离页面顶部的位置，默认为0居中，
 	allowUploadGraft : true, //是否允许保存涂鸦
 	resLoadCache : { //静态资源加载缓存
 
-	}
+	},
+	tableBorderColor : '#cccccc', //表格默认边框颜色
 };

@@ -18,25 +18,31 @@ KindEditor.plugin('flash', function(K) {
 	self.plugin.flash = {
 		edit : function() {
 			var html = [
-				'<div style="padding:20px;">',
+				'<div class="ke-dialog-content-inner">',
 				//url
-				'<div class="ke-dialog-row">',
-				'<label for="keUrl" style="width:60px;">' + lang.url + '</label>',
+				'<div class="ke-dialog-row ke-clearfix">',
+				'<label for="keUrl" class="row-left">' + lang.url + '：</label>',
+				'<div class="row-right">',
 				'<input class="ke-input-text" type="text" id="keUrl" name="url" value="" style="width:160px;" /> &nbsp;',
 				'<input type="button" class="ke-upload-button" value="' + lang.upload + '" /> &nbsp;',
 				'<span class="ke-button-common ke-button-outer">',
 				'<input type="button" class="ke-button-common ke-button" name="viewServer" value="' + lang.viewServer + '" />',
 				'</span>',
 				'</div>',
+				'</div>',
 				//width
-				'<div class="ke-dialog-row">',
-				'<label for="keWidth" style="width:60px;">' + lang.width + '</label>',
+				'<div class="ke-dialog-row ke-clearfix">',
+				'<label for="keWidth" class="row-left">' + lang.width + '：</label>',
+				'<div class="row-right">',
 				'<input type="text" id="keWidth" class="ke-input-text ke-input-number" name="width" value="550" maxlength="4" /> ',
 				'</div>',
+				'</div>',
 				//height
-				'<div class="ke-dialog-row">',
-				'<label for="keHeight" style="width:60px;">' + lang.height + '</label>',
+				'<div class="ke-dialog-row ke-clearfix">',
+				'<label for="keHeight" class="row-left">' + lang.height + '：</label>',
+				'<div class="row-right">',
 				'<input type="text" id="keHeight" class="ke-input-text ke-input-number" name="height" value="400" maxlength="4" /> ',
+				'</div>',
 				'</div>',
 				'</div>'
 			].join('');

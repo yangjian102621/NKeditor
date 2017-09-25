@@ -5,7 +5,7 @@
 * @author Roddy <luolonghao@gmail.com>
 * @website http://www.kindsoft.net/
 * @licence http://www.kindsoft.net/license.php
-* @version 4.2.1 (2017-09-21)
+* @version 5.0.0 (2017-09-25)
 *******************************************************************************/
 (function (window, undefined) {
 	if (window.KindEditor) {
@@ -19,7 +19,7 @@ if (!window.console) {
 if (!console.log) {
 	console.log = function () {};
 }
-var _VERSION = '4.2.1 (2017-09-21)',
+var _VERSION = '5.0.0 (2017-09-25)',
 	_ua = navigator.userAgent.toLowerCase(),
 	_IE = _ua.indexOf('msie') > -1 && _ua.indexOf('opera') == -1,
 	_NEWIE = _ua.indexOf('msie') == -1 && _ua.indexOf('trident') > -1,
@@ -156,8 +156,7 @@ function _extend(child, parent, proto) {
 	child.prototype = childProto;
 	child.parent = parent ? parent.prototype : null;
 }
-
-
+
 function _json(text) {
 	var match;
 	if ((match = /\{[\s\S]*\}|\[[\s\S]*\]/.exec(text))) {
@@ -178,8 +177,7 @@ function _json(text) {
 	}
 	throw 'JSON parse error';
 }
-
-
+
 function _merge(distObj, obj) {
 	for (var name in distObj) {
 		obj[name] = distObj[name];
@@ -262,22 +260,22 @@ K.options = {
 	fullscreenShortcut : false,
 	bodyClass : 'ke-content',
 	indentChar : '\t',
-	cssPath : '',
+	cssPath : 'plugins/code/prettify.css',
 	cssData : '',
 	minWidth : 650,
 	minHeight : 300,
 	minChangeSize : 50,
 	zIndex : 811213,
-    items : [
-    	'source', 'undo', 'redo', 'preview', 'print', 'template', 'code', 'cut', 'copy', 'paste',
-    	'plainpaste', 'wordpaste', 'justifyleft', 'justifycenter', 'justifyright',
-    	'justifyfull', 'insertorderedlist', 'insertunorderedlist', 'indent', 'outdent', 'subscript',
-    	'superscript', 'clearhtml', 'quickformat', 'selectall', 'fullscreen', '/',
-    	'formatblock', 'fontname', 'fontsize',  'forecolor', 'hilitecolor', 'bold',
-    	'italic', 'underline', 'strikethrough', 'lineheight', 'removeformat', 'image', 'multiimage',
-    	'flash', 'media', 'insertfile', 'table', 'hr', 'emoticons', 'baidumap', 'pagebreak',
-    	'anchor', 'link', 'unlink', 'about'
-    ],
+	items : [
+		'source', 'undo', 'redo',  'preview', 'print', 'template', 'code', 'cut', 'copy', 'paste',
+		'plainpaste', 'wordpaste', 'justifyleft', 'justifycenter', 'justifyright',
+		'justifyfull', 'insertorderedlist', 'insertunorderedlist', 'indent', 'outdent', 'subscript',
+		'superscript', 'clearhtml', 'quickformat', 'selectall', 'fullscreen', '/',
+		'formatblock', 'fontname', 'fontsize', 'forecolor', 'hilitecolor', 'bold',
+		'italic', 'underline', 'strikethrough', 'lineheight', 'removeformat', 'image', 'multiimage','graft',
+		'flash', 'media', 'insertfile', 'table', 'hr', 'emoticons', 'baidumap', 'pagebreak',
+		'anchor', 'link', 'unlink', 'about'
+	],
 	noDisableItems : ['source', 'fullscreen'],
 	colorTable : [
 		['#E53333', '#E56600', '#FF9900', '#64451D', '#DFC5A4', '#FFE500'],
@@ -329,19 +327,18 @@ K.options = {
 		console.log(type);
 		alert(message);
 	},
+	dialogOffset : 0,
 	allowUploadGraft : true,
 	resLoadCache : {
-	}
+	},
+	tableBorderColor : '#cccccc',
 };
 
 
 var _useCapture = false;
-
-
-var _INPUT_KEY_MAP = _toMap('8,9,13,32,46,48..57,59,61,65..90,106,109..111,188,190..192,219..222');
-
-var _CURSORMOVE_KEY_MAP = _toMap('33..40');
-
+
+var _INPUT_KEY_MAP = _toMap('8,9,13,32,46,48..57,59,61,65..90,106,109..111,188,190..192,219..222');
+var _CURSORMOVE_KEY_MAP = _toMap('33..40');
 var _CHANGE_KEY_MAP = {};
 _each(_INPUT_KEY_MAP, function(key, val) {
 	_CHANGE_KEY_MAP[key] = val;
@@ -349,16 +346,14 @@ _each(_INPUT_KEY_MAP, function(key, val) {
 _each(_CURSORMOVE_KEY_MAP, function(key, val) {
 	_CHANGE_KEY_MAP[key] = val;
 });
-
-
+
 function _bindEvent(el, type, fn) {
 	if (el.addEventListener){
 		el.addEventListener(type, fn, _useCapture);
 	} else if (el.attachEvent){
 		el.attachEvent('on' + type, fn);
 	}
-}
-
+}
 function _unbindEvent(el, type, fn) {
 	if (el.removeEventListener){
 		el.removeEventListener(type, fn, _useCapture);
@@ -369,8 +364,7 @@ function _unbindEvent(el, type, fn) {
 var _EVENT_PROPS = ('altKey,attrChange,attrName,bubbles,button,cancelable,charCode,clientX,clientY,ctrlKey,currentTarget,' +
 	'data,detail,eventPhase,fromElement,handler,keyCode,metaKey,newValue,offsetX,offsetY,originalTarget,pageX,' +
 	'pageY,prevValue,relatedNode,relatedTarget,screenX,screenY,shiftKey,srcElement,target,toElement,view,wheelDelta,which').split(',');
-
-
+
 function KEvent(el, event) {
 	this.init(el, event);
 }
@@ -928,8 +922,7 @@ function _formatHtml(html, htmlTags, urlType, wellFormatted, indentChar) {
 	html = html.replace(/\n\s*\n/g, '\n');
 	html = html.replace(/<span id="__kindeditor_pre_newline__">\n/g, '\n');
 	return _trim(html);
-}
-
+}
 function _clearMsWord(html, htmlTags) {
 	html = html.replace(/<meta[\s\S]*?>/ig, '')
 		.replace(/<![\s\S]*?>/ig, '')
@@ -942,8 +935,7 @@ function _clearMsWord(html, htmlTags) {
 			return full.replace(/border-bottom:([#\w\s]+)/ig, 'border:$1');
 		});
 	return _formatHtml(html, htmlTags);
-}
-
+}
 function _mediaType(src) {
 	if (/\.(rm|rmvb)(\?|$)/i.test(src)) {
 		return 'audio/x-pn-realaudio-plugin';
@@ -952,8 +944,7 @@ function _mediaType(src) {
 		return 'application/x-shockwave-flash';
 	}
 	return 'video/x-ms-asf-plugin';
-}
-
+}
 function _mediaClass(type) {
 	if (/realaudio/i.test(type)) {
 		return 'ke-rm';
@@ -997,10 +988,7 @@ function _mediaImg(blankPath, attrs) {
 	html += 'data-ke-tag="' + escape(srcTag) + '" alt="" />';
 	return html;
 }
-
-
-
-
+
 function _tmpl(str, data) {
 	var fn = new Function("obj",
 		"var p=[],print=function(){p.push.apply(p,arguments);};" +
@@ -1337,8 +1325,7 @@ function _getScrollPos(doc) {
 	}
 	return {x : x, y : y};
 }
-
-
+
 function KNode(node) {
 	this.init(node);
 }
@@ -1974,8 +1961,7 @@ function _copyAndDelete(range, isCopy, isDelete) {
 		}
 	}
 	return isCopy ? frag : range;
-}
-
+}
 function _moveToElementText(range, el) {
 	var node = el;
 	while (node) {
@@ -1988,8 +1974,7 @@ function _moveToElementText(range, el) {
 	try {
 		range.moveToElementText(el);
 	} catch(e) {}
-}
-
+}
 function _getStartEnd(rng, isStart) {
 	var doc = rng.parentElement().ownerDocument,
 		pointRange = rng.duplicate();
@@ -2054,8 +2039,7 @@ function _getStartEnd(rng, isStart) {
 		}
 	}
 	return {node: startNode, offset: startPos};
-}
-
+}
 function _getEndRange(node, offset) {
 	var doc = node.ownerDocument || node,
 		range = doc.body.createTextRange();
@@ -2112,8 +2096,7 @@ function _getEndRange(node, offset) {
 	range.moveStart('character', offset);
 	K(dummy).remove();
 	return range;
-}
-
+}
 function _toRange(rng) {
 	var doc, range;
 	function tr2td(start) {
@@ -2146,8 +2129,7 @@ function _toRange(rng) {
 	range.setEnd(rng.endContainer, rng.endOffset);
 	return range;
 }
-
-
+
 function KRange(doc) {
 	this.init(doc);
 }
@@ -2565,14 +2547,12 @@ K.START_TO_END = _START_TO_END;
 K.END_TO_END = _END_TO_END;
 K.END_TO_START = _END_TO_START;
 
-
-
+
 function _nativeCommand(doc, key, val) {
 	try {
 		doc.execCommand(key, false, val);
 	} catch(e) {}
-}
-
+}
 function _nativeCommandValue(doc, key) {
 	var val = '';
 	try {
@@ -2582,13 +2562,11 @@ function _nativeCommandValue(doc, key) {
 		val = '';
 	}
 	return val;
-}
-
+}
 function _getSel(doc) {
 	var win = _getWin(doc);
 	return _IERANGE ? doc.selection : win.getSelection();
-}
-
+}
 function _getRng(doc) {
 	var sel = _getSel(doc), rng;
 	try {
@@ -2602,8 +2580,7 @@ function _getRng(doc) {
 		return null;
 	}
 	return rng;
-}
-
+}
 function _singleKeyMap(map) {
 	var newMap = {}, arr, v;
 	_each(map, function(key, val) {
@@ -2614,8 +2591,7 @@ function _singleKeyMap(map) {
 		}
 	});
 	return newMap;
-}
-
+}
 function _hasAttrOrCss(knode, map) {
 	return _hasAttrOrCssByKey(knode, map, '*') || _hasAttrOrCssByKey(knode, map);
 }
@@ -2646,8 +2622,7 @@ function _hasAttrOrCssByKey(knode, map, mapKey) {
 		}
 	}
 	return false;
-}
-
+}
 function _removeAttrOrCss(knode, map) {
 	if (knode.type != 1) {
 		return;
@@ -2685,26 +2660,20 @@ function _removeAttrOrCssByKey(knode, map, mapKey) {
 	if (allFlag) {
 		knode.remove(true);
 	}
-}
-
+}
 function _getInnerNode(knode) {
 	var inner = knode;
 	while (inner.first()) {
 		inner = inner.first();
 	}
 	return inner;
-}
-
+}
 function _isEmptyNode(knode) {
 	if (knode.type != 1 || knode.isSingle()) {
 		return false;
 	}
 	return knode.html().replace(/<[^>]+>/g, '') === '';
-}
-
-
-
-
+}
 function _mergeWrapper(a, b) {
 	a = a.clone(true);
 	var lastA = _getInnerNode(a), childA = a, merged = false;
@@ -2723,8 +2692,7 @@ function _mergeWrapper(a, b) {
 		b = b.first();
 	}
 	return a;
-}
-
+}
 function _wrapNode(knode, wrapper) {
 	wrapper = wrapper.clone(true);
 	if (knode.type == 3) {
@@ -2748,8 +2716,7 @@ function _wrapNode(knode, wrapper) {
 	}
 	nodeWrapper.replaceWith(wrapper);
 	return wrapper;
-}
-
+}
 function _mergeAttrs(knode, attrs, styles) {
 	_each(attrs, function(key, val) {
 		if (key !== 'style') {
@@ -2759,8 +2726,7 @@ function _mergeAttrs(knode, attrs, styles) {
 	_each(styles, function(key, val) {
 		knode.css(key, val);
 	});
-}
-
+}
 function _inPreElement(knode) {
 	while (knode && knode.name != 'body') {
 		if (_PRE_TAG_MAP[knode.name] || knode.name == 'div' && knode.hasClass('ke-script')) {
@@ -2769,8 +2735,7 @@ function _inPreElement(knode) {
 		knode = knode.parent();
 	}
 	return false;
-}
-
+}
 function KCmd(range) {
 	this.init(range);
 }
@@ -3454,8 +3419,7 @@ function _drag(options) {
 		}
 	});
 }
-
-
+
 function KWidget(options) {
 	this.init(options);
 }
@@ -3554,8 +3518,11 @@ _extend(KWidget, {
 		} else {
 			var docEl = _docElement(self.doc);
 			x = _round(scrollPos.x + (docEl.clientWidth - w) / 2);
+			y = _round(scrollPos.y + (docEl.clientHeight - h) / 2);
 		}
-		y = scrollPos.y + 20;
+		if (K.options.dialogOffset > 0) {
+			y = scrollPos.y + 20;
+		}
 		if (!(_IE && _V < 7 || _QUIRKS)) {
 			x -= scrollPos.x;
 			y -= scrollPos.y;
@@ -3629,7 +3596,9 @@ function _getInitHtml(themesPath, bodyClass, cssPath, cssData) {
 		'table.ke-zeroborder td {border:1px dotted #AAA;}',
 		'img.ke-flash {',
 		'	border:1px solid #AAA;',
-		'	background-image:url(' + themesPath + 'common/flash.gif);',
+		'	background-image:url(' + themesPath + 'common/flash.svg);',
+		'	*background-image:url(' + themesPath + 'common/flash.png);',
+		'	background-size:64px 64px;',
 		'	background-position:center center;',
 		'	background-repeat:no-repeat;',
 		'	width:100px;',
@@ -3645,8 +3614,10 @@ function _getInitHtml(themesPath, bodyClass, cssPath, cssData) {
 		'}',
 		'img.ke-media {',
 		'	border:1px solid #AAA;',
-		'	background-image:url(' + themesPath + 'common/media.gif);',
+		'	background-image:url(' + themesPath + 'common/play.svg);',
+		'	*background-image:url(' + themesPath + 'common/play.png);',
 		'	background-position:center center;',
+		'	background-size:64px 64px;',
 		'	background-repeat:no-repeat;',
 		'	width:100px;',
 		'	height:100px;',
@@ -3694,8 +3665,7 @@ function _elementVal(knode, val) {
 	}
 	return knode.html(val);
 }
-
-
+
 function KEdit(options) {
 	this.init(options);
 }
@@ -3956,8 +3926,7 @@ function _selectToolbar(name, fn) {
 		fn(knode);
 	}
 }
-
-
+
 function KToolbar(options) {
 	this.init(options);
 }
@@ -4077,8 +4046,7 @@ function _toolbar(options) {
 K.ToolbarClass = KToolbar;
 K.toolbar = _toolbar;
 
-
-
+
 function KMenu(options) {
 	this.init(options);
 }
@@ -4161,8 +4129,7 @@ function _menu(options) {
 K.MenuClass = KMenu;
 K.menu = _menu;
 
-
-
+
 function KColorPicker(options) {
 	this.init(options);
 }
@@ -4342,8 +4309,7 @@ function _createButton(arg) {
 	}
 	return btn;
 }
-
-
+
 function KDialog(options) {
 	this.init(options);
 }
@@ -4379,7 +4345,8 @@ _extend(KDialog, KWidget, {
 		bodyDiv.append(body);
 		var footerDiv = K('<div class="ke-dialog-footer"></div>');
 		if (previewBtn || yesBtn || noBtn) {
-			contentDiv.append(footerDiv);
+			self.div.append(footerDiv);
+			contentDiv.height(self.div.height() - footerDiv.height());
 		}
 		_each([
 			{ btn : previewBtn, name : 'preview' },
@@ -4540,8 +4507,7 @@ function _loadScript(url, fn) {
 		}
 	};
 }
-
-
+
 function _chopQuery(url) {
 	var index = url.indexOf('?');
 	return index > 0 ? url.substr(0, index) : url;
@@ -4641,8 +4607,7 @@ function _lang(mixed, langType) {
 		_language[langType][obj.ns][obj.key] = val;
 	});
 }
-
-
+
 function _getImageFromRange(range, fn) {
 	if (range.collapsed) {
 		return;
@@ -4853,9 +4818,7 @@ function _addBookmarkToStack(stack, bookmark) {
 		stack.push(bookmark);
 	}
 }
-
-
-
+
 function _undoToRedo(fromStack, toStack) {
 	var self = this, edit = self.edit,
 		body = edit.doc.body,
@@ -5546,7 +5509,6 @@ function _create(expr, options) {
 	if (_undef(options.loadStyleMode, K.options.loadStyleMode)) {
 		var themeType = _undef(options.themeType, K.options.themeType);
 		_loadStyle(options.themesPath + themeType + '/editor.min.css');
-		_loadStyle(options.pluginsPath + 'code/prettify.css');
 	}
 	function create(editor) {
 		_each(_plugins, function(name, fn) {
@@ -5617,8 +5579,7 @@ K.appendHtml = function(expr, val) {
 		this.appendHtml(val);
 	});
 };
-
-
+
 if (_IE && _V < 7) {
 	_nativeCommand(document, 'BackgroundImageCache', true);
 }
@@ -5628,8 +5589,7 @@ K.create = _create;
 K.instances = _instances;
 K.plugin = _plugin;
 K.lang = _lang;
-
-
+
 _plugin('core', function(K) {
 	var self = this,
 		shortcutKeys = {
@@ -5764,6 +5724,7 @@ _plugin('core', function(K) {
 				name : 'fontname',
 				width : 150
 			});
+		console
 		_each(self.lang('fontname.fontName'), function(key, val) {
 			menu.addItem({
 				title : '<span style="font-family: ' + key + ';" unselectable="on">' + val + '</span>',
@@ -6255,7 +6216,7 @@ KindEditor.lang({
 	'multiimage.noListUrl' : '无法获取图片，请先配置 fileManagerJson.',
 	'multiimage.noSearchUrl' : '无法进行图片搜索，请先配置 imageSearchJson.',
 	'multiimage.noDataText' : '(⊙o⊙)亲，没有多数据了。',
-	'multiimage.colseText' : '关闭对话框',
+	'multiimage.closeText' : '关闭对话框',
 	'multiimage.confirmBtnText' : '确定',
 	'multiimage.cancelBtnText' : '取消',
 	'multiimage.loadMoreData' : '往下拉动滚动条可以加载更多数据.',
@@ -6282,7 +6243,7 @@ KindEditor.lang({
 	'filemanager.noDataText' : '(⊙o⊙)亲，没有多数据了。',
 	'filemanager.title' : '文件服务器',
 	'filemanager.noListUrl' : '无法获取图片，请先配置 fileManagerJson.',
-	'filemanager.colseText' : '关闭对话框',
+	'filemanager.closeText' : '关闭对话框',
 	'filemanager.confirmBtnText' : '确定',
 	'filemanager.cancelBtnText' : '取消',
 	'filemanager.loadMoreData' : '往下拉动滚动条可以加载更多数据.',
@@ -6319,7 +6280,7 @@ KindEditor.lang({
 	'table.alignBottom' : '底部',
 	'table.alignBaseline' : '基线',
 	'table.border' : '边框',
-	'table.borderWidth' : '边框',
+	'table.borderWidth' : '宽度',
 	'table.borderColor' : '颜色',
 	'table.backgroundColor' : '背景颜色',
 	'map.address' : '地址: ',
@@ -6377,9 +6338,9 @@ KindEditor.plugin('anchor', function(K) {
 	var self = this, name = 'anchor', lang = self.lang(name + '.');
 	self.plugin.anchor = {
 		edit : function() {
-			var html = ['<div style="padding:20px;">',
-					'<div class="ke-dialog-row">',
-					'<label for="keName">' + lang.name + '</label>',
+			var html = ['<div class="ke-dialog-content-inner">',
+					'<div class="ke-dialog-row ke-clearfix">',
+					'<label for="keName">' + lang.name + '：</label>',
 					'<input class="ke-input-text" type="text" id="keName" name="name" value="" style="width:100px;" />',
 					'</div>',
 					'</div>'].join('');
@@ -6475,18 +6436,15 @@ KindEditor.plugin('baidumap', function(K) {
 	var mapWidth = K.undef(self.mapWidth, 558);
 	var mapHeight = K.undef(self.mapHeight, 360);
 	self.clickToolbar(name, function() {
-		var html = ['<div style="padding:10px 20px;">',
-			'<div class="ke-header">',
-			'<div class="ke-left">',
-			lang.address + ' <input id="kindeditor_plugin_map_address" name="address" class="ke-input-text" value="" style="width:200px;" /> ',
-			'<span class="ke-button-common ke-button-outer">',
+		var html = ['<div class="ke-dialog-content-inner" style="padding-top: 0">',
+			'<div class="ke-dialog-row ke-clearfix">',
+			'<div class="ke-header">' + lang.address,
+			'<input id="kindeditor_plugin_map_address" name="address" class="ke-input-text" value="" style="width:200px;" /> ',
+			'<span>',
 			'<input type="button" name="searchBtn" class="ke-button-common ke-button" value="' + lang.search + '" />',
 			'</span>',
+			'<input type="checkbox" id="keInsertDynamicMap" name="insertDynamicMap" class="checkbox" value="1" /> <label for="keInsertDynamicMap">' + lang.insertDynamicMap + '</label>',
 			'</div>',
-			'<div class="ke-right">',
-			'<input type="checkbox" id="keInsertDynamicMap" name="insertDynamicMap" value="1" /> <label for="keInsertDynamicMap">' + lang.insertDynamicMap + '</label>',
-			'</div>',
-			'<div class="ke-clearfix"></div>',
 			'</div>',
 			'<div class="ke-map" style="width:' + mapWidth + 'px;height:' + mapHeight + 'px;"></div>',
 			'</div>'].join('');
@@ -6558,8 +6516,7 @@ KindEditor.plugin('baidumap', function(K) {
 * @site http://www.kindsoft.net/
 * @licence http://www.kindsoft.net/license.php
 *******************************************************************************/
-
-
+
 KindEditor.plugin('map', function(K) {
 	var self = this, name = 'map', lang = self.lang(name + '.');
 	self.clickToolbar(name, function() {
@@ -6719,16 +6676,14 @@ KindEditor.plugin('clearhtml', function(K) {
 * @site http://www.kindsoft.net/
 * @licence http://www.kindsoft.net/license.php
 *******************************************************************************/
-
-
-
+
 KindEditor.plugin('code', function(K) {
 	var self = this, name = 'code';
 	self.clickToolbar(name, function() {
 		var lang = self.lang(name + '.'),
-			html = ['<div style="padding:10px 20px;">',
+			html = ['<div style="margin: 0px 20px;">',
 				'<div class="ke-dialog-row">',
-				'<select class="ke-code-type">',
+				'<select class="ke-select" style="margin-bottom: 5px;">',
 				'<option value="js">JavaScript</option>',
 				'<option value="html">HTML</option>',
 				'<option value="css">CSS</option>',
@@ -6920,6 +6875,7 @@ KindEditor.plugin('filemanager', function(K) {
 			list_url : fileManagerJson,
 			lang : lang,
 			fileType : options.dirName,
+			top : self.dialogOffset,
 			callback : function(data) {
 				clickFn.call(this, data[0]);
 			}
@@ -6946,22 +6902,28 @@ KindEditor.plugin('flash', function(K) {
 	self.plugin.flash = {
 		edit : function() {
 			var html = [
-				'<div style="padding:20px;">',
-				'<div class="ke-dialog-row">',
-				'<label for="keUrl" style="width:60px;">' + lang.url + '</label>',
+				'<div class="ke-dialog-content-inner">',
+				'<div class="ke-dialog-row ke-clearfix">',
+				'<label for="keUrl" class="row-left">' + lang.url + '：</label>',
+				'<div class="row-right">',
 				'<input class="ke-input-text" type="text" id="keUrl" name="url" value="" style="width:160px;" /> &nbsp;',
 				'<input type="button" class="ke-upload-button" value="' + lang.upload + '" /> &nbsp;',
 				'<span class="ke-button-common ke-button-outer">',
 				'<input type="button" class="ke-button-common ke-button" name="viewServer" value="' + lang.viewServer + '" />',
 				'</span>',
 				'</div>',
-				'<div class="ke-dialog-row">',
-				'<label for="keWidth" style="width:60px;">' + lang.width + '</label>',
+				'</div>',
+				'<div class="ke-dialog-row ke-clearfix">',
+				'<label for="keWidth" class="row-left">' + lang.width + '：</label>',
+				'<div class="row-right">',
 				'<input type="text" id="keWidth" class="ke-input-text ke-input-number" name="width" value="550" maxlength="4" /> ',
 				'</div>',
-				'<div class="ke-dialog-row">',
-				'<label for="keHeight" style="width:60px;">' + lang.height + '</label>',
+				'</div>',
+				'<div class="ke-dialog-row ke-clearfix">',
+				'<label for="keHeight" class="row-left">' + lang.height + '：</label>',
+				'<div class="row-right">',
 				'<input type="text" id="keHeight" class="ke-input-text ke-input-number" name="height" value="400" maxlength="4" /> ',
+				'</div>',
 				'</div>',
 				'</div>'
 			].join('');
@@ -7115,48 +7077,60 @@ KindEditor.plugin('image', function(K) {
 			hiddenElements.push('<input type="hidden" name="' + k + '" value="' + extraParams[k] + '" />');
 		}
 		var html = [
-			'<div style="padding:20px;">',
+			'<div class="ke-dialog-content-inner">',
 			'<div class="tabs"></div>',
 			'<div class="tab1" style="display:none;">',
-			'<div class="ke-dialog-row">',
-			'<label for="remoteUrl" style="width:60px;">' + lang.remoteUrl + '</label>',
+			'<div class="ke-dialog-row ke-clearfix">',
+			'<label for="remoteUrl" class="row-left">' + lang.remoteUrl + '：</label>',
+			'<div class="row-right">',
 			'<input type="text" id="remoteUrl" class="ke-input-text" name="url" value="" style="width:250px;" /> &nbsp;',
 			'<span class="ke-button-common ke-button-outer">',
 			'<input type="button" class="ke-button-common ke-button" name="viewServer" value="' + lang.viewServer + '" />',
 			'</span>',
 			'</div>',
-			'<div class="ke-dialog-row">',
-			'<label for="remoteWidth" style="width:60px;">' + lang.size + '</label>',
-			lang.width + ' <input type="text" id="remoteWidth" class="ke-input-text ke-input-number" name="width" value="" maxlength="4" /> ',
+			'</div>',
+			'<div class="ke-dialog-row ke-clearfix ">',
+			'<label for="remoteWidth" class="row-left">' + lang.size + '：</label>',
+			'<div class="row-right">'+lang.width + ' <input type="text" id="remoteWidth" class="ke-input-text ke-input-number" name="width" value="" maxlength="4" /> ',
 			lang.height + ' <input type="text" class="ke-input-text ke-input-number" name="height" value="" maxlength="4" /> ',
 			'<img class="ke-refresh-btn" src="' + imgPath + 'refresh.png" width="16" height="16" alt="" style="cursor:pointer;" title="' + lang.resetSize + '" />',
 			'</div>',
-			'<div class="ke-dialog-row">',
-			'<label style="width:60px;">' + lang.align + '</label>',
-			'<label><input type="radio" name="align" class="ke-inline-block" value="" checked="checked" /> <img name="defaultImg" src="' + imgPath + 'align_top.gif" width="23" height="25" alt="" /></lable>',
-			' <label><input type="radio" name="align" class="ke-inline-block" value="left" /> <img name="leftImg" src="' + imgPath + 'align_left.gif" width="23" height="25" alt="" /></lable>',
-			' <label><input type="radio" name="align" class="ke-inline-block" value="right" /> <img name="rightImg" src="' + imgPath + 'align_right.gif" width="23" height="25" alt="" /></lable>',
 			'</div>',
-			'<div class="ke-dialog-row">',
-			'<label for="remoteTitle" style="width:60px;">' + lang.imgTitle + '</label>',
+			'<div class="ke-dialog-row ke-clearfix">',
+			'<label class="row-left">' + lang.align + '：</label>',
+			'<div class="row-right">',
+			'<label><input type="radio" name="align" class="ke-inline-block" value="" checked="checked" /> ' +
+			'<img name="defaultImg" src="' + imgPath + 'align_top.gif" width="23" height="25" alt="" /></lable>',
+			' <label><input type="radio" name="align" class="ke-inline-block" value="left" /> ' +
+			'<img name="leftImg" src="' + imgPath + 'align_left.gif" width="23" height="25" alt="" /></lable>',
+			' <label><input type="radio" name="align" class="ke-inline-block" value="right" /> ' +
+			'<img name="rightImg" src="' + imgPath + 'align_right.gif" width="23" height="25" alt="" /></lable>',
+			'</div>',
+			'</div>',
+			'<div class="ke-dialog-row ke-clearfix">',
+			'<label for="remoteTitle" class="row-left">' + lang.imgTitle + '：</label>',
+			'<div class="row-right">',
 			'<input type="text" id="remoteTitle" class="ke-input-text" name="title" value="" style="width:250px;" />',
+			'</div>',
 			'</div>',
 			'</div>',
 			'<div class="tab2" style="display:none;">',
 			'<iframe name="' + target + '" style="display:none;"></iframe>',
 			'<form class="ke-upload-area ke-form" method="post" enctype="multipart/form-data" target="' + target + '" action="' + K.addParam(uploadJson, 'fileType=image') + '">',
-			'<div class="ke-dialog-row">',
+			'<div class="ke-dialog-row ke-clearfix">',
 			hiddenElements.join(''),
-			'<label style="width:60px;">' + lang.localUrl + '</label>',
+			'<label class="row-left">' + lang.localUrl + '：</label>',
+			'<div class="row-right">',
 			'<input type="text" name="localUrl" class="ke-input-text" tabindex="-1" style="width:250px;" readonly="true" /> &nbsp;',
 			'<input type="button" class="ke-upload-button" value="' + lang.upload + '" />',
+			'</div>',
 			'</div>',
 			'</form>',
 			'</div>',
 			'</div>'
 		].join('');
 		var dialogWidth = showLocal || allowFileManager ? 450 : 400,
-			dialogHeight = showLocal && showRemote ? 300 : 250;
+			dialogHeight = showLocal && showRemote ? 310 : 260;
 		var dialog = self.createDialog({
 			name : name,
 			width : dialogWidth,
@@ -7261,7 +7235,7 @@ KindEditor.plugin('image', function(K) {
 					if (!fillDescAfterUploadImage) {
 						clickFn.call(self, url, data.title, data.width, data.height, data.border, data.align);
 					} else {
-						K(".ke-dialog-row #remoteUrl", div).val(url);
+						K(".ke-dialog-row ke-clearfix #remoteUrl", div).val(url);
 						K(".ke-tabs-li", div)[0].click();
 						K(".ke-refresh-btn", div).click();
 					}
@@ -7403,18 +7377,22 @@ KindEditor.plugin('insertfile', function(K) {
 			fileTitle = K.undef(options.fileTitle, ''),
 			clickFn = options.clickFn;
 		var html = [
-			'<div style="padding:20px;">',
-			'<div class="ke-dialog-row">',
-			'<label for="keUrl" style="width:60px;">' + lang.url + '</label>',
+			'<div class="ke-dialog-content-inner">',
+			'<div class="ke-dialog-row ke-clearfix">',
+			'<label for="keUrl" class="row-left">' + lang.url + '：</label>',
+			'<div class="row-right">',
 			'<input type="text" id="keUrl" name="url" class="ke-input-text" style="width:160px;" /> &nbsp;',
 			'<input type="button" class="ke-upload-button" value="' + lang.upload + '" /> &nbsp;',
 			'<span class="ke-button-common ke-button-outer">',
 			'<input type="button" class="ke-button-common ke-button" name="viewServer" value="' + lang.viewServer + '" />',
 			'</span>',
 			'</div>',
-			'<div class="ke-dialog-row">',
-			'<label for="keTitle" style="width:60px;">' + lang.title + '</label>',
+			'</div>',
+			'<div class="ke-dialog-row ke-clearfix">',
+			'<label for="keTitle" class="row-left">' + lang.title + '：</label>',
+			'<div class="row-right">',
 			'<input type="text" id="keTitle" class="ke-input-text" name="title" value="" style="width:160px;" /></div>',
+			'</div>',
 			'</div>',
 			'</form>',
 			'</div>'
@@ -7564,15 +7542,20 @@ KindEditor.plugin('link', function(K) {
 	self.plugin.link = {
 		edit : function() {
 			var lang = self.lang(name + '.'),
-				html = '<div style="padding:20px;">' +
-					'<div class="ke-dialog-row">' +
-					'<label for="keUrl" style="width:60px;">' + lang.url + '</label>' +
-					'<input class="ke-input-text" type="text" id="keUrl" name="url" value="" style="width:260px;" /></div>' +
-					'<div class="ke-dialog-row"">' +
-					'<label for="keType" style="width:60px;">' + lang.linkType + '</label>' +
-					'<select id="keType" name="type"></select>' +
-					'</div>' +
-					'</div>',
+				html = ['<div class="ke-dialog-content-inner">',
+				'<div class="ke-dialog-row ke-clearfix">',
+				'<label for="keUrl" class="row-left">' + lang.url + '：</label>',
+				'<div class="row-right">',
+				'<input class="ke-input-text" type="text" id="keUrl" name="url" value="" style="width:260px;" />',
+				'</div>',
+				'</div>',
+				'<div class="ke-dialog-row ke-clearfix"">',
+				'<label for="keType" class="row-left">' + lang.linkType + '：</label>',
+				'<div class="row-right">',
+				'<select id="keType" class="ke-select" name="type"></select>',
+				'</div>',
+				'</div>',
+				'</div>'].join(""),
 				dialog = self.createDialog({
 					name : name,
 					width : 450,
@@ -7634,33 +7617,41 @@ KindEditor.plugin('media', function(K) {
 	self.plugin.media = {
 		edit : function() {
 			var html = [
-				'<div style="padding:20px;">',
-				'<div class="ke-dialog-row">',
-				'<label for="keUrl" style="width:60px;">' + lang.url + '</label>',
+				'<div class="ke-dialog-content-inner">',
+				'<div class="ke-dialog-row ke-clearfix">',
+				'<label for="keUrl" class="row-left">' + lang.url + '：</label>',
+				'<div class="row-right">',
 				'<input class="ke-input-text" type="text" id="keUrl" name="url" value="" style="width:180px;" /> &nbsp;',
 				'<input type="button" class="ke-upload-button" value="' + lang.upload + '" /> &nbsp;',
 				'<span class="ke-button-common ke-button-outer">',
 				'<input type="button" class="ke-button-common ke-button" name="viewServer" value="' + lang.viewServer + '" />',
 				'</span>',
 				'</div>',
-				'<div class="ke-dialog-row">',
-				'<label for="keWidth" style="width:60px;">' + lang.width + '</label>',
+				'</div>',
+				'<div class="ke-dialog-row ke-clearfix">',
+				'<label for="keWidth" class="row-left">' + lang.width + '：</label>',
+				'<div class="row-right">',
 				'<input type="text" id="keWidth" class="ke-input-text ke-input-number" name="width" value="550" maxlength="4" />',
 				'</div>',
-				'<div class="ke-dialog-row">',
-				'<label for="keHeight" style="width:60px;">' + lang.height + '</label>',
+				'</div>',
+				'<div class="ke-dialog-row ke-clearfix">',
+				'<label for="keHeight" class="row-left">' + lang.height + '：</label>',
+				'<div class="row-right">',
 				'<input type="text" id="keHeight" class="ke-input-text ke-input-number" name="height" value="400" maxlength="4" />',
 				'</div>',
-				'<div class="ke-dialog-row">',
-				'<label for="keAutostart" style="width:60px;">' + lang.autostart + '</label>',
-				'<input type="checkbox" id="keAutostart" name="autostart" value="" /> ',
+				'</div>',
+				'<div class="ke-dialog-row ke-clearfix">',
+				'<label for="keAutostart" class="row-left">' + lang.autostart + '：</label>',
+				'<div class="row-right">',
+				'<input type="checkbox" id="keAutostart" name="autostart" class="ke-input-checkbox" value="" /> ',
+				'</div>',
 				'</div>',
 				'</div>'
 			].join('');
 			var dialog = self.createDialog({
 				name : name,
 				width : 450,
-				height : 230,
+				height : 260,
 				title : self.lang(name),
 				body : html,
 				yesBtn : {
@@ -7793,12 +7784,25 @@ KindEditor.plugin('multiimage', function(K) {
 		K.loadScript(K.options.pluginsPath+name+"/BUpload.min.js");
 		K.loadStyle(K.options.pluginsPath+name+"/css/upload.min.css");
 	}
+	K.locker = function () {
+		var docWidth = Math.max(document.documentElement.clientWidth, document.body.clientWidth);
+		var docHeight = Math.max(document.documentElement.clientHeight, document.body.clientHeight, $(document).height()) + document.documentElement.scrollTop;
+		return K.widget({
+			x : 0,
+			y : 0,
+			cls : 'ke-dialog-lock',
+			width : docWidth,
+			height : docHeight
+		});
+	}
 	self.plugin.multiImageDialog = function(options) {
 		if ( !window.applicationCache ) {
 			K.options.errorMsgHandler("您当前的浏览器不支持HTML5,请先升级浏览器才能使用该上传插件!", "error");
 			return;
 		}
 		var clickFn = options.clickFn;
+		var locker = K.locker();
+		locker.show();
 		var dialog = new BUpload({
 			src : filePostName,
 			upload_url : uploadJson,
@@ -7809,10 +7813,14 @@ KindEditor.plugin('multiimage', function(K) {
 			max_filenum : imageUploadLimit,
 			ext_allow : imageFileTypes,
 			lang : lang,
+			top : self.dialogOffset,
 			fileType : "image",
 			errorHandler : K.options.errorMsgHandler,
 			callback : function(data) {
 				clickFn.call(this, data);
+			},
+			close : function () {
+				locker.remove();
 			}
 		});
 		return dialog;
@@ -8161,6 +8169,7 @@ KindEditor.plugin('quickformat', function(K) {
 *******************************************************************************/
 KindEditor.plugin('table', function(K) {
 	var self = this, name = 'table', lang = self.lang(name + '.'), zeroborder = 'ke-zeroborder';
+	var borderColor = K.undef(self.options.tableBorderColor, '#cccccc');
 	function _setColor(box, color) {
 		color = color.toUpperCase();
 		box.css('background-color', color);
@@ -8215,47 +8224,59 @@ KindEditor.plugin('table', function(K) {
 	self.plugin.table = {
 		prop : function(isInsert) {
 			var html = [
-				'<div style="padding:20px;">',
-				'<div class="ke-dialog-row">',
-				'<label for="keRows" style="width:90px;">' + lang.cells + '</label>',
+				'<div class="ke-dialog-content-inner">',
+				'<div class="ke-dialog-row ke-clearfix">',
+				'<label for="keRows" class="row-left">' + lang.cells + '：</label>',
+				'<div class="row-right">',
 				lang.rows + ' <input type="text" id="keRows" class="ke-input-text ke-input-number" name="rows" value="" maxlength="4" /> &nbsp; ',
 				lang.cols + ' <input type="text" class="ke-input-text ke-input-number" name="cols" value="" maxlength="4" />',
 				'</div>',
-				'<div class="ke-dialog-row">',
-				'<label for="keWidth" style="width:90px;">' + lang.size + '</label>',
+				'</div>',
+				'<div class="ke-dialog-row ke-clearfix">',
+				'<label for="keWidth" class="row-left">' + lang.size + '：</label>',
+				'<div class="row-right">',
 				lang.width + ' <input type="text" id="keWidth" class="ke-input-text ke-input-number" name="width" value="" maxlength="4" /> &nbsp; ',
-				'<select name="widthType">',
+				'<select name="widthType" class="ke-select">',
 				'<option value="%">' + lang.percent + '</option>',
 				'<option value="px">' + lang.px + '</option>',
 				'</select> &nbsp; ',
 				lang.height + ' <input type="text" class="ke-input-text ke-input-number" name="height" value="" maxlength="4" /> &nbsp; ',
-				'<select name="heightType">',
+				'<select name="heightType" class="ke-select">',
 				'<option value="%">' + lang.percent + '</option>',
 				'<option value="px">' + lang.px + '</option>',
 				'</select>',
 				'</div>',
-				'<div class="ke-dialog-row">',
-				'<label for="kePadding" style="width:90px;">' + lang.space + '</label>',
+				'</div>',
+				'<div class="ke-dialog-row ke-clearfix">',
+				'<label for="kePadding" class="row-left">' + lang.space + '：</label>',
+				'<div class="row-right">',
 				lang.padding + ' <input type="text" id="kePadding" class="ke-input-text ke-input-number" name="padding" value="" maxlength="4" /> &nbsp; ',
 				lang.spacing + ' <input type="text" class="ke-input-text ke-input-number" name="spacing" value="" maxlength="4" />',
 				'</div>',
-				'<div class="ke-dialog-row">',
-				'<label for="keAlign" style="width:90px;">' + lang.align + '</label>',
-				'<select id="keAlign" name="align">',
+				'</div>',
+				'<div class="ke-dialog-row ke-clearfix">',
+				'<label for="keAlign" class="row-left">' + lang.align + '：</label>',
+				'<div class="row-right">',
+				'<select id="keAlign" class="ke-select" name="align">',
 				'<option value="">' + lang.alignDefault + '</option>',
 				'<option value="left">' + lang.alignLeft + '</option>',
 				'<option value="center">' + lang.alignCenter + '</option>',
 				'<option value="right">' + lang.alignRight + '</option>',
 				'</select>',
 				'</div>',
-				'<div class="ke-dialog-row">',
-				'<label for="keBorder" style="width:90px;">' + lang.border + '</label>',
+				'</div>',
+				'<div class="ke-dialog-row ke-clearfix">',
+				'<label for="keBorder" class="row-left">' + lang.border + '：</label>',
+				'<div class="row-right">',
 				lang.borderWidth + ' <input type="text" id="keBorder" class="ke-input-text ke-input-number" name="border" value="" maxlength="4" /> &nbsp; ',
 				lang.borderColor + ' <span class="ke-inline-block ke-input-color"></span>',
 				'</div>',
-				'<div class="ke-dialog-row">',
-				'<label for="keBgColor" style="width:90px;">' + lang.backgroundColor + '</label>',
+				'</div>',
+				'<div class="ke-dialog-row ke-clearfix">',
+				'<label for="keBgColor" class="row-left">' + lang.backgroundColor + '：</label>',
+				'<div class="row-right">',
 				'<span class="ke-inline-block ke-input-color"></span>',
+				'</div>',
 				'</div>',
 				'</div>'
 			].join('');
@@ -8439,7 +8460,7 @@ KindEditor.plugin('table', function(K) {
 			colorBox = K('.ke-input-color', div);
 			_initColorPicker(div, colorBox.eq(0));
 			_initColorPicker(div, colorBox.eq(1));
-			_setColor(colorBox.eq(0), '#000000');
+			_setColor(colorBox.eq(0), borderColor);
 			_setColor(colorBox.eq(1), '');
 			rowsBox[0].focus();
 			rowsBox[0].select();
@@ -8479,7 +8500,7 @@ KindEditor.plugin('table', function(K) {
 		cellprop : function() {
 			var html = [
 				'<div style="padding:20px;">',
-				'<div class="ke-dialog-row">',
+				'<div class="ke-dialog-row ke-clearfix">',
 				'<label for="keWidth" style="width:90px;">' + lang.size + '</label>',
 				lang.width + ' <input type="text" id="keWidth" class="ke-input-text ke-input-number" name="width" value="" maxlength="4" /> &nbsp; ',
 				'<select name="widthType">',
@@ -8492,7 +8513,7 @@ KindEditor.plugin('table', function(K) {
 				'<option value="px">' + lang.px + '</option>',
 				'</select>',
 				'</div>',
-				'<div class="ke-dialog-row">',
+				'<div class="ke-dialog-row ke-clearfix">',
 				'<label for="keAlign" style="width:90px;">' + lang.align + '</label>',
 				lang.textAlign + ' <select id="keAlign" name="textAlign">',
 				'<option value="">' + lang.alignDefault + '</option>',
@@ -8508,12 +8529,12 @@ KindEditor.plugin('table', function(K) {
 				'<option value="baseline">' + lang.alignBaseline + '</option>',
 				'</select>',
 				'</div>',
-				'<div class="ke-dialog-row">',
+				'<div class="ke-dialog-row ke-clearfix">',
 				'<label for="keBorder" style="width:90px;">' + lang.border + '</label>',
 				lang.borderWidth + ' <input type="text" id="keBorder" class="ke-input-text ke-input-number" name="border" value="" maxlength="4" /> &nbsp; ',
 				lang.borderColor + ' <span class="ke-inline-block ke-input-color"></span>',
 				'</div>',
-				'<div class="ke-dialog-row">',
+				'<div class="ke-dialog-row ke-clearfix">',
 				'<label for="keBgColor" style="width:90px;">' + lang.backgroundColor + '</label>',
 				'<span class="ke-inline-block ke-input-color"></span>',
 				'</div>',
@@ -8842,19 +8863,17 @@ KindEditor.plugin('template', function(K) {
 	}
 	self.clickToolbar(name, function() {
 		var lang = self.lang(name + '.'),
-			arr = ['<div style="padding:10px 20px;">',
-				'<div class="ke-header">',
-				'<div class="ke-left">',
-				lang. selectTemplate + ' <select>'];
+			arr = ['<div class="ke-dialog-content-inner" style="padding-top:0">',
+				'<div class="ke-dialog-row ke-clearfix">',
+				'<div class="ke-header" style="height: 32px;">',
+				lang. selectTemplate + ' <select class="ke-select">'];
 			K.each(lang.fileList, function(key, val) {
 				arr.push('<option value="' + key + '">' + val + '</option>');
 			});
 			html = [arr.join(''),
-				'</select></div>',
-				'<div class="ke-right">',
-				'<input type="checkbox" id="keReplaceFlag" name="replaceFlag" value="1" /> <label for="keReplaceFlag">' + lang.replaceContent + '</label>',
+				'</select>',
+				'<input type="checkbox" id="keReplaceFlag" class="checkbox" name="replaceFlag" value="1" /> <label for="keReplaceFlag">' + lang.replaceContent + '</label>',
 				'</div>',
-				'<div class="ke-clearfix"></div>',
 				'</div>',
 				'<iframe class="ke-textarea" frameborder="0" style="width:458px;height:260px;background-color:#FFF;"></iframe>',
 				'</div>'].join('');

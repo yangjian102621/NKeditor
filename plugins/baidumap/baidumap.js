@@ -14,21 +14,19 @@ KindEditor.plugin('baidumap', function(K) {
 	var mapWidth = K.undef(self.mapWidth, 558);
 	var mapHeight = K.undef(self.mapHeight, 360);
 	self.clickToolbar(name, function() {
-		var html = ['<div style="padding:10px 20px;">',
-			'<div class="ke-header">',
-			// left start
-			'<div class="ke-left">',
-			lang.address + ' <input id="kindeditor_plugin_map_address" name="address" class="ke-input-text" value="" style="width:200px;" /> ',
-			'<span class="ke-button-common ke-button-outer">',
+		var html = ['<div class="ke-dialog-content-inner" style="padding-top: 0">',
+			'<div class="ke-dialog-row ke-clearfix">',
+			// right start
+			'<div class="ke-header">' + lang.address,
+			'<input id="kindeditor_plugin_map_address" name="address" class="ke-input-text" value="" style="width:200px;" /> ',
+			'<span>',
 			'<input type="button" name="searchBtn" class="ke-button-common ke-button" value="' + lang.search + '" />',
 			'</span>',
+			'<input type="checkbox" id="keInsertDynamicMap" name="insertDynamicMap" class="checkbox" value="1" /> <label for="keInsertDynamicMap">' + lang.insertDynamicMap + '</label>',
 			'</div>',
-			// right start
-			'<div class="ke-right">',
-			'<input type="checkbox" id="keInsertDynamicMap" name="insertDynamicMap" value="1" /> <label for="keInsertDynamicMap">' + lang.insertDynamicMap + '</label>',
 			'</div>',
-			'<div class="ke-clearfix"></div>',
-			'</div>',
+
+			//map iframe
 			'<div class="ke-map" style="width:' + mapWidth + 'px;height:' + mapHeight + 'px;"></div>',
 			'</div>'].join('');
 		var dialog = self.createDialog({

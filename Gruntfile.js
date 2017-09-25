@@ -121,6 +121,35 @@ grunt.initConfig({
 					dest: 'themes/default/editor.min.css'
 				},
 				{
+					src: 'themes/grey/editor.css',
+					dest: 'themes/grey/editor.min.css'
+				},
+				{
+					src: 'themes/purple/editor.css',
+					dest: 'themes/purple/editor.min.css'
+				},
+				{
+					src: 'themes/green/editor.css',
+					dest: 'themes/green/editor.min.css'
+				},
+				{
+					src: 'themes/red/editor.css',
+					dest: 'themes/red/editor.min.css'
+				},
+				{
+					src: 'themes/blue/editor.css',
+					dest: 'themes/blue/editor.min.css'
+				},
+				{
+					src: 'themes/primary/editor.css',
+					dest: 'themes/primary/editor.min.css'
+				},
+				{
+					src: 'themes/brown/editor.css',
+					dest: 'themes/brown/editor.min.css'
+				},
+
+				{
 					src : 'plugins/multiimage/css/upload.css',
 					dest : 'plugins/multiimage/css/upload.min.css'
 				},

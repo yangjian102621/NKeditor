@@ -46,7 +46,8 @@ _extend(KDialog, KWidget, {
 		bodyDiv.append(body);
 		var footerDiv = K('<div class="ke-dialog-footer"></div>');
 		if (previewBtn || yesBtn || noBtn) {
-			contentDiv.append(footerDiv);
+			self.div.append(footerDiv);
+			contentDiv.height(self.div.height() - footerDiv.height());
 		}
 		_each([
 			{ btn : previewBtn, name : 'preview' },

@@ -21,19 +21,23 @@ KindEditor.plugin('insertfile', function(K) {
 			fileTitle = K.undef(options.fileTitle, ''),
 			clickFn = options.clickFn;
 		var html = [
-			'<div style="padding:20px;">',
-			'<div class="ke-dialog-row">',
-			'<label for="keUrl" style="width:60px;">' + lang.url + '</label>',
+			'<div class="ke-dialog-content-inner">',
+			'<div class="ke-dialog-row ke-clearfix">',
+			'<label for="keUrl" class="row-left">' + lang.url + '：</label>',
+			'<div class="row-right">',
 			'<input type="text" id="keUrl" name="url" class="ke-input-text" style="width:160px;" /> &nbsp;',
 			'<input type="button" class="ke-upload-button" value="' + lang.upload + '" /> &nbsp;',
 			'<span class="ke-button-common ke-button-outer">',
 			'<input type="button" class="ke-button-common ke-button" name="viewServer" value="' + lang.viewServer + '" />',
 			'</span>',
 			'</div>',
+			'</div>',
 			//title
-			'<div class="ke-dialog-row">',
-			'<label for="keTitle" style="width:60px;">' + lang.title + '</label>',
+			'<div class="ke-dialog-row ke-clearfix">',
+			'<label for="keTitle" class="row-left">' + lang.title + '：</label>',
+			'<div class="row-right">',
 			'<input type="text" id="keTitle" class="ke-input-text" name="title" value="" style="width:160px;" /></div>',
+			'</div>',
 			'</div>',
 			//form end
 			'</form>',

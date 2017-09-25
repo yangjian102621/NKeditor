@@ -111,6 +111,9 @@
 		o.close = function () {
 			o.dialog.remove();
 			try {JDialog.lock.hide();} catch (e) {}
+			if (typeof options.close == 'function') {
+				options.close();
+			}
 		}
 
 		//create dialog
@@ -128,9 +131,12 @@
 
 			o.dialog = $(builder.toString());
 			$("body").append(o.dialog);
+			if (options.top == 0) {
+				options.top = ($(window).height() - o.dialog.height())/2;
+			}
 			o.dialog.css({
 				left : ($(window).width() - o.dialog.width())/2 + "px",
-				top : getScrollTop() + options.top + "px"
+				top : options.top + "px"
 			});
 			//给对话框添加拖拽事件
 			o.dialog.draggable({handler : o.dialog.find(".ued_title")});
@@ -168,11 +174,6 @@
 		//query
 		function G(query) {
 			return o.dialog.find(query);
-		}
-
-		//获取滚动条的高度
-		function getScrollTop() {
-			return window.document.body.scrollTop || window.document.documentElement.scrollTop;
 		}
 
 		//从服务器上获取图片地址

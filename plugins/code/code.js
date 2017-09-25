@@ -14,9 +14,9 @@ KindEditor.plugin('code', function(K) {
 	var self = this, name = 'code';
 	self.clickToolbar(name, function() {
 		var lang = self.lang(name + '.'),
-			html = ['<div style="padding:10px 20px;">',
+			html = ['<div style="margin: 0px 20px;">',
 				'<div class="ke-dialog-row">',
-				'<select class="ke-code-type">',
+				'<select class="ke-select" style="margin-bottom: 5px;">',
 				'<option value="js">JavaScript</option>',
 				'<option value="html">HTML</option>',
 				'<option value="css">CSS</option>',
