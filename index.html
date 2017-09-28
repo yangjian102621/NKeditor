@@ -4,7 +4,7 @@
 	<meta charset="utf-8" />
 	<title>NKeditor 在线编辑器 PHP demo</title>
 
-	<script charset="utf-8" src="NKeditor-all.js"></script>
+	<script charset="utf-8" src="NKeditor-all-min.js"></script>
 
 	<!-- 下面是外部插件不是必须引入的 -->
 	<script charset="utf-8" src="libs/jquery.min.js"></script>
@@ -36,7 +36,7 @@
 						K('form[name=example]')[0].submit();
 					});
 				},
-				themeType : "grey", //主题
+				themeType : "default", //主题
 				//错误处理 handler
 				errorMsgHandler : function(message, type) {
 					JDialog.msg({type:type, content:message, timer:2000});
@@ -54,7 +54,7 @@
 				allowFileManager : true,
 				allowImageUpload : true,
 				allowMediaUpload : true,
-				themeType : "default", //主题
+				themeType : "grey", //主题
 				//错误处理 handler
 				errorMsgHandler : function(message, type) {
 					JDialog.msg({type:type, content:message, timer:2000});
@@ -180,7 +180,7 @@
 		<div style="">
 			<h1>通用php文件上传 API 版（Default）</h1>
 			<form name="example" method="post">
-				<textarea name="content2" style="width:900px;height:200px;visibility:hidden;"></textarea>
+				<textarea name="content1" style="width:900px;height:200px;visibility:hidden;"></textarea>
 
 			</form>
 		</div>
@@ -188,7 +188,7 @@
 		<div style="">
 			<h1>七牛云上传 API 版（Grey）</h1>
 			<form name="example" method="post">
-				<textarea name="content1" style="width:900px;height:200px;visibility:hidden;"></textarea>
+				<textarea name="content2" style="width:900px;height:200px;visibility:hidden;"></textarea>
 			</form>
 		</div>
 

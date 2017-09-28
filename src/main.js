@@ -1324,7 +1324,7 @@ _plugin('core', function(K) {
 	// about
 	self.clickToolbar('about', function() {
 		var html = '<div style="margin:20px;">' +
-			'<div>KindEditorX ' + _VERSION + '</div>' +
+			'<div>NKeditor ' + _VERSION + '</div>' +
 			'<div>Forked from KindEditor By BlackFox. <a href="http://git.oschina.net/blackfox/kindeditor">Git项目地址</a>.</div>' +
 			'</div>';
 		self.createDialog({
