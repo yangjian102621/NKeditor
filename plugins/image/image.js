@@ -64,12 +64,14 @@ KindEditor.plugin('image', function(K) {
 			'<div class="ke-dialog-row ke-clearfix">',
 			'<label class="row-left">' + lang.align + '：</label>',
 			'<div class="row-right">',
-			'<label><input type="radio" name="align" class="ke-inline-block" value="" checked="checked" /> ' +
-			'<img name="defaultImg" src="' + imgPath + 'align_top.gif" width="23" height="25" alt="" /></lable>',
-			' <label><input type="radio" name="align" class="ke-inline-block" value="left" /> ' +
-			'<img name="leftImg" src="' + imgPath + 'align_left.gif" width="23" height="25" alt="" /></lable>',
-			' <label><input type="radio" name="align" class="ke-inline-block" value="right" /> ' +
-			'<img name="rightImg" src="' + imgPath + 'align_right.gif" width="23" height="25" alt="" /></lable>',
+			'<span><input type="radio" name="align" class="ke-inline-block" value="" checked="checked" /> ' +
+			'<img name="defaultImg" src="' + imgPath + 'align_top.gif" width="23" height="25" alt="" /></span>',
+
+			' <span><input type="radio" name="align" class="ke-inline-block" value="left" /> ' +
+			'<img name="leftImg" src="' + imgPath + 'align_left.gif" width="23" height="25" alt="" /></span>',
+
+			' <span><input type="radio" name="align" class="ke-inline-block" value="right" /> ' +
+			'<img name="rightImg" src="' + imgPath + 'align_right.gif" width="23" height="25" alt="" /></span>',
 			'</div>',
 			'</div>',
 			//title
