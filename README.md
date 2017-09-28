@@ -15,6 +15,14 @@ NKeditor 沿用了 kindeditor 最后发布的版本号 v4.1.11，所以NKeditor 
 
 ### http://d.r9it.com/nkeditor/
 
+# java版本接入
+在本人的另一个 spring-boot 开源项目 https://gitee.com/blackfox/spring-boot-demo 中做了集成，'
+这里顺便介绍一下 spring-boot-demo 项目，就是用 spring-boot 结合国产前端框架 AmazeUI 做了一个后台基础开发框架，集成了mybatis Mapper3, 分页插件,
+并集成了 shiro 实现了 RBAC 权限管理系统，可谓开箱即用，分分钟搭建好一个高大上的后台管理系统。
+
+clone 下来，导入数据库，更改application.yml的数据库配置，就可以直接运行了，登录进去就可以体验了。
+不过java版本目前只实现了七牛云的文件上传和管理，原生的没有做实现。
+
 # 使用说明
 1. 批量图片上传的插件依赖 jQuery-1.7 以上的版本，jquery需要自己手动引入，编辑器没有默认引入的，这样避免加载了你不需要的脚本库导致页面加载变慢
 2. 文件上传实现了 php 传统方式和七牛云图片上传，默认推荐使用七牛云，使用很简单，而且免费（企业版收费）。demo 上使用的是我的个人空间，多人测试的时候上传速度和并发都有很大的限制，如果大家测试的时候觉得慢，可以改成自己的七牛空间或者使用本地上传。

@@ -79,21 +79,106 @@
 				}
 			});
 
+			K.create('textarea[name="content4"]', {
+				/**
+				 * 通用上传 API
+				 */
+				uploadJson : K.basePath+'php/upload_json.php',
+				fileManagerJson : K.basePath+'php/file_manager_json.php',
+				imageSearchJson : K.basePath+'php/image_search_json.php', //图片搜索url
+				imageGrapJson : K.basePath+'php/image_grap_json.php', //抓取选中的搜索图片地址
+				allowFileManager : true,
+				allowImageUpload : true,
+				allowMediaUpload : true,
+				themeType : "purple", //主题
+				//错误处理 handler
+				errorMsgHandler : function(message, type) {
+					JDialog.msg({type:type, content:message, timer:2000});
+				}
+			});
+
+			K.create('textarea[name="content5"]', {
+				/**
+				 * 通用上传 API
+				 */
+				uploadJson : K.basePath+'php/upload_json.php',
+				fileManagerJson : K.basePath+'php/file_manager_json.php',
+				imageSearchJson : K.basePath+'php/image_search_json.php', //图片搜索url
+				imageGrapJson : K.basePath+'php/image_grap_json.php', //抓取选中的搜索图片地址
+				allowFileManager : true,
+				allowImageUpload : true,
+				allowMediaUpload : true,
+				themeType : "green", //主题
+				//错误处理 handler
+				errorMsgHandler : function(message, type) {
+					JDialog.msg({type:type, content:message, timer:2000});
+				}
+			});
+
+			K.create('textarea[name="content6"]', {
+				/**
+				 * 通用上传 API
+				 */
+				uploadJson : K.basePath+'php/upload_json.php',
+				fileManagerJson : K.basePath+'php/file_manager_json.php',
+				imageSearchJson : K.basePath+'php/image_search_json.php', //图片搜索url
+				imageGrapJson : K.basePath+'php/image_grap_json.php', //抓取选中的搜索图片地址
+				allowFileManager : true,
+				allowImageUpload : true,
+				allowMediaUpload : true,
+				themeType : "primary", //主题
+				//错误处理 handler
+				errorMsgHandler : function(message, type) {
+					JDialog.msg({type:type, content:message, timer:2000});
+				}
+			});
+
+			K.create('textarea[name="content7"]', {
+				/**
+				 * 通用上传 API
+				 */
+				uploadJson : K.basePath+'php/upload_json.php',
+				fileManagerJson : K.basePath+'php/file_manager_json.php',
+				imageSearchJson : K.basePath+'php/image_search_json.php', //图片搜索url
+				imageGrapJson : K.basePath+'php/image_grap_json.php', //抓取选中的搜索图片地址
+				allowFileManager : true,
+				allowImageUpload : true,
+				allowMediaUpload : true,
+				themeType : "brown", //主题
+				//错误处理 handler
+				errorMsgHandler : function(message, type) {
+					JDialog.msg({type:type, content:message, timer:2000});
+				}
+			});
+
+			K.create('textarea[name="content8"]', {
+				/**
+				 * 通用上传 API
+				 */
+				uploadJson : K.basePath+'php/upload_json.php',
+				fileManagerJson : K.basePath+'php/file_manager_json.php',
+				imageSearchJson : K.basePath+'php/image_search_json.php', //图片搜索url
+				imageGrapJson : K.basePath+'php/image_grap_json.php', //抓取选中的搜索图片地址
+				allowFileManager : true,
+				allowImageUpload : true,
+				allowMediaUpload : true,
+				themeType : "red", //主题
+				//错误处理 handler
+				errorMsgHandler : function(message, type) {
+					JDialog.msg({type:type, content:message, timer:2000});
+				}
+			});
+
+
 		});
 	</script>
 </head>
 <body>
 	<div style="padding-bottom: 100px;">
 		<?php echo $htmlData; ?>
-		<div style="">
-			<h1>七牛云上传 API 版（灰色主题）</h1>
-			<form name="example" method="post">
-				<textarea name="content1" style="width:900px;height:200px;visibility:hidden;"></textarea>
-			</form>
-		</div>
 
 		<div style="">
-			<h1>通用php文件上传 API 版（黑色主题，默认）</h1>
+			<h1>通用php文件上传 API 版（Default）</h1>
 			<form name="example" method="post">
 				<textarea name="content2" style="width:900px;height:200px;visibility:hidden;"></textarea>
 
@@ -101,9 +186,56 @@
 		</div>
 
 		<div style="">
-			<h1>通用php文件上传 API 版（蓝色主题）</h1>
+			<h1>七牛云上传 API 版（Grey）</h1>
+			<form name="example" method="post">
+				<textarea name="content1" style="width:900px;height:200px;visibility:hidden;"></textarea>
+			</form>
+		</div>
+
+		<div style="">
+			<h1>通用php文件上传 API 版（Blue）</h1>
 			<form name="example" method="post">
 				<textarea name="content3" style="width:900px;height:200px;visibility:hidden;"></textarea>
+
+			</form>
+		</div>
+
+		<div style="">
+			<h1>通用php文件上传 API 版（Purple）</h1>
+			<form name="example" method="post">
+				<textarea name="content4" style="width:900px;height:200px;visibility:hidden;"></textarea>
+
+			</form>
+		</div>
+
+		<div style="">
+			<h1>通用php文件上传 API 版（Green）</h1>
+			<form name="example" method="post">
+				<textarea name="content5" style="width:900px;height:200px;visibility:hidden;"></textarea>
+
+			</form>
+		</div>
+
+		<div style="">
+			<h1>通用php文件上传 API 版（Primary）</h1>
+			<form name="example" method="post">
+				<textarea name="content6" style="width:900px;height:200px;visibility:hidden;"></textarea>
+
+			</form>
+		</div>
+
+		<div style="">
+			<h1>通用php文件上传 API 版（Brown）</h1>
+			<form name="example" method="post">
+				<textarea name="content7" style="width:900px;height:200px;visibility:hidden;"></textarea>
+
+			</form>
+		</div>
+
+		<div style="">
+			<h1>通用php文件上传 API 版（Red）</h1>
+			<form name="example" method="post">
+				<textarea name="content8" style="width:900px;height:200px;visibility:hidden;"></textarea>
 
 			</form>
 		</div>
