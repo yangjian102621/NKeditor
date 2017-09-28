@@ -35,7 +35,7 @@ K.options = {
 	bodyClass : 'ke-content',
 	indentChar : '\t', // \t, "  "
 	//设置默认的css路径
-	cssPath : 'plugins/code/prettify.css', //String or Array
+	cssPath : K.pluginsPath+'code/prettify.css', //String or Array
 	cssData : '',
 	minWidth : 650,
 	minHeight : 300,
