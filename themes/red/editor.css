@@ -545,7 +545,7 @@
       z-index: 1;
       text-align: center; }
       .ke-dialog .ke-dialog-content .ke-dialog-loading .ke-dialog-loading-content {
-        background: url("../common/loading.gif") no-repeat;
+        background: url("../common/loading.gif") no-repeat center;
         color: #666;
         font-size: 14px;
         font-weight: bold;
