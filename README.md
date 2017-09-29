@@ -15,6 +15,12 @@ NKeditor 沿用了 kindeditor 最后发布的版本号 v4.1.11，所以NKeditor 
 
 ### http://d.r9it.com/nkeditor/
 
+# 部署和构建
+1. npm install -g grunt-cli
+2. 切换到 NKeditor 根目录，执行 npm install
+3. 编译 : 执行 grunt
+4. 如果要打包的话，执行 grunt zip，就会把编辑器的有关的的文件全部打包放入 dist 文件夹中，解压之后你就会得到一个干净的编辑器了。直接访问 index.html 进行预览。
+
 # java版本接入
 在本人的另一个 spring-boot 开源项目 https://gitee.com/blackfox/spring-boot-demo 中做了集成，'
 这里顺便介绍一下 spring-boot-demo 项目，就是用 spring-boot 结合国产前端框架 AmazeUI 做了一个后台基础开发框架，集成了mybatis Mapper3, 分页插件,
