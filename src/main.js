@@ -120,6 +120,7 @@ function _bindContextmenuEvent() {
 			var pos = K(self.edit.iframe).pos(),
 				menu = _menu({
 					x : pos.x + e.clientX,
+					themeType : self.themeType,
 					y : pos.y + e.clientY,
 					width : maxWidth,
 					css : { visibility: 'hidden' },

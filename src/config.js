@@ -22,7 +22,7 @@ K.options = {
 	themesPath : K.basePath + 'themes/',
 	langPath : K.basePath + 'lang/',
 	pluginsPath : K.basePath + 'plugins/',
-	themeType : 'default', // default, simple
+	themeType : 'primary', // default, simple
 	langType : 'zh-CN',
 	urlType : '', // "", relative, absolute, domain
 	newlineTag : 'p', // p, br

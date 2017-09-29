@@ -248,7 +248,7 @@ K.options = {
 	themesPath : K.basePath + 'themes/',
 	langPath : K.basePath + 'lang/',
 	pluginsPath : K.basePath + 'plugins/',
-	themeType : 'default',
+	themeType : 'primary',
 	langType : 'zh-CN',
 	urlType : '',
 	newlineTag : 'p',
@@ -4056,7 +4056,7 @@ _extend(KMenu, KWidget, {
 		options.z = options.z || 811213;
 		KMenu.parent.init.call(self, options);
 		self.centerLineMode = _undef(options.centerLineMode, true);
-		self.div.addClass('ke-menu').bind('click,mousedown', function(e){
+		self.div.addClass('ke-menu ke-menu-'+options.themeType).bind('click,mousedown', function(e){
 			e.stopPropagation();
 		}).attr('unselectable', 'on');
 	},
@@ -4669,6 +4669,7 @@ function _bindContextmenuEvent() {
 			var pos = K(self.edit.iframe).pos(),
 				menu = _menu({
 					x : pos.x + e.clientX,
+					themeType : self.themeType,
 					y : pos.y + e.clientY,
 					width : maxWidth,
 					css : { visibility: 'hidden' },
