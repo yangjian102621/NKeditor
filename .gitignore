@@ -13,7 +13,6 @@ Thumbs.db
 dist/
 node_modules/
 _build/
-php/files
-php/tmp
+uploads
 php/qiniu/vendor
 .idea

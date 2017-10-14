@@ -237,8 +237,8 @@ KindEditor.lang({
 	'fontname.fontName' : {
 		'SimSun' : '宋体',
 		'NSimSun' : '新宋体',
-		'FangSong_GB2312' : '仿宋_GB2312',
-		'KaiTi_GB2312' : '楷体_GB2312',
+		'FangSong' : '仿宋',
+		'KaiTi' : '楷体',
 		'SimHei' : '黑体',
 		'Microsoft YaHei' : '微软雅黑',
 		'Arial' : 'Arial',

@@ -164,9 +164,10 @@ grunt.initConfig({
 				{src: ['php/**'], dest: '<%= pkg.name %>/'},
 				{src: ['plugins/**'], dest: '<%= pkg.name %>/'},
 				{src: ['themes/**'], dest: '<%= pkg.name %>/'},
+				{src: ['uploads/**'], dest: '<%= pkg.name %>/'},
 				{src: ['<%= pkg.filename %>*-all-min.js'], dest: '<%= pkg.name %>/'},
 				{src: ['index.html'], dest: '<%= pkg.name %>/'},
-				{src: ['old.html'], dest: '<%= pkg.name %>/'},
+				{src: ['old .html'], dest: '<%= pkg.name %>/'},
 			]
 		}
 	}

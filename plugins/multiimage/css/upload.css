@@ -233,7 +233,7 @@
               background: url("images/icons.png") no-repeat;
               margin: 5px 1px 1px;
               cursor: pointer;
-              -webkit-tap-highlight-color: transparent;
+              -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
               -webkit-user-select: none;
               -moz-user-select: none;
               -ms-user-select: none;
@@ -262,6 +262,7 @@
             width: 100%; }
           .uedbody .wrapper .wra_body .upload-panel .image-list-box .filelist li .error {
             position: absolute;
+            width: 100%;
             display: none;
             background: rgba(255, 255, 255, 0.7) none repeat scroll 0% 0%;
             left: 0;

@@ -72,7 +72,7 @@ class JsonResult {
      * @param $code
      * @param $message
      */
-    public function __construct($code, $message){
+    public function __construct($code=null, $message=null){
         $this->setCode($code);
         $this->setMessage($message);
     }

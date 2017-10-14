@@ -15,6 +15,7 @@ use Qiniu\Storage\UploadManager;
 require_once "vendor/autoload.php";
 require_once "../JsonResult.php";
 require_once "config.php";
+require_once "../functions.php";
 
 $fileType = trim($_GET['fileType']);
 if (empty($fileType)) {
@@ -22,7 +23,6 @@ if (empty($fileType)) {
 }
 // 构建鉴权对象
 $auth = new Auth(QINIU_ACCESS_KEY, QINIU_SECRET_KEY);
-
 // 生成上传 Token
 $token = $auth->uploadToken(QINIU_TEST_BUCKET);
 
@@ -88,35 +88,3 @@ if ($base64) {
     $json->output();
 }
 
-
-function base64Upload($data, $filename, $upToken)
-{
-
-    if (preg_match('/^(data:\s*image\/(\w+);base64,)/', $data, $match)) {
-
-        $imgData = str_replace($match[1], '', $data); //去掉图片的声明前缀
-
-        /**
-         * upload.qiniu.com 上传域名适用于华东空间。华北空间使用 upload-z1.qiniu.com，
-         * 华南空间使用 upload-z2.qiniu.com，北美空间使用 upload-na0.qiniu.com。
-         */
-        $url = "http://upload-z2.qiniu.com/putb64/-1/key/".base64_encode($filename);
-        $headers = array();
-        $headers[] = 'Content-Type:image/png';
-        $headers[] = 'Authorization:UpToken ' . $upToken;
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $url);
-        //curl_setopt($ch, CURLOPT_HEADER, 0);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        //curl_setopt($ch, CURLOPT_POST, 1);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $imgData);
-        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 10);
-        curl_setopt($ch, CURLOPT_TIMEOUT, 30);
-        $data = curl_exec($ch);
-        curl_close($ch);
-        return $data;
-    }
-    return false;
-
-}

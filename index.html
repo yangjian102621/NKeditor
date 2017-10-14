@@ -6,8 +6,9 @@
 
 	<script charset="utf-8" src="NKeditor-all-min.js"></script>
 
-	<!-- 下面是外部插件不是必须引入的 -->
+	<!-- 如果你不需要使用批量图片上传，涂鸦功能和文件管理功能，就不需要引入 jquery -->
 	<script charset="utf-8" src="libs/jquery.min.js"></script>
+	<!-- JDialog是一款优秀的漂亮，轻量级的js弹出框插件 不是必须引入的，如果不引入则使用默认的 window.alert() 来弹出提示信息 -->
 	<script charset="utf-8" src="libs/JDialog/JDialog.min.js"></script>
 
 	<script>
@@ -38,7 +39,11 @@
 				},
 				//错误处理 handler
 				errorMsgHandler : function(message, type) {
-					JDialog.msg({type:type, content:message, timer:2000});
+					try {
+						JDialog.msg({type:type, content:message, timer:2000});
+					} catch (Error) {
+						alert(message);
+					}
 				}
 			});
 
@@ -46,17 +51,21 @@
 				/**
 				 * 通用上传 API
 				 */
-				uploadJson : K.basePath+'php/upload_json.php',
-				fileManagerJson : K.basePath+'php/file_manager_json.php',
-				imageSearchJson : K.basePath+'php/image_search_json.php', //图片搜索url
-				imageGrapJson : K.basePath+'php/image_grap_json.php', //抓取选中的搜索图片地址
+				uploadJson : K.basePath+'php/default/upload_json.php',
+				fileManagerJson : K.basePath+'php/default/file_manager_json.php',
+				imageSearchJson : K.basePath+'php/default/image_search_json.php', //图片搜索url
+				imageGrapJson : K.basePath+'php/default/image_grap_json.php', //抓取选中的搜索图片地址
 				allowFileManager : true,
 				allowImageUpload : true,
 				allowMediaUpload : true,
 				themeType : "black", //主题
 				//错误处理 handler
 				errorMsgHandler : function(message, type) {
-					JDialog.msg({type:type, content:message, timer:2000});
+					try {
+						JDialog.msg({type:type, content:message, timer:2000});
+					} catch (Error) {
+						alert(message);
+					}
 				}
 			});
 
@@ -64,17 +73,21 @@
 				/**
 				 * 通用上传 API
 				 */
-				uploadJson : K.basePath+'php/upload_json.php',
-				fileManagerJson : K.basePath+'php/file_manager_json.php',
-				imageSearchJson : K.basePath+'php/image_search_json.php', //图片搜索url
-				imageGrapJson : K.basePath+'php/image_grap_json.php', //抓取选中的搜索图片地址
+				uploadJson : K.basePath+'php/default/upload_json.php',
+				fileManagerJson : K.basePath+'php/default/file_manager_json.php',
+				imageSearchJson : K.basePath+'php/default/image_search_json.php', //图片搜索url
+				imageGrapJson : K.basePath+'php/default/image_grap_json.php', //抓取选中的搜索图片地址
 				allowFileManager : true,
 				allowImageUpload : true,
 				allowMediaUpload : true,
 				themeType : "grey", //主题
 				//错误处理 handler
 				errorMsgHandler : function(message, type) {
-					JDialog.msg({type:type, content:message, timer:2000});
+					try {
+						JDialog.msg({type:type, content:message, timer:2000});
+					} catch (Error) {
+						alert(message);
+					}
 				}
 			});
 
@@ -82,17 +95,21 @@
 				/**
 				 * 通用上传 API
 				 */
-				uploadJson : K.basePath+'php/upload_json.php',
-				fileManagerJson : K.basePath+'php/file_manager_json.php',
-				imageSearchJson : K.basePath+'php/image_search_json.php', //图片搜索url
-				imageGrapJson : K.basePath+'php/image_grap_json.php', //抓取选中的搜索图片地址
+				uploadJson : K.basePath+'php/default/upload_json.php',
+				fileManagerJson : K.basePath+'php/default/file_manager_json.php',
+				imageSearchJson : K.basePath+'php/default/image_search_json.php', //图片搜索url
+				imageGrapJson : K.basePath+'php/default/image_grap_json.php', //抓取选中的搜索图片地址
 				allowFileManager : true,
 				allowImageUpload : true,
 				allowMediaUpload : true,
 				themeType : "blue", //主题
 				//错误处理 handler
 				errorMsgHandler : function(message, type) {
-					JDialog.msg({type:type, content:message, timer:2000});
+					try {
+						JDialog.msg({type:type, content:message, timer:2000});
+					} catch (Error) {
+						alert(message);
+					}
 				}
 			});
 		});

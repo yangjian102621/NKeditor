@@ -5,7 +5,7 @@
 * @author Roddy <luolonghao@gmail.com>
 * @website http://www.kindsoft.net/
 * @licence http://www.kindsoft.net/license.php
-* @version 5.0.1 (2017-10-08)
+* @version 5.0.1 (2017-10-14)
 *******************************************************************************/
 (function (window, undefined) {
 	if (window.KindEditor) {
@@ -19,7 +19,7 @@ if (!window.console) {
 if (!console.log) {
 	console.log = function () {};
 }
-var _VERSION = '5.0.1 (2017-10-08)',
+var _VERSION = '5.0.1 (2017-10-14)',
 	_ua = navigator.userAgent.toLowerCase(),
 	_IE = _ua.indexOf('msie') > -1 && _ua.indexOf('opera') == -1,
 	_NEWIE = _ua.indexOf('msie') == -1 && _ua.indexOf('trident') > -1,
@@ -6300,8 +6300,8 @@ KindEditor.lang({
 	'fontname.fontName' : {
 		'SimSun' : '宋体',
 		'NSimSun' : '新宋体',
-		'FangSong_GB2312' : '仿宋_GB2312',
-		'KaiTi_GB2312' : '楷体_GB2312',
+		'FangSong' : '仿宋',
+		'KaiTi' : '楷体',
 		'SimHei' : '黑体',
 		'Microsoft YaHei' : '微软雅黑',
 		'Arial' : 'Arial',

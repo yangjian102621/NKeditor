@@ -10,10 +10,10 @@ namespace qiniu\upload;
 use Qiniu\Auth;
 use Qiniu\Storage\BucketManager;
 
-error_reporting(0);
 require_once "vendor/autoload.php";
 require_once "../JsonResult.php";
 require_once "config.php";
+require_once "../functions.php";
 
 $page = intval($_GET["page"]);
 $fileType = trim($_GET['fileType']);

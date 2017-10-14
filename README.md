@@ -38,6 +38,13 @@ clone 下来，导入数据库，更改application.yml的数据库配置，就�
 
 NKeditor 更新记录
 ========
+### version 5.0.2
+* 修复字体，颜色等下拉菜单图标的位置的bug
+* 修复搜索相对路径的bug issue [https://gitee.com/blackfox/kindeditor/issues/IFLFS](https://gitee
+.com/blackfox/kindeditor/issues/IFLFS)，感谢 @mean2015 的反馈
+* 重构了通用图片上传和图片列表的API，优化图片的存储和列表算法 issue [https://gitee.com/blackfox/kindeditor/issues/IFHXZ](https://gitee
+.com/blackfox/kindeditor/issues/IFHXZ), 感谢 @快乐的langYa 的反馈。
+
 ### version 5.0.1
 * 鉴于很多网友反馈新版的皮肤很丑，吓得宝宝赶紧修正了皮肤，更改图标尺寸和间距，使编辑器看起来不那么拥挤, 更改了样式，图标参参考了 "wysiwyg-editor"， 看起来确实好多了，感谢 @
 公孙二狗 同学的推荐。

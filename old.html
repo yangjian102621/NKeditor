@@ -39,7 +39,11 @@
 				themeType : "default", //主题
 				//错误处理 handler
 				errorMsgHandler : function(message, type) {
-					JDialog.msg({type:type, content:message, timer:2000});
+					try {
+						JDialog.msg({type:type, content:message, timer:2000});
+					} catch (Error) {
+						alert(message);
+					}
 				}
 			});
 
