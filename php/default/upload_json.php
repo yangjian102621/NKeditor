@@ -1,14 +1,16 @@
 <?php
-/**
- * KindEditor PHP
- *
+/****************************************************
+ * NKeditor PHP
  * 本PHP程序是演示程序，建议不要直接在实际项目中使用。
  * 如果您确定直接使用本程序，使用之前请仔细确认相关安全设置。
- *
+ * **************************************************
+ * @author yangjian<yangjian102621@gmail.com>
+ * 文件上传程序
  */
 error_reporting(0);
 require_once '../JsonResult.php';
 require_once '../functions.php';
+require_once "db/SimpleDB.php";
 
 $fileType = empty($_GET['dir']) ? 'image' : trim($_GET['dir']);
 //文件保存目录路径
@@ -125,6 +127,22 @@ if (empty($_FILES) == false) {
 
 	$json = new JsonResult(JsonResult::CODE_SUCCESS, "上传成功");
 	$json->setItem(array('url' => $fileUrl));
+
+	//保存文件地址到数据库
+    $db = new SimpleDB($fileType);
+    //过滤掉非图片文件
+    if ($fileType == "image") {
+        $size = getimagesize($filePath);
+    }
+    $data = [
+        "thumbURL" => $fileUrl,
+        "oriURL" => $fileUrl,
+        "filesize" => $filesize,
+        "width" => intval($size[0]),
+        "height" => intval($size[1])
+    ];
+    $db->putLine($data);
+
 	$json->output();
 }
 

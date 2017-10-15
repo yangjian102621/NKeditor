@@ -1,6 +1,11 @@
 <?php
-/**
- * 简易数据库
+/****************************************************
+ * NKeditor PHP
+ * 本PHP程序是演示程序，建议不要直接在实际项目中使用。
+ * 如果您确定直接使用本程序，使用之前请仔细确认相关安全设置。
+ * **************************************************
+ * 简易数据库, 单表 100w 条数据，查询一页数据在 0.015 秒左右
+ * 缺陷，无法排序，如果要排序的话，那么不适合使用 SimpleDB， 请使用 mysql 或者 mongdb
  * User: yangjian
  * Date: 17-10-14
  * Time: 下午5:15
@@ -8,15 +13,11 @@
 
 class SimpleDB {
 
+    /**
+     * 文件资源
+     * @var null|resource
+     */
     private $handler = null;
-
-    private $dbFile = null;
-
-    private $page = 1;
-
-    private $pagesize = 15;
-
-    private $offset = 0;
 
     /**
      * 初始化，打开文件
@@ -25,26 +26,52 @@ class SimpleDB {
      */
     public function __construct($dbname)
     {
-        $this->handler = fopen(__DIR__."/data/".$dbname, 'a+');
+        $this->handler = fopen(__DIR__."/data/".$dbname.'.db', 'a+');
     }
 
     /**
-     * 追加数据
-     * @param $data
+     * 写入一行数据
      * @return bool
      */
-    public function put($key, $data) {
+    public function putLine($data) {
 
-        $_data = ['key' => $key, 'data' => $data];
         if ($this->handler != null) {
-            fwrite($this->handler, $this->seralize($_data));
+            fwrite($this->handler, $this->seralize($data));
         }
         return false;
 
     }
 
-    public function get() {
+    /**
+     * 分页获取数据列表
+     * @param $key
+     * @return array|null
+     */
+    public function getDataList($page, $pagesize) {
 
+        if($page <= 0) {
+            $page = 1;
+        }
+        $offset = ($page - 1) * $pagesize;
+        //循环读取数据
+        $datas = [];
+        $counter = 0;
+        while (!feof($this->handler)) {
+            if ($counter < $offset) {
+                fgets($this->handler); //移动指针到下一行
+                $counter++;
+                continue;
+            }
+            if (count($datas) == $pagesize) {
+                break;
+            }
+            $line = fgets($this->handler);
+            if (!empty($line)) {
+                $datas[] = $this->unseralize($line);
+            }
+        }
+
+        return $datas;
     }
 
     /**
@@ -54,7 +81,11 @@ class SimpleDB {
      */
     private function seralize($data) {
 
-        return json_encode($data, JSON_UNESCAPED_UNICODE);
+        $break = "\n"; //换行符
+        if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
+            $break = "\r\n";
+        }
+        return json_encode($data, JSON_UNESCAPED_UNICODE).$break;
 
     }
 

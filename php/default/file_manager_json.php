@@ -1,50 +1,24 @@
 <?php
-/**
+/****************************************************
+ * NKeditor PHP
+ * 本PHP程序是演示程序，建议不要直接在实际项目中使用。
+ * 如果您确定直接使用本程序，使用之前请仔细确认相关安全设置。
+ * **************************************************
  * 获取图片服务器上已上传的图片列表
  * @author yangjian<yangjian102621@gmail.com>
  */
 error_reporting(0);
 require_once '../JsonResult.php';
 require_once '../functions.php';
+require_once "db/SimpleDB.php";
 
 usleep(500000);
 $page = intval($_GET["page"]);
 $fileType = trim($_GET['fileType']);
-$offset = ($page - 1) * 15;
-$image_dir = __DIR__ . "/files";
-$files = array();
-$handler = opendir($image_dir);
-$baseUrl = dirname($_SERVER['PHP_SELF']);
-
-if ( $handler != false ) {
-    $i = 0;
-    while ( $filename = readdir($handler) ) {
-        if ( $filename != "." && $filename != ".." ) {
-            if ( $i < $offset ) {
-                $i++;
-                continue;
-            }
-            $size = getimagesize("files/".$filename);
-            //过滤掉非图片文件
-            if ($fileType == "image" && empty($size)) {
-                continue;
-            }
-            if ($fileType != "image" && !empty($size)) {
-                continue;
-            }
-            $filesize = filesize("files/".$filename);
-            array_push($files, array(
-                "thumbURL" => $baseUrl."/files/".$filename,
-                "oriURL" => $baseUrl."/files/".$filename,
-                "filesize" => $filesize,
-                "width" => intval($size[0]),
-                "height" => intval($size[1])));
-            $i++;
-            if ( $i > $offset + 15 ) break;
-        }
-    }
-    closedir($handler);
-}
+$pagesize = 15;
+//读取文件数据
+$db = new SimpleDB($fileType);
+$files = $db->getDataList($page, $pagesize);
 $result = new JsonResult();
 if (!empty($files)) {
     $result->setCode(JsonResult::CODE_SUCCESS);

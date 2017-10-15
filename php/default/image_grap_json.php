@@ -1,6 +1,10 @@
 <?php
-/**
- * 抓取百度搜索图片服务器上的防盗链图片
+/****************************************************
+ * NKeditor PHP
+ * 本PHP程序是演示程序，建议不要直接在实际项目中使用。
+ * 如果您确定直接使用本程序，使用之前请仔细确认相关安全设置。
+ * **************************************************
+ * 抓取远程图片服务器上的防盗链图片
  * @author yangjian<yangjian102621@gmail.com>
  */
 error_reporting(0);
@@ -8,8 +12,8 @@ require "../JsonResult.php";
 require "../functions.php";
 
 $img_url = trim($_GET["img_url"]);
-$tmp_dir = dirname(__FILE__)."/tmp";
-$dist_dir = dirname(__FILE__)."/files";
+$tmp_dir = dirname(dirname(__DIR__)) . "/uploads/tmp";
+$dist_dir = dirname(dirname(__DIR__)) . "/uploads/image";
 if (!file_exists($tmp_dir)) {
     mkdir($tmp_dir);
 }
@@ -36,7 +40,7 @@ if ($act == "grapImage") { //抓取图片
 } else {
     if ($img_url)  {
         //每天清理一次临时目录
-        delFile($tmp_dir);
+        deldir($tmp_dir);
         $filename = basename($img_url);
         $image = file_get_contents($img_url);
         if ($image != false) {

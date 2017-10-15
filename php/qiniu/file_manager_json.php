@@ -1,10 +1,12 @@
 <?php
 namespace qiniu\upload;
-/**
- * Created by PhpStorm.
- * User: yangjian
- * Date: 17-9-14
- * Time: 上午10:08
+/****************************************************
+ * NKeditor PHP
+ * 本PHP程序是演示程序，建议不要直接在实际项目中使用。
+ * 如果您确定直接使用本程序，使用之前请仔细确认相关安全设置。
+ * **************************************************
+ * 获取图片服务器上已上传的图片列表
+ * @author yangjian<yangjian102621@gmail.com>
  */
 
 use Qiniu\Auth;
