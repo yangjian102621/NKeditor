@@ -16,3 +16,4 @@ _build/
 uploads
 php/qiniu/vendor
 .idea
+php/default/db/data

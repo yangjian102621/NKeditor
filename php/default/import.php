@@ -8,6 +8,7 @@
  * 重建文件索引， 请使用命令行运行 php import.php
  * @author yangjian
  */
+error_reporting(0);
 require_once "db/SimpleDB.php";
 
 // 文件上传的根目录，请根据自己的实际情况修改

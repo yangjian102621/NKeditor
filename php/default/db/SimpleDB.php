@@ -26,7 +26,11 @@ class SimpleDB {
      */
     public function __construct($dbname)
     {
-        $this->handler = fopen(__DIR__."/data/".$dbname.'.db', 'a+');
+        $dataDir = __DIR__."/data/";
+        if (!file_exists($dataDir)) {
+            mkdir($dataDir);
+        }
+        $this->handler = fopen($dataDir.$dbname.'.db', 'a+');
     }
 
     /**
