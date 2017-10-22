@@ -10,11 +10,17 @@
  */
 error_reporting(0);
 require_once "db/SimpleDB.php";
+require_once "../functions.php";
 
 // 文件上传的根目录，请根据自己的实际情况修改
 $root = $basePath = dirname(dirname(__DIR__)) . "/uploads/";
 // 图片上传的根url，请根据实际项目修改
 $baseUrl = "/editor/nkeditor/uploads/";
+
+//如果数据库已经存在，则先删除
+$datadir = __DIR__.'/db/data';
+file_exists($datadir) && deldir($datadir);
+
 chdir($root);
 $dirs = glob("*");
 foreach ($dirs as $dir) {

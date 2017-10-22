@@ -21,11 +21,10 @@ $files = array();
 if ( is_array($data["list"]) ) {
     foreach ( $data["list"] as $value ) {
         $filename = basename($value["thumb"]);
-        $baseUrl = dirname($_SERVER['PHP_SELF']);
         //这里为了防止搜索的图片禁止盗链，前端无法显示，这里提供一个图片抓取的后端页面
         array_push($files, array(
-            "thumbURL" => $baseUrl."/image_grap_json.php?img_url={$value["thumb"]}",
-            "oriURL" => "{$baseUrl}/files/".$filename,
+            "thumbURL" => dirname($_SERVER['PHP_SELF'])."/image_grap_json.php?img_url={$value["thumb"]}",
+            "oriURL" => BASE_URL.'image/'.UPLOAD_PREFIX.$filename,
             "width" => $value["width"],
             "height" => $value["height"]));
     }

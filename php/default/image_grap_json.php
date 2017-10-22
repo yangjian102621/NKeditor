@@ -10,13 +10,17 @@
 error_reporting(0);
 require "../JsonResult.php";
 require "../functions.php";
+require_once "db/SimpleDB.php";
 
 $img_url = trim($_GET["img_url"]);
-$tmp_dir = dirname(dirname(__DIR__)) . "/uploads/tmp";
-$dist_dir = dirname(dirname(__DIR__)) . "/uploads/image";
-if (!file_exists($tmp_dir)) {
-    mkdir($tmp_dir);
-}
+$fileType = "image";
+$tmp_dir = BASE_PATH . "tmp/";
+$dist_dir = BASE_PATH . $fileType. "/" . UPLOAD_PREFIX;
+
+// 创建目录
+file_exists($tmp_dir) || mkdir($tmp_dir);
+file_exists($dist_dir) || mkdir($dist_dir);
+
 $act = trim($_GET['act']);
 if ($act == "grapImage") { //抓取图片
     $urls = explode(",", $_GET["urls"]);
@@ -25,9 +29,25 @@ if ($act == "grapImage") { //抓取图片
     } else {
         $res = true;
         $newUrls = [];
+        //初始化数据库
+        $db = new SimpleDB($fileType);
         foreach ($urls as $value) {
-            $res = $res && copy($tmp_dir."/".basename($value), $dist_dir."/".basename($value));
-            array_push($newUrls, $value);
+            $baseFilename = basename($value);
+            $newFilename = genNewFilename($baseFilename);
+            $newFilePath = $dist_dir.$newFilename;
+            // 拷贝文件
+            $res = $res && copy($tmp_dir.$baseFilename, $newFilePath);
+            $newImgUrl = str_replace($baseFilename, $newFilename, $value);
+            $filesize = filesize($newFilePath);
+            $size = getimagesize($newFilePath);
+            array_push($newUrls, $newImgUrl);
+            $db->putLine([
+                "thumbURL" => $newImgUrl,
+                "oriURL" => $newImgUrl,
+                "filesize" => $filesize,
+                "width" => intval($size[0]),
+                "height" => intval($size[1])
+            ]);
         }
         if ($res) {
             $jsonResult = new JsonResult(JsonResult::CODE_SUCCESS, "抓取图片成功");

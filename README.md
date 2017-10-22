@@ -38,6 +38,9 @@ clone 下来，导入数据库，更改application.yml的数据库配置，就�
 
 NKeditor 更新记录
 ========
+### version 5.0.3
+* 修复文图片搜索和图片抓取的bug，修复通用存储模式的图片抓取时候没有更新图片列表数据库的bug。
+
 ### version 5.0.2
 * 修复字体，颜色等下拉菜单图标的位置的bug
 * 修复搜索相对路径的bug issue [https://gitee.com/blackfox/kindeditor/issues/IFLFS](https://gitee

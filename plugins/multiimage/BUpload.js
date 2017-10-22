@@ -299,6 +299,7 @@
 						if (res.code != "000") {
 							options.errorHandler(res.message, "error");
 						} else {
+							options.errorHandler(res.message, "ok");
 							//删除之前的 url
 							$.each(o.searchList, function(idx, item) {
 								o.selectedList.remove(item);

@@ -14,9 +14,9 @@ require_once "db/SimpleDB.php";
 
 $fileType = empty($_GET['dir']) ? 'image' : trim($_GET['dir']);
 //文件保存目录路径
-$basePath = dirname(dirname(__DIR__)) . "/uploads/{$fileType}/".date('Ym').'/'.date('d').'/';
+$basePath = BASE_PATH."{$fileType}/".UPLOAD_PREFIX;
 //文件保存目录URL
-$baseUrl = dirname(dirname(dirname($_SERVER['PHP_SELF']))) . "/uploads/{$fileType}/".date('Ym').'/'.date('d').'/';
+$baseUrl = BASE_URL . "{$fileType}/".UPLOAD_PREFIX;
 //定义允许上传的文件扩展名
 $allowExtesions = array(
 	'image' => array('gif', 'jpg', 'jpeg', 'png', 'bmp'),
@@ -83,13 +83,13 @@ if ($base64) {
 // input 文件上传
 if (empty($_FILES) == false) {
 	//原文件名
-	$fillename = $_FILES['imgFile']['name'];
+	$filename = $_FILES['imgFile']['name'];
 	//服务器上临时文件名
 	$tmpName = $_FILES['imgFile']['tmp_name'];
 	//文件大小
 	$filesize = $_FILES['imgFile']['size'];
 	//检查文件名
-	if (!$fillename) {
+	if (!$filename) {
 		alert("请选择文件。");
 	}
 	//检查目录
@@ -110,13 +110,13 @@ if (empty($_FILES) == false) {
 	}
 
 	//获得文件扩展名
-	$extesion = getFileExt($fillename);
+	$extesion = getFileExt($filename);
 	//检查扩展名
 	if (in_array($extesion, $allowExtesions[$fileType]) === false) {
 		alert("上传文件扩展名是不允许的扩展名。\n只允许" . implode(",", $allowExtesions[$fileType]) . "格式。");
 	}
 	//新文件名
-	$newFileName = date("YmdHis") . '_' . rand(10000, 99999) . '.' . $extesion;
+	$newFileName = genNewFilename($filename);
 	//移动文件
 	$filePath = $basePath . $newFileName;
 	if (move_uploaded_file($tmpName, $filePath) === false) {
@@ -149,19 +149,4 @@ if (empty($_FILES) == false) {
 function alert($msg) {
 	$json = new JsonResult(JsonResult::CODE_FAIL, $msg);
 	$json->output();
-}
-
-/**
- * 创建多级目录
- * @param $dir
- */
-function mkdirs($path) {
-	$files = preg_split('/[\/|\\\]/s', $path);
-	$_dir = '';
-	foreach ($files as $value) {
-		$_dir .= $value.DIRECTORY_SEPARATOR;
-		if ( !file_exists($_dir) ) {
-			mkdir($_dir);
-		}
-	}
 }

@@ -4,6 +4,28 @@
  * @author yangjian<yangjian102621@gmail.com>
  */
 
+// 文件上传的根路径
+define('BASE_PATH', dirname(__DIR__)."/uploads/");
+// 文件上传路径前缀
+define('UPLOAD_PREFIX', date('Ym').'/'.date('d').'/');
+// 文件上传的根 url
+define('BASE_URL', dirname(dirname(dirname($_SERVER['PHP_SELF'])))."/uploads/");
+
+/**
+ * 创建多级目录
+ * @param $dir
+ */
+function mkdirs($path) {
+    $files = preg_split('/[\/|\\\]/s', $path);
+    $_dir = '';
+    foreach ($files as $value) {
+        $_dir .= $value.DIRECTORY_SEPARATOR;
+        if ( !file_exists($_dir) ) {
+            mkdir($_dir);
+        }
+    }
+}
+
 /**
  * 获取文件后缀名
  * @param $filename
@@ -45,6 +67,16 @@ function show_image($image, $img_url) {
             image2wbmp($image);
     }
 
+}
+
+/**
+ * 生成新的文件名
+ * @param $file
+ * @return string
+ */
+function genNewFilename($file) {
+    $extesion = getFileExt($file);
+    return date("YmdHis") . '_' . rand(10000, 99999) . '.' . $extesion;
 }
 
 /**
