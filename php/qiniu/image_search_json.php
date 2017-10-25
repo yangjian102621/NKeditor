@@ -20,11 +20,11 @@ $data = json_decode(mb_convert_encoding($content, 'UTF-8','GBK,UTF-8'), true);
 $files = array();
 if ( is_array($data["list"]) ) {
     foreach ( $data["list"] as $value ) {
-        $filename = basename($value["thumb"]);
+        $filename = basename($value["img"]);
         $baseUrl = dirname($_SERVER['PHP_SELF']);
         //这里为了防止搜索的图片禁止盗链，前端无法显示，这里提供一个图片抓取的后端页面
         array_push($files, array(
-            "thumbURL" => $baseUrl."/image_grap_json.php?img_url={$value["thumb"]}",
+            "thumbURL" => $baseUrl."/image_grap_json.php?img_url={$value["img"]}",
             "oriURL" => "{$baseUrl}/files/".$filename,
             "width" => $value["width"],
             "height" => $value["height"]));
