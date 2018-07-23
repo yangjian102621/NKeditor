@@ -1,9 +1,9 @@
 {
-	"name" : "NKeditor",
-	"version" : "5.0.2",
-	"filename" : "NKeditor",
-	"repository" : "blackfox/NKeditor",
-	"devDependencies" : {
+	"name": "NKeditor",
+	"version": "5.0.2",
+	"filename": "NKeditor",
+	"repository": "blackfox/NKeditor",
+	"devDependencies": {
 		"grunt": "~0.4.1",
 		"grunt-contrib-concat": "~0.3.0",
 		"grunt-contrib-uglify": "~0.2.7",
@@ -11,5 +11,5 @@
 		"grunt-contrib-copy": "~0.4.1",
 		"grunt-contrib-compress": "~0.5.3"
 	},
-	"license" : "MIT"
+	"license": "MIT"
 }

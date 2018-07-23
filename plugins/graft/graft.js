@@ -145,7 +145,7 @@ KindEditor.plugin('graft', function(K) {
 									dialog.hideLoading();
 									if (res.code == "000") {
 										K.options.errorMsgHandler(lang.uploadSuccess, "ok");
-										clickFn.call(self, res.item);
+										clickFn.call(self, res.item.url);
 										self.hideDialog().focus();
 									} else {
 										K.options.errorMsgHandler(lang.uploadFaild, "error");

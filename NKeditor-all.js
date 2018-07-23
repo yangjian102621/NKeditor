@@ -1,11 +1,11 @@
 /*******************************************************************************
 * KindEditor - WYSIWYG HTML Editor for Internet
-* Copyright (C) 2006-2017 kindsoft.net
+* Copyright (C) 2006-2018 kindsoft.net
 *
 * @author Roddy <luolonghao@gmail.com>
 * @website http://www.kindsoft.net/
 * @licence http://www.kindsoft.net/license.php
-* @version 5.0.2 (2017-10-24)
+* @version 5.0.2 (2018-07-23)
 *******************************************************************************/
 (function (window, undefined) {
 	if (window.KindEditor) {
@@ -19,7 +19,7 @@ if (!window.console) {
 if (!console.log) {
 	console.log = function () {};
 }
-var _VERSION = '5.0.2 (2017-10-24)',
+var _VERSION = '5.0.2 (2018-07-23)',
 	_ua = navigator.userAgent.toLowerCase(),
 	_IE = _ua.indexOf('msie') > -1 && _ua.indexOf('opera') == -1,
 	_NEWIE = _ua.indexOf('msie') == -1 && _ua.indexOf('trident') > -1,
@@ -7977,7 +7977,7 @@ KindEditor.plugin('graft', function(K) {
 									dialog.hideLoading();
 									if (res.code == "000") {
 										K.options.errorMsgHandler(lang.uploadSuccess, "ok");
-										clickFn.call(self, res.item);
+										clickFn.call(self, res.item.url);
 										self.hideDialog().focus();
 									} else {
 										K.options.errorMsgHandler(lang.uploadFaild, "error");
