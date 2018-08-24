@@ -210,7 +210,7 @@ KindEditor.plugin('image', function(K) {
 
 					K.options.errorMsgHandler(self.lang('uploadSuccess'), "ok");
 
-					var url = data.item.url;
+					var url = data.data.url;
 					if (formatUploadUrl) {
 						url = K.formatUrl(url, 'absolute');
 					}

@@ -34,7 +34,7 @@ if ( is_array($data["list"]) ) {
 $result = new JsonResult();
 if (!empty($files)) {
     $result->setCode(JsonResult::CODE_SUCCESS);
-    $result->setItems($files);
+    $result->setData($files);
 } else {
     $result->setCode(JsonResult::CODE_FAIL);
 }

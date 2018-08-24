@@ -80,7 +80,7 @@ KindEditor.plugin('insertfile', function(K) {
 				afterUpload : function(data) {
 					dialog.hideLoading();
 					if (data.code === "000") {
-						var url = data.item.url;
+						var url = data.data.url;
 						if (formatUploadUrl) {
 							url = K.formatUrl(url, 'absolute');
 						}

@@ -47,7 +47,7 @@ if ($act == "grapImage") { //抓取图片
         }
         if ($res) {
             $jsonResult = new JsonResult(JsonResult::CODE_SUCCESS, "抓取图片成功");
-            $jsonResult->setItems($newUrls);
+            $jsonResult->setData($newUrls);
             $jsonResult->output();
         } else {
             JsonResult::fail("抓取图片失败");

@@ -39,7 +39,7 @@ if ($base64) {
     if ($res) {
         $res = json_decode($res, true);
         $json->setCode(\JsonResult::CODE_SUCCESS);
-        $json->setItem(QINIU_BUCKET_DOMAIN.$res['key']);
+        $json->setData(QINIU_BUCKET_DOMAIN.$res['key']);
     } else {
         $json->setCode(\JsonResult::CODE_FAIL);
         $json->setMessage("上传涂鸦失败!");
@@ -85,7 +85,7 @@ if ($base64) {
     } else {
         $json->setCode(\JsonResult::CODE_SUCCESS);
         $json->setMessage("上传成功.");
-        $json->setItem(array('url' => QINIU_BUCKET_DOMAIN . $ret['key']));
+        $json->setData(array('url' => QINIU_BUCKET_DOMAIN . $ret['key']));
     }
     $json->output();
 }

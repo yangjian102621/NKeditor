@@ -305,7 +305,7 @@
 								o.selectedList.remove(item);
 							});
 							//更新成新的 url
-							$.each(res.items, function(idx, item) {
+							$.each(res.data, function(idx, item) {
 								o.selectedList.push(item);
 							});
 							options.callback(o.selectedList);
@@ -458,7 +458,7 @@
 					//console.log(e);
 					var data = $.parseJSON(e.target.responseText);
 					if ( data.code == "000" ) {
-						o.selectedList.push(data.item.url);   //添加文件到上传文件列表
+						o.selectedList.push(data.data.url);   //添加文件到上传文件列表
 						o.uploadSuccessNum++;
 						$("#img-comtainer-"+dialogSCode+ node.index).find(".file-opt-box").remove();
 						$("#img-comtainer-"+dialogSCode+ node.index).find(".progress").remove();
@@ -601,13 +601,13 @@
 				G(".loading-icon").hide(); //隐藏加载图标
 				if ( res.code == "000" ) {
 
-					if (!res.items[0]) { //没有加载到数据
+					if (!res.data[0]) { //没有加载到数据
 						G(".online .no-data").text(options.lang.noDataText).show();
 						return;
 					}
-					o.marker = res.item; //存储marker
+					o.marker = res.extra; //存储marker
 					o.page++;
-					appendFiles(res.items, "online");
+					appendFiles(res.data, "online");
 				} else {
 					G(".online .no-data").text(options.lang.noDataText).show();
 					o.noRecord = true;
@@ -633,7 +633,7 @@
 				if ( res.code == "000" ) {
 					G(".searchbox .no-data").hide();
 					o.searchPage++;
-					appendFiles(res.items, "search");
+					appendFiles(res.data, "search");
 				} else {
 					G(".no-data").text(options.no_data_text).show();
 				}

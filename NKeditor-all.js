@@ -5,7 +5,7 @@
 * @author Roddy <luolonghao@gmail.com>
 * @website http://www.kindsoft.net/
 * @licence http://www.kindsoft.net/license.php
-* @version 5.0.2 (2018-07-23)
+* @version 5.0.2 (2018-08-24)
 *******************************************************************************/
 (function (window, undefined) {
 	if (window.KindEditor) {
@@ -19,7 +19,7 @@ if (!window.console) {
 if (!console.log) {
 	console.log = function () {};
 }
-var _VERSION = '5.0.2 (2018-07-23)',
+var _VERSION = '5.0.2 (2018-08-24)',
 	_ua = navigator.userAgent.toLowerCase(),
 	_IE = _ua.indexOf('msie') > -1 && _ua.indexOf('opera') == -1,
 	_NEWIE = _ua.indexOf('msie') == -1 && _ua.indexOf('trident') > -1,
@@ -7229,7 +7229,7 @@ KindEditor.plugin('image', function(K) {
 				dialog.hideLoading();
 				if (data.code == "000") {
 					K.options.errorMsgHandler(self.lang('uploadSuccess'), "ok");
-					var url = data.item.url;
+					var url = data.data.url;
 					if (formatUploadUrl) {
 						url = K.formatUrl(url, 'absolute');
 					}

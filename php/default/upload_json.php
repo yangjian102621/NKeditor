@@ -71,7 +71,7 @@ if ($base64) {
 		$filename = date("YmdHis") . '_' . rand(10000, 99999) . '.png';
 		if (file_put_contents($basePath.$filename, base64_decode(str_replace($match[1], '', $imgData)))){
 			$json->setCode(JsonResult::CODE_SUCCESS);
-			$json->setItem($baseUrl.$filename);
+			$json->setData($baseUrl.$filename);
 			$json->output();
 		}
 	}
@@ -126,7 +126,7 @@ if (empty($_FILES) == false) {
 	$fileUrl = $baseUrl . $newFileName;
 
 	$json = new JsonResult(JsonResult::CODE_SUCCESS, "上传成功");
-	$json->setItem(array('url' => $fileUrl));
+	$json->setData(array('url' => $fileUrl));
 
 	//保存文件地址到数据库
     $db = new SimpleDB($fileType);

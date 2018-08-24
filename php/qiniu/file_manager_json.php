@@ -61,11 +61,11 @@ if ($err !== null) {
             "width" => intval($imgSize["width"]),
             "height" => intval($imgSize["height"])));
     }
-    $result->setItems($files);
+    $result->setData($files);
     if (array_key_exists('marker', $ret)) {
-        $result->setItem($ret['marker']);
+        $result->setExtra($ret['marker']);
     } else {
-        $result->setItem("no_records");
+        $result->setExtra("no_records");
     }
 }
 $result->output();
