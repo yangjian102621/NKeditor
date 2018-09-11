@@ -6742,7 +6742,7 @@ KindEditor.plugin('code', function(K) {
 						var type = K('.ke-select', dialog.div).val(),
 							code = textarea.val(),
 							cls = type === '' ? '' :  'language-' + type,
-							html = '<pre class="' + cls + '"><code>' + K.escape(code) + '</code></pre> \n';
+							html = '<pre class="' + cls + '"><code>' + K.escape(code) + '</code></pre> <br/>';
 						if (K.trim(code) === '') {
 							K.options.errorMsgHandler(lang.pleaseInput, "error");
 							textarea[0].focus();
