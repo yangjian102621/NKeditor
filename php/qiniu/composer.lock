@@ -4,7 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "0a7b03ff3d70648d44cdbcbc8e6a40e0",
+    "hash": "950bafd0ae6623c9fdc42a0ef039aac6",
+    "content-hash": "e0dd4b480ce3ed67ad527554d82237fd",
     "packages": [
         {
             "name": "qiniu/php-sdk",
@@ -16,7 +17,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://files.phpcomposer.com/files/qiniu/php-sdk/8c7ba738bd4443ee3569a07441913b07c4b2c4a2.zip",
+                "url": "https://api.github.com/repos/qiniu/php-sdk/zipball/8c7ba738bd4443ee3569a07441913b07c4b2c4a2",
                 "reference": "8c7ba738bd4443ee3569a07441913b07c4b2c4a2",
                 "shasum": ""
             },
@@ -55,7 +56,7 @@
                 "sdk",
                 "storage"
             ],
-            "time": "2017-08-26T00:46:11+00:00"
+            "time": "2017-08-26 00:46:11"
         }
     ],
     "packages-dev": [],

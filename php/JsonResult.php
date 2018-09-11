@@ -246,8 +246,7 @@ class JsonResult {
             'page'=>$this->getPage(),
             'pagesize'=>$this->getPagesize(),
             'extra'=>$this->getExtra(),
-            'item'=>$this->getItem(),
-            'items'=>$this->getItems()), JSON_UNESCAPED_UNICODE);
+            'data'=>$this->getData()), JSON_UNESCAPED_UNICODE);
     }
 
     /**

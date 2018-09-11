@@ -54,6 +54,7 @@ KindEditor.lang({
 	print : '打印(Ctrl+P)',
 	filemanager : '文件空间',
 	code : '插入程序代码',
+	quote : '插入引用',
 	map : 'Google地图',
 	baidumap : '百度地图',
 	lineheight : '行距',

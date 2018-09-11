@@ -193,13 +193,13 @@
 
 				G(".loading-icon").hide(); //隐藏加载图标
 				if ( res.code == "000" ) {
-					if (!res.items[0]) {
+					if (!res.data[0]) {
 						G(".online .no-data").html(options.lang.noDataText).show();
 						return;
 					}
 					o.page++;
-					o.marker = res.item; //存储marker
-					appendFiles(res.items);
+					o.marker = res.extra; //存储marker
+					appendFiles(res.data);
 				} else {
 					G(".online .no-data").text(options.lang.noDataText).show();
 					o.noRecord = true;

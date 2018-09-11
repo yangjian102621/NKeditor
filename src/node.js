@@ -370,7 +370,9 @@ _extend(KNode, {
 	},
 	before : function(expr) {
 		this.each(function() {
-			this.parentNode.insertBefore(_get(expr), this);
+			try {
+				this.parentNode.insertBefore(_get(expr), this);
+			} catch (e) {}
 		});
 		return this;
 	},

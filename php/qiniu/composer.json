@@ -3,7 +3,7 @@
     "description": "just a test",
     "type": "project",
     "require": {
-        "qiniu/php-sdk": "^7.2"
+        "qiniu/php-sdk": "7.2.1"
     },
     "license": "MIT",
     "authors": [

@@ -5,7 +5,7 @@
 * @author Roddy <luolonghao@gmail.com>
 * @website http://www.kindsoft.net/
 * @licence http://www.kindsoft.net/license.php
-* @version 5.0.2 (2018-08-24)
+* @version 5.0.2 (2018-09-11)
 *******************************************************************************/
 (function (window, undefined) {
 	if (window.KindEditor) {
@@ -19,7 +19,7 @@ if (!window.console) {
 if (!console.log) {
 	console.log = function () {};
 }
-var _VERSION = '5.0.2 (2018-08-24)',
+var _VERSION = '5.0.2 (2018-09-11)',
 	_ua = navigator.userAgent.toLowerCase(),
 	_IE = _ua.indexOf('msie') > -1 && _ua.indexOf('opera') == -1,
 	_NEWIE = _ua.indexOf('msie') == -1 && _ua.indexOf('trident') > -1,
@@ -260,14 +260,15 @@ K.options = {
 	fullscreenShortcut : false,
 	bodyClass : 'ke-content',
 	indentChar : '\t',
-	cssPath : K.basePath+'plugins/code/prettify.css',
+	cssPath : [],
+	jsPath: [],
 	cssData : '',
 	minWidth : 650,
 	minHeight : 300,
 	minChangeSize : 50,
 	zIndex : 811213,
 	items : [
-		'source', 'undo', 'redo',  'preview', 'print', 'template', 'code', 'cut', 'copy', 'paste',
+		'source', 'undo', 'redo',  'preview', 'print', 'template', 'code', 'quote', 'cut', 'copy', 'paste',
 		'plainpaste', 'wordpaste', 'justifyleft', 'justifycenter', 'justifyright',
 		'justifyfull', 'insertorderedlist', 'insertunorderedlist', 'indent', 'outdent', 'subscript',
 		'superscript', 'clearhtml', 'quickformat', 'selectall', 'fullscreen', '/',
@@ -281,7 +282,7 @@ K.options = {
 		['#E53333', '#E56600', '#FF9900', '#64451D', '#DFC5A4', '#FFE500'],
 		['#009900', '#006600', '#99BB00', '#B8D100', '#60D978', '#00D5FF'],
 		['#337FE5', '#003399', '#4C33E5', '#9933E5', '#CC33E5', '#EE33EE'],
-		['#FFFFFF', '#CCCCCC', '#999999', '#666666', '#333333', '#000000']
+		['#FFFFFF', '#DDDDDD', '#999999', '#666666', '#333333', '#000000']
 	],
 	fontSizeTable : ['9px', '10px', '12px', '14px', '16px', '18px', '24px', '32px'],
 	htmlTags : {
@@ -793,6 +794,9 @@ function _formatHtml(html, htmlTags, urlType, wellFormatted, indentChar) {
 			attr = $4 || '',
 			endSlash = $5 ? ' ' + $5 : '',
 			endNewline = $6 || '';
+		if (tagName == 'code') {
+			return full;
+		}
 		if (htmlTags && !htmlTagMap[tagName]) {
 			return '';
 		}
@@ -1590,7 +1594,9 @@ _extend(KNode, {
 	},
 	before : function(expr) {
 		this.each(function() {
-			this.parentNode.insertBefore(_get(expr), this);
+			try {
+				this.parentNode.insertBefore(_get(expr), this);
+			} catch (e) {}
 		});
 		return this;
 	},
@@ -3580,7 +3586,7 @@ var html, _direction = '';
 if ((html = document.getElementsByTagName('html'))) {
 	_direction = html[0].dir;
 }
-function _getInitHtml(themesPath, bodyClass, cssPath, cssData) {
+function _getInitHtml(themesPath, bodyClass, cssPath, cssData, jsPath) {
 	var arr = [
 		(_direction === '' ? '<html>' : '<html dir="' + _direction + '">'),
 		'<head><meta charset="utf-8" /><title></title>',
@@ -3643,6 +3649,10 @@ function _getInitHtml(themesPath, bodyClass, cssPath, cssData) {
 	if (!_isArray(cssPath)) {
 		cssPath = [cssPath];
 	}
+	if (_inArray(K.basePath+'themes/app.css', cssPath) < 0) {
+		cssPath.push(K.basePath+'themes/app.css');
+		cssPath.push(K.basePath+'plugins/code/prism.css');
+	}
 	_each(cssPath, function(i, path) {
 		if (path) {
 			arr.push('<link href="' + path + '" rel="stylesheet" />');
@@ -3651,7 +3661,20 @@ function _getInitHtml(themesPath, bodyClass, cssPath, cssData) {
 	if (cssData) {
 		arr.push('<style>' + cssData + '</style>');
 	}
-	arr.push('</head><body ' + (bodyClass ? 'class="' + bodyClass + '"' : '') + '></body></html>');
+	arr.push('</head><body ' + (bodyClass ? 'class="' + bodyClass + '"' : '') + '>');
+	if (!_isArray(jsPath)) {
+		jsPath = [jsPath];
+	}
+	if (_inArray(K.basePath+'plugins/code/prism.js', jsPath) < 0) {
+		jsPath.push(K.basePath+'plugins/code/prism.js');
+		jsPath.push(K.basePath+'plugins/code/pretty.js');
+	}
+	_each(jsPath, function(i, path) {
+		if (path) {
+			arr.push('<script type="text/javascript" src="' + path + '"></script>');
+		}
+	});
+	arr.push('</body></html>');
 	return arr.join('\n');
 }
 function _elementVal(knode, val) {
@@ -3682,6 +3705,7 @@ _extend(KEdit, KWidget, {
 		var themesPath = _undef(options.themesPath, ''),
 			bodyClass = options.bodyClass,
 			cssPath = options.cssPath,
+			jsPath = options.jsPath,
 			cssData = options.cssData,
 			isDocumentDomain = location.protocol != 'res:' && location.host.replace(/:\d+/, '') !== document.domain,
 			srcScript = ('document.open();' +
@@ -3710,7 +3734,7 @@ _extend(KEdit, KWidget, {
 			if (isDocumentDomain) {
 				doc.domain = document.domain;
 			}
-			doc.write(_getInitHtml(themesPath, bodyClass, cssPath, cssData));
+			doc.write(_getInitHtml(themesPath, bodyClass, cssPath, cssData, jsPath));
 			doc.close();
 			self.win = self.iframe[0].contentWindow;
 			self.doc = doc;
@@ -5080,6 +5104,7 @@ KEditor.prototype = {
 			themesPath : self.themesPath,
 			bodyClass : self.bodyClass,
 			cssPath : self.cssPath,
+			jsPath: self.jsPath,
 			cssData : self.cssData,
 			beforeGetHtml : function(html) {
 				html = self.beforeGetHtml(html);
@@ -6122,6 +6147,7 @@ KindEditor.lang({
 	print : '打印(Ctrl+P)',
 	filemanager : '文件空间',
 	code : '插入程序代码',
+	quote : '插入引用',
 	map : 'Google地图',
 	baidumap : '百度地图',
 	lineheight : '行距',
@@ -6685,20 +6711,22 @@ KindEditor.plugin('code', function(K) {
 			html = ['<div style="margin: 0px 20px;">',
 				'<div class="ke-dialog-row">',
 				'<select class="ke-select" style="margin-bottom: 5px;">',
-				'<option value="js">JavaScript</option>',
+				'<option value="javascript">JavaScript</option>',
 				'<option value="html">HTML</option>',
 				'<option value="css">CSS</option>',
 				'<option value="php">PHP</option>',
-				'<option value="pl">Perl</option>',
-				'<option value="py">Python</option>',
-				'<option value="rb">Ruby</option>',
+				'<option value="perl">Perl</option>',
+				'<option value="python">Python</option>',
+				'<option value="ruby">Ruby</option>',
 				'<option value="java">Java</option>',
-				'<option value="vb">ASP/VB</option>',
+				'<option value="go">Go</option>',
+				'<option value="asp">ASP/VB</option>',
+				'<option value="csharp">C#</option>',
 				'<option value="cpp">C/C++</option>',
 				'<option value="cs">C#</option>',
-				'<option value="xml">XML</option>',
-				'<option value="bsh">Shell</option>',
-				'<option value="">Other</option>',
+				'<option value="bash">Shell</option>',
+				'<option value="sql">SQL</option>',
+				'<option value="markup">Other</option>',
 				'</select>',
 				'</div>',
 				'<textarea class="ke-textarea" style="width:408px;height:260px;"></textarea>',
@@ -6711,10 +6739,10 @@ KindEditor.plugin('code', function(K) {
 				yesBtn : {
 					name : self.lang('yes'),
 					click : function(e) {
-						var type = K('.ke-code-type', dialog.div).val(),
+						var type = K('.ke-select', dialog.div).val(),
 							code = textarea.val(),
-							cls = type === '' ? '' :  ' lang-' + type,
-							html = '<pre class="prettyprint' + cls + '">\n' + K.escape(code) + '</pre> ';
+							cls = type === '' ? '' :  'language-' + type,
+							html = '<pre class="' + cls + '"><code>' + K.escape(code) + '</code></pre> \n';
 						if (K.trim(code) === '') {
 							K.options.errorMsgHandler(lang.pleaseInput, "error");
 							textarea[0].focus();
@@ -6867,8 +6895,8 @@ KindEditor.plugin('filemanager', function(K) {
 		K.options.errorMsgHandler(lang.depJQueryError, "error");
 		return;
 	} else {
-		K.loadScript(K.options.pluginsPath+"filemanager/FManager.min.js");
-		K.loadStyle(K.options.pluginsPath+"multiimage/css/upload.min.css");
+		K.loadScript(K.options.pluginsPath+"filemanager/FManager.js");
+		K.loadStyle(K.options.pluginsPath+"multiimage/css/upload.css");
 	}
 	self.plugin.filemanagerDialog = function(options) {
 		var clickFn = options.clickFn;
@@ -6980,7 +7008,7 @@ KindEditor.plugin('flash', function(K) {
 					afterUpload : function(data) {
 						dialog.hideLoading();
 						if (data.code === "000") {
-							var url = data.item.url;
+							var url = data.data.url;
 							if (formatUploadUrl) {
 								url = K.formatUrl(url, 'absolute');
 							}
@@ -7433,7 +7461,7 @@ KindEditor.plugin('insertfile', function(K) {
 				afterUpload : function(data) {
 					dialog.hideLoading();
 					if (data.code === "000") {
-						var url = data.item.url;
+						var url = data.data.url;
 						if (formatUploadUrl) {
 							url = K.formatUrl(url, 'absolute');
 						}
@@ -7704,7 +7732,7 @@ KindEditor.plugin('media', function(K) {
 					afterUpload : function(data) {
 						dialog.hideLoading();
 						if (data.code == "000") {
-							var url = data.item.url;
+							var url = data.data.url;
 							if (formatUploadUrl) {
 								url = K.formatUrl(url, 'absolute');
 							}
@@ -7771,8 +7799,6 @@ KindEditor.plugin('multiimage', function(K) {
 	var self = this, name = 'multiimage',
 		uploadJson = K.undef(self.uploadJson, self.basePath + 'php/upload_json.php'),
 		fileManagerJson = K.undef(self.fileManagerJson, self.basePath + 'php/file_manager_json.php'),
-		imageSearchJson = K.undef(self.imageSearchJson, self.basePath + 'php/image_search_json.php'),
-		imageGrapJson = K.undef(self.imageGrapJson, self.basePath + 'php/image_grap_json.php'),
 		imageSizeLimit = K.undef(self.imageSizeLimit, 2048),
 		imageFileTypes = K.undef(self.imageFileTypes, 'jpg|png|gif|jpeg'),
 		imageUploadLimit = K.undef(self.imageUploadLimit, 20),
@@ -7782,8 +7808,8 @@ KindEditor.plugin('multiimage', function(K) {
 		K.options.errorMsgHandler(lang.depJQueryError, "error");
 		return;
 	} else {
-		K.loadScript(K.options.pluginsPath+name+"/BUpload.min.js");
-		K.loadStyle(K.options.pluginsPath+name+"/css/upload.min.css");
+		K.loadScript(K.options.pluginsPath+name+"/BUpload.js");
+		K.loadStyle(K.options.pluginsPath+name+"/css/upload.css");
 	}
 	K.locker = function () {
 		var docWidth = Math.max(document.documentElement.clientWidth, document.body.clientWidth);
@@ -7808,8 +7834,6 @@ KindEditor.plugin('multiimage', function(K) {
 			src : filePostName,
 			upload_url : uploadJson,
 			list_url : fileManagerJson,
-			search_url : imageSearchJson,
-			grap_url : imageGrapJson,
 			max_filesize : imageSizeLimit,
 			max_filenum : imageUploadLimit,
 			ext_allow : imageFileTypes,
@@ -8085,19 +8109,111 @@ KindEditor.plugin('preview', function(K) {
 	var self = this, name = 'preview', undefined;
 	self.clickToolbar(name, function() {
 		var lang = self.lang(name + '.'),
+			width = document.documentElement.clientWidth * 0.9,
+			height = document.documentElement.clientHeight - 160,
 			html = '<div style="padding:10px 20px;">' +
-				'<iframe class="ke-textarea" frameborder="0" style="width:708px;height:400px;"></iframe>' +
+				'<iframe class="ke-textarea" frameborder="0" style="width:'+(width-42)+'px;height:'+height+'px;"></iframe>' +
 				'</div>',
 			dialog = self.createDialog({
 				name : name,
-				width : 750,
+				width : width,
 				title : self.lang(name),
 				body : html
 			}),
 			iframe = K('iframe', dialog.div),
 			doc = K.iframeDoc(iframe);
 		doc.open();
-		doc.write(self.fullHtml());
+		var cssPath = self.options.cssPath;
+		var jsPath = self.options.jsPath;
+		var arr = [
+			'<html lang="en">',
+			'<head><meta charset="utf-8" /><title></title>',
+			'<style>',
+			'html {margin:0;padding:0;}',
+			'body {margin:0;padding:5px;}',
+			'body, td {font:12px/1.5 "sans serif",tahoma,verdana,helvetica;}',
+			'body, p, div {word-wrap: break-word;}',
+			'p {margin:5px 0;}',
+			'table {border-collapse:collapse;}',
+			'img {border:0;}',
+			'noscript {display:none;}',
+			'table.ke-zeroborder td {border:1px dotted #AAA;}',
+			'img.ke-flash {',
+			'	border:1px solid #AAA;',
+			'	background-image:url(' + self.options.themesPath + 'common/flash.svg);',
+			'	*background-image:url(' + self.options.themesPath + 'common/flash.png);',
+			'	background-size:64px 64px;',
+			'	background-position:center center;',
+			'	background-repeat:no-repeat;',
+			'	width:100px;',
+			'	height:100px;',
+			'}',
+			'img.ke-rm {',
+			'	border:1px solid #AAA;',
+			'	background-image:url(' + self.options.themesPath + 'common/rm.gif);',
+			'	background-position:center center;',
+			'	background-repeat:no-repeat;',
+			'	width:100px;',
+			'	height:100px;',
+			'}',
+			'img.ke-media {',
+			'	border:1px solid #AAA;',
+			'	background-image:url(' + self.options.themesPath + 'common/play.svg);',
+			'	*background-image:url(' + self.options.themesPath + 'common/play.png);',
+			'	background-position:center center;',
+			'	background-size:64px 64px;',
+			'	background-repeat:no-repeat;',
+			'	width:100px;',
+			'	height:100px;',
+			'}',
+			'img.ke-anchor {',
+			'	border:1px dashed #666;',
+			'	width:16px;',
+			'	height:16px;',
+			'}',
+			'.ke-script, .ke-noscript, .ke-display-none {',
+			'	display:none;',
+			'	font-size:0;',
+			'	width:0;',
+			'	height:0;',
+			'}',
+			'.ke-pagebreak {',
+			'	border:1px dotted #AAA;',
+			'	font-size:0;',
+			'	height:2px;',
+			'}',
+			'</style>'
+		];
+		if (!K.isArray(cssPath)) {
+			cssPath = [cssPath];
+		}
+		if (K.inArray(self.options.pluginsPath+'code/prism.css', cssPath) < 0) {
+			cssPath.push(self.options.pluginsPath+'code/prism.css');
+		}
+		K.each(cssPath, function(i, path) {
+			if (path) {
+				arr.push('<link href="' + path + '" rel="stylesheet" />');
+			}
+		});
+		if (self.options.cssData) {
+			arr.push('<style>' + self.options.cssData + '</style>');
+		}
+		arr.push('</head><body ' + (self.options.bodyClass ? 'class="' + self.options.bodyClass + '"' : '') + '>');
+		arr.push(self.fullHtml());
+		if (!K.isArray(jsPath)) {
+			jsPath = [jsPath];
+		}
+		if (K.inArray(self.options.pluginsPath+'code/prism.js', jsPath) < 0) {
+			jsPath.push(self.options.pluginsPath+'code/prism.js');
+		}
+		K.each(jsPath, function(i, path) {
+			if (path) {
+				arr.push('<script type="text/javascript" src="' + path + '"></script>');
+			}
+		});
+		arr.push('</body></html>');
+		console.log(self.fullHtml());
+		doc.write(arr.join('\n'));
 		doc.close();
 		K(doc.body).css('background-color', '#FFF');
 		iframe[0].contentWindow.focus();
@@ -8407,7 +8523,7 @@ KindEditor.plugin('table', function(K) {
 						if (bgColor !== '') {
 							style += 'background-color:' + bgColor + ';';
 						}
-						var html = '<table';
+						var html = '<table class="table"';
 						if (style !== '') {
 							html += ' style="' + style + '"';
 						}
@@ -8424,7 +8540,7 @@ KindEditor.plugin('table', function(K) {
 							html += ' border="' + border + '"';
 						}
 						if (border === '' || border === '0') {
-							html += ' class="' + zeroborder + '"';
+							html += ' class="table ' + zeroborder + '"';
 						}
 						if (borderColor !== '') {
 							html += ' bordercolor="' + borderColor + '"';
@@ -8454,14 +8570,13 @@ KindEditor.plugin('table', function(K) {
 			heightBox = K('[name="height"]', div),
 			widthTypeBox = K('[name="widthType"]', div),
 			heightTypeBox = K('[name="heightType"]', div),
-			paddingBox = K('[name="padding"]', div).val(2),
+			paddingBox = K('[name="padding"]', div).val(0),
 			spacingBox = K('[name="spacing"]', div).val(0),
 			alignBox = K('[name="align"]', div),
 			borderBox = K('[name="border"]', div).val(1),
 			colorBox = K('.ke-input-color', div);
 			_initColorPicker(div, colorBox.eq(0));
 			_initColorPicker(div, colorBox.eq(1));
-			_setColor(colorBox.eq(0), borderColor);
 			_setColor(colorBox.eq(1), '');
 			rowsBox[0].focus();
 			rowsBox[0].select();
@@ -8601,7 +8716,7 @@ KindEditor.plugin('table', function(K) {
 			heightBox = K('[name="height"]', div),
 			widthTypeBox = K('[name="widthType"]', div),
 			heightTypeBox = K('[name="heightType"]', div),
-			paddingBox = K('[name="padding"]', div).val(2),
+			paddingBox = K('[name="padding"]', div).val(0),
 			spacingBox = K('[name="spacing"]', div).val(0),
 			textAlignBox = K('[name="textAlign"]', div),
 			verticalAlignBox = K('[name="verticalAlign"]', div),
@@ -8609,7 +8724,6 @@ KindEditor.plugin('table', function(K) {
 			colorBox = K('.ke-input-color', div);
 			_initColorPicker(div, colorBox.eq(0));
 			_initColorPicker(div, colorBox.eq(1));
-			_setColor(colorBox.eq(0), '#000000');
 			_setColor(colorBox.eq(1), '');
 			widthBox[0].focus();
 			widthBox[0].select();

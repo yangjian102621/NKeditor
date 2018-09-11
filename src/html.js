@@ -180,6 +180,11 @@ function _formatHtml(html, htmlTags, urlType, wellFormatted, indentChar) {
 			attr = $4 || '',
 			endSlash = $5 ? ' ' + $5 : '',
 			endNewline = $6 || '';
+
+		// # 这里修复插入代码时，与代码高亮插件 prism 冲突的 bug
+		if (tagName == 'code') {
+			return full;
+		}
 		// 不在名单里的过滤掉
 		if (htmlTags && !htmlTagMap[tagName]) {
 			return '';

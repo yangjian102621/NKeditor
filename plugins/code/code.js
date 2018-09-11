@@ -17,20 +17,22 @@ KindEditor.plugin('code', function(K) {
 			html = ['<div style="margin: 0px 20px;">',
 				'<div class="ke-dialog-row">',
 				'<select class="ke-select" style="margin-bottom: 5px;">',
-				'<option value="js">JavaScript</option>',
+				'<option value="javascript">JavaScript</option>',
 				'<option value="html">HTML</option>',
 				'<option value="css">CSS</option>',
 				'<option value="php">PHP</option>',
-				'<option value="pl">Perl</option>',
-				'<option value="py">Python</option>',
-				'<option value="rb">Ruby</option>',
+				'<option value="perl">Perl</option>',
+				'<option value="python">Python</option>',
+				'<option value="ruby">Ruby</option>',
 				'<option value="java">Java</option>',
-				'<option value="vb">ASP/VB</option>',
+				'<option value="go">Go</option>',
+				'<option value="asp">ASP/VB</option>',
+				'<option value="csharp">C#</option>',
 				'<option value="cpp">C/C++</option>',
 				'<option value="cs">C#</option>',
-				'<option value="xml">XML</option>',
-				'<option value="bsh">Shell</option>',
-				'<option value="">Other</option>',
+				'<option value="bash">Shell</option>',
+				'<option value="sql">SQL</option>',
+				'<option value="markup">Other</option>',
 				'</select>',
 				'</div>',
 				'<textarea class="ke-textarea" style="width:408px;height:260px;"></textarea>',
@@ -43,10 +45,10 @@ KindEditor.plugin('code', function(K) {
 				yesBtn : {
 					name : self.lang('yes'),
 					click : function(e) {
-						var type = K('.ke-code-type', dialog.div).val(),
+						var type = K('.ke-select', dialog.div).val(),
 							code = textarea.val(),
-							cls = type === '' ? '' :  ' lang-' + type,
-							html = '<pre class="prettyprint' + cls + '">\n' + K.escape(code) + '</pre> ';
+							cls = type === '' ? '' :  'language-' + type,
+							html = '<pre class="' + cls + '"><code>' + K.escape(code) + '</code></pre> \n';
 						if (K.trim(code) === '') {
 							K.options.errorMsgHandler(lang.pleaseInput, "error");
 							textarea[0].focus();

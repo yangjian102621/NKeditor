@@ -35,14 +35,15 @@ K.options = {
 	bodyClass : 'ke-content',
 	indentChar : '\t', // \t, "  "
 	//设置默认的css路径
-	cssPath : K.basePath+'plugins/code/prettify.css', //String or Array
+	cssPath : [], //String or Array
+	jsPath: [], //
 	cssData : '',
 	minWidth : 650,
 	minHeight : 300,
 	minChangeSize : 50,
 	zIndex : 811213,
 	items : [
-		'source', 'undo', 'redo',  'preview', 'print', 'template', 'code', 'cut', 'copy', 'paste',
+		'source', 'undo', 'redo',  'preview', 'print', 'template', 'code', 'quote', 'cut', 'copy', 'paste',
 		'plainpaste', 'wordpaste', 'justifyleft', 'justifycenter', 'justifyright',
 		'justifyfull', 'insertorderedlist', 'insertunorderedlist', 'indent', 'outdent', 'subscript',
 		'superscript', 'clearhtml', 'quickformat', 'selectall', 'fullscreen', '/',
@@ -52,22 +53,12 @@ K.options = {
 		'anchor', 'link', 'unlink', 'about'
 	],
 
-	// items : [
-	// 	'source', '|', 'undo', 'redo', '|', 'preview', 'print', 'template', 'code',
-	// 	'plainpaste', 'wordpaste', '|', 'justifyleft', 'justifycenter', 'justifyright',
-	// 	'justifyfull', 'insertorderedlist', 'insertunorderedlist', 'indent', 'outdent', 'subscript',
-	// 	'superscript', 'clearhtml', 'quickformat', 'selectall', '|', 'link', 'unlink','fullscreen', '/',
-	// 	'formatblock', 'fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold',
-	// 	'italic', 'underline', 'strikethrough', 'lineheight', 'removeformat', '|', 'image', 'multiimage','graft',
-	// 	'flash', 'media', 'insertfile', 'table', 'hr', 'emoticons', 'baidumap', 'pagebreak',
-	// 	'anchor', 'about'
-	// ],
 	noDisableItems : ['source', 'fullscreen'],
 	colorTable : [
 		['#E53333', '#E56600', '#FF9900', '#64451D', '#DFC5A4', '#FFE500'],
 		['#009900', '#006600', '#99BB00', '#B8D100', '#60D978', '#00D5FF'],
 		['#337FE5', '#003399', '#4C33E5', '#9933E5', '#CC33E5', '#EE33EE'],
-		['#FFFFFF', '#CCCCCC', '#999999', '#666666', '#333333', '#000000']
+		['#FFFFFF', '#DDDDDD', '#999999', '#666666', '#333333', '#000000']
 	],
 	fontSizeTable : ['9px', '10px', '12px', '14px', '16px', '18px', '24px', '32px'],
 	htmlTags : {

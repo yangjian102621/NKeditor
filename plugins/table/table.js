@@ -258,7 +258,7 @@ KindEditor.plugin('table', function(K) {
 						if (bgColor !== '') {
 							style += 'background-color:' + bgColor + ';';
 						}
-						var html = '<table';
+						var html = '<table class="table"';
 						if (style !== '') {
 							html += ' style="' + style + '"';
 						}
@@ -275,7 +275,7 @@ KindEditor.plugin('table', function(K) {
 							html += ' border="' + border + '"';
 						}
 						if (border === '' || border === '0') {
-							html += ' class="' + zeroborder + '"';
+							html += ' class="table ' + zeroborder + '"';
 						}
 						if (borderColor !== '') {
 							html += ' bordercolor="' + borderColor + '"';
@@ -305,14 +305,14 @@ KindEditor.plugin('table', function(K) {
 			heightBox = K('[name="height"]', div),
 			widthTypeBox = K('[name="widthType"]', div),
 			heightTypeBox = K('[name="heightType"]', div),
-			paddingBox = K('[name="padding"]', div).val(2),
+			paddingBox = K('[name="padding"]', div).val(0),
 			spacingBox = K('[name="spacing"]', div).val(0),
 			alignBox = K('[name="align"]', div),
 			borderBox = K('[name="border"]', div).val(1),
 			colorBox = K('.ke-input-color', div);
 			_initColorPicker(div, colorBox.eq(0));
 			_initColorPicker(div, colorBox.eq(1));
-			_setColor(colorBox.eq(0), borderColor);
+			//_setColor(colorBox.eq(0), borderColor);
 			_setColor(colorBox.eq(1), '');
 			// foucs and select
 			rowsBox[0].focus();
@@ -459,7 +459,7 @@ KindEditor.plugin('table', function(K) {
 			heightBox = K('[name="height"]', div),
 			widthTypeBox = K('[name="widthType"]', div),
 			heightTypeBox = K('[name="heightType"]', div),
-			paddingBox = K('[name="padding"]', div).val(2),
+			paddingBox = K('[name="padding"]', div).val(0),
 			spacingBox = K('[name="spacing"]', div).val(0),
 			textAlignBox = K('[name="textAlign"]', div),
 			verticalAlignBox = K('[name="verticalAlign"]', div),
@@ -467,7 +467,7 @@ KindEditor.plugin('table', function(K) {
 			colorBox = K('.ke-input-color', div);
 			_initColorPicker(div, colorBox.eq(0));
 			_initColorPicker(div, colorBox.eq(1));
-			_setColor(colorBox.eq(0), '#000000');
+			//_setColor(colorBox.eq(0), '#000000');
 			_setColor(colorBox.eq(1), '');
 			// foucs and select
 			widthBox[0].focus();

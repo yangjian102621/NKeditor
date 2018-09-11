@@ -14,6 +14,5 @@ dist/
 node_modules/
 _build/
 uploads
-php/qiniu/vendor
 .idea
 php/default/db/data

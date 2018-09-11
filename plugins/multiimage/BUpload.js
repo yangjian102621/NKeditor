@@ -93,7 +93,6 @@
 			src : "src",
 			upload_url : null,
 			list_url : null,
-			search_url : null,
 			data_type : "json",
 			top : 20,
 			fileType : "image", //文件类型，默认是图片，可选flash,media,file
@@ -179,10 +178,7 @@
 		o.uploadLock = false; //upload thread lock
 		o.page = 1; //服务器图片列表页码
 		o.marker = null, //七牛云上传的分页标识
-		o.searchPage = 1; //图片搜索页码
-		o.searchText = null; //搜索文字
 		o.noRecord = false;
-		o.searchList = []; //选中的搜索图片
 		var dialogSCode = Math.ceil(Math.random() * 1000000000000); //对话框的令牌，如果创建多个BUpload上传对象用来保持唯一性
 
 		//close the dialog
@@ -204,9 +200,6 @@
 				' tab-upload focus" tab="upload-panel">'+options.lang.localUpload+'</span>');
 			if ( options.list_url != null ) {
 				builder.append('<span class="tab tab-online" tab="online">'+options.lang.fileServer+'</span>');
-			}
-			if ( options.search_url != null ) {
-				builder.append('<span class="tab tab-search" tab="searchbox">'+options.lang.imgSearch+'</span>');
 			}
 			builder.append('</div><div class="wra_body"><div class="tab-panel upload-panel"><div class="wra_pla"><div class="upload-image-placeholder">');
 			builder.append('<div class="btn btn-primary image-select">'+options.lang.selectFile+'</div><input type="file" name="'+options.src+'" class="webuploader-element-invisible"' +
@@ -287,36 +280,8 @@
 					options.errorHandler(options.lang.noFileSelected, "error");
 					return false;
 				}
-				//console.log(o.selectedList);
-				//抓取网络图片，并更新图片链接
-				if (o.searchList.length > 0) {
-					var $message = $('<span class="loading-message">正在抓取网络图片……</span>')
-					G(".loading-icon").show().html($message); //显示加载图标
-					$.get(options.grap_url, {
-						act : "grapImage",
-						urls : encodeURI(o.searchList.join(","))
-					}, function (res) {
-						if (res.code != "000") {
-							options.errorHandler(res.message, "error");
-						} else {
-							options.errorHandler(res.message, "ok");
-							//删除之前的 url
-							$.each(o.searchList, function(idx, item) {
-								o.selectedList.remove(item);
-							});
-							//更新成新的 url
-							$.each(res.data, function(idx, item) {
-								o.selectedList.push(item);
-							});
-							options.callback(o.selectedList);
-							o.close();
-						}
-						G(".loading-icon").hide().empty();
-					}, "json");
-				} else {
-					options.callback(o.selectedList);
-					o.close();
-				}
+				options.callback(o.selectedList);
+				o.close();
 
 			});
 			G(".btn-cancel").on("click", function() {
@@ -338,31 +303,6 @@
 				if ( this.scrollTop + this.clientHeight >= this.scrollHeight ) {
 					loadFilesFromServer();
 				}
-			});
-
-			G(".search-imagelist-box").on("scroll", function() {
-
-				if ( this.scrollTop + this.clientHeight >= this.scrollHeight ) {
-					imageSearch();
-				}
-			});
-
-			//图片搜索事件
-			G(".btn-search").on("click", function() {
-				var text = G(".searTxt").val().trim();
-				if ( text == "" ) {
-					G(".searchbox .no-data").html('<span class="error">'+options.lang.searchPlaceholder+'</span>').show();
-					G(".searTxt").focus();
-					return false;
-				}
-				o.searchText = text;
-				o.searchPage = 1;
-				G(".search-imagelist-box").find(".search-list").empty();
-				imageSearch();
-			});
-			//重置搜索
-			G(".btn-reset").on("click", function() {
-				G(".searTxt").val("");
 			});
 		}
 
@@ -616,31 +556,6 @@
 			}, "json");
 		}
 
-		//图片搜索
-		function imageSearch() {
-			if ( !options.search_url ) {
-				G(".searchbox .no-data").html('<span class="error">'+options.lang.noSearchUrl+'</span>').show();
-				return false;
-			}
-
-			G(".loading-icon").show(); //显示加载图标
-			$.get(options.search_url, {
-				page : o.searchPage,
-				kw : o.searchText
-			}, function(res) {
-
-				G(".loading-icon").hide(); //隐藏加载图标
-				if ( res.code == "000" ) {
-					G(".searchbox .no-data").hide();
-					o.searchPage++;
-					appendFiles(res.data, "search");
-				} else {
-					G(".no-data").text(options.no_data_text).show();
-				}
-
-			}, "json");
-		}
-
 		//追加元素到图片列表
 		function appendFiles(data, module) {
 
@@ -669,16 +584,9 @@
 					var module = $(this).data("module");
 					if ( $(this).hasClass("selected") ) {
 						$(this).removeClass("selected");
-						o.selectedList.remove(src);
-						if (module == "search") {
-							o.searchList.remove(src);
-						}
 					} else {
 						$(this).addClass("selected");
 						o.selectedList.push(src);
-						if (module == "search") {
-							o.searchList.push(src);
-						}
 					}
 					//console.log(o.selectedList);
 				});

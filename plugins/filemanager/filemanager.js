@@ -12,8 +12,8 @@ KindEditor.plugin('filemanager', function(K) {
 		K.options.errorMsgHandler(lang.depJQueryError, "error");
 		return;
 	} else {
-		K.loadScript(K.options.pluginsPath+"filemanager/FManager.min.js");
-		K.loadStyle(K.options.pluginsPath+"multiimage/css/upload.min.css");
+		K.loadScript(K.options.pluginsPath+"filemanager/FManager.js");
+		K.loadStyle(K.options.pluginsPath+"multiimage/css/upload.css");
 	}
 
 	self.plugin.filemanagerDialog = function(options) {

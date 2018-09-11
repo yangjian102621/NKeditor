@@ -555,7 +555,7 @@ KEditor.prototype = {
 				self.clickToolbar(name);
 			}
 		});
-		// create edit
+		// create edit(创建编辑器实例)
 		var editHeight = _removeUnit(height) - toolbar.div.height();
 		var edit = self.edit = _edit({
 			height : editHeight > 0 && _removeUnit(height) > self.minHeight ? editHeight : self.minHeight,
@@ -565,6 +565,7 @@ KEditor.prototype = {
 			themesPath : self.themesPath,
 			bodyClass : self.bodyClass,
 			cssPath : self.cssPath,
+			jsPath: self.jsPath,
 			cssData : self.cssData,
 			beforeGetHtml : function(html) {
 				html = self.beforeGetHtml(html);
