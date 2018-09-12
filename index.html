@@ -3,42 +3,84 @@
 <head>
 	<meta charset="utf-8" />
 	<title>NKeditor 在线编辑器 PHP demo</title>
+	<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	<style>
+		.tab-pane form {
+			margin-top: 20px;
+		}
+	</style>
+</head>
+<body>
+
+	<div class="container" style="padding-top: 20px;">
+
+		<!-- Nav tabs -->
+		<ul class="nav nav-tabs" role="tablist">
+			<li role="presentation" class="active"><a href="#light" aria-controls="home" role="tab" data-toggle="tab">精简版</a></li>
+			<li role="presentation"><a href="#default" aria-controls="profile" role="tab" data-toggle="tab">全功能版</a></li>
+			<li role="presentation"><a href="#block" aria-controls="messages" role="tab" data-toggle="tab">雅黑主题</a></li>
+			<li role="presentation"><a href="#grey" aria-controls="messages" role="tab" data-toggle="tab">深灰主题</a></li>
+			<li role="presentation"><a href="#blue" aria-controls="settings" role="tab" data-toggle="tab">淡蓝主题</a></li>
+			<li role="presentation"><a href="#classic" aria-controls="settings" role="tab" data-toggle="tab">经典主题</a></li>
+		</ul>
+
+		<div class="tab-content">
+			<div role="tabpanel" class="tab-pane fade in active" id="light">
+				<form name="example" method="post">
+					<textarea name="content1" style="width:900px;height:200px;visibility:hidden;"></textarea>
+				</form>
+			</div>
+			<div role="tabpanel" class="tab-pane fade" id="default">
+				<form name="example" method="post">
+					<textarea name="content2" style="width:900px;height:200px;visibility:hidden;"></textarea>
+				</form>
+			</div>
+			<div role="tabpanel" class="tab-pane fade" id="block">
+				<form name="example" method="post">
+					<textarea name="content3" style="width:900px;height:200px;visibility:hidden;"></textarea>
+				</form>
+			</div>
+			<div role="tabpanel" class="tab-pane fade" id="grey">
+				<form name="example" method="post">
+					<textarea name="content4" style="width:900px;height:200px;visibility:hidden;"></textarea>
+				</form>
+			</div>
+			<div role="tabpanel" class="tab-pane fade" id="blue">
+				<form name="example" method="post">
+					<textarea name="content5" style="width:900px;height:200px;visibility:hidden;"></textarea>
+				</form>
+			</div>
+			<div role="tabpanel" class="tab-pane fade" id="classic">
+				<iframe frameborder="0" src="old.html" height="500" width="950"></iframe>
+			</div>
+		</div>
+
+	</div>
 
 	<script charset="utf-8" src="NKeditor-all.js"></script>
-
 	<!-- 如果你不需要使用批量图片上传，涂鸦功能和文件管理功能，就不需要引入 jquery -->
 	<script charset="utf-8" src="libs/jquery.min.js"></script>
 	<!-- JDialog是一款优秀的漂亮，轻量级的js弹出框插件 不是必须引入的，如果不引入则使用默认的 window.alert() 来弹出提示信息 -->
 	<script charset="utf-8" src="libs/JDialog/JDialog.min.js"></script>
+	<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
 	<script>
 		KindEditor.ready(function(K) {
-			K.create('textarea[name="content1"]', {
 
-				/**
-				 * 七牛云上传 API
-				 */
+			K.create('textarea[name="content1"]', {
 				uploadJson : K.basePath+'php/qiniu/upload_json.php',
 				fileManagerJson : K.basePath+'php/qiniu/file_manager_json.php',
-				imageSearchJson : K.basePath+'php/qiniu/image_search_json.php', //图片搜索url
-				imageGrapJson : K.basePath+'php/qiniu/image_grap_json.php', //抓取选中的搜索图片地址
 				dialogOffset : 0, //对话框距离页面顶部的位置，默认为0居中，
 				allowFileManager : true,
-				allowImageUpload : true,
-				allowMediaUpload : true,
-				//cssPath : [K.basePath+'plugins/code/prism.css'], //String or Array
-				//jsPath: ['http://www.r9it.com/assets/themes/twitter/js/jquery-1.11.1.min.js', 'test.js'], //
-				afterCreate : function() {
-					var self = this;
-					K.ctrl(document, 13, function() {
-						self.sync();
-						K('form[name=example]')[0].submit();
-					});
-					K.ctrl(self.edit.doc, 13, function() {
-						self.sync();
-						K('form[name=example]')[0].submit();
-					});
+				items : ['source','formatblock', 'fontname', 'fontsize','forecolor','justifyleft', 'justifycenter', 'justifyright',
+					'justifyfull', 'insertorderedlist', 'insertunorderedlist', 'indent', 'outdent', 'bold', 'italic', 'underline',
+					'lineheight', 'removeformat','code', 'quote', 'plainpaste','image', 'table', 'hr', 'pagebreak','link', 'unlink',
+					'preview','about'
+				],
+				afterChange : function() {
+					this.sync();
 				},
+				themeType : "primary", //主题
 				//错误处理 handler
 				errorMsgHandler : function(message, type) {
 					try {
@@ -50,13 +92,41 @@
 			});
 
 			K.create('textarea[name="content2"]', {
-				/**
-				 * 通用上传 API
-				 */
+				uploadJson : K.basePath+'php/qiniu/upload_json.php',
+				fileManagerJson : K.basePath+'php/qiniu/file_manager_json.php',
+				dialogOffset : 0, //对话框距离页面顶部的位置，默认为0居中，
+				allowFileManager : true,
+				allowImageUpload : true,
+				allowMediaUpload : true,
+				//cssPath : [K.basePath+'plugins/code/prism.css'], //网编辑器中插入自定义的 css
+				//jsPath: ['http://www.r9it.com/assets/themes/twitter/js/jquery-1.11.1.min.js'], // 插入自定义的脚本
+				afterCreate : function() {
+					var self = this;
+					K.ctrl(document, 13, function() {
+						self.sync();
+						K('form[name=example]')[0].submit();
+					});
+					K.ctrl(self.edit.doc, 13, function() {
+						self.sync();
+						K('form[name=example]')[0].submit();
+					});
+				},
+				showHelpGrid: true, // 是否显示输入辅助线
+				themeType : "primary", //主题
+				//错误处理 handler
+				errorMsgHandler : function(message, type) {
+					try {
+						JDialog.msg({type:type, content:message, timer:2000});
+					} catch (Error) {
+						alert(message);
+					}
+				}
+			});
+
+			// black theme
+			K.create('textarea[name="content3"]', {
 				uploadJson : K.basePath+'php/default/upload_json.php',
 				fileManagerJson : K.basePath+'php/default/file_manager_json.php',
-				imageSearchJson : K.basePath+'php/default/image_search_json.php', //图片搜索url
-				imageGrapJson : K.basePath+'php/default/image_grap_json.php', //抓取选中的搜索图片地址
 				allowFileManager : true,
 				allowImageUpload : true,
 				allowMediaUpload : true,
@@ -71,14 +141,9 @@
 				}
 			});
 
-			K.create('textarea[name="content3"]', {
-				/**
-				 * 通用上传 API
-				 */
+			K.create('textarea[name="content4"]', {
 				uploadJson : K.basePath+'php/default/upload_json.php',
 				fileManagerJson : K.basePath+'php/default/file_manager_json.php',
-				imageSearchJson : K.basePath+'php/default/image_search_json.php', //图片搜索url
-				imageGrapJson : K.basePath+'php/default/image_grap_json.php', //抓取选中的搜索图片地址
 				allowFileManager : true,
 				allowImageUpload : true,
 				allowMediaUpload : true,
@@ -93,14 +158,9 @@
 				}
 			});
 
-			K.create('textarea[name="content4"]', {
-				/**
-				 * 通用上传 API
-				 */
+			K.create('textarea[name="content5"]', {
 				uploadJson : K.basePath+'php/default/upload_json.php',
 				fileManagerJson : K.basePath+'php/default/file_manager_json.php',
-				imageSearchJson : K.basePath+'php/default/image_search_json.php', //图片搜索url
-				imageGrapJson : K.basePath+'php/default/image_grap_json.php', //抓取选中的搜索图片地址
 				allowFileManager : true,
 				allowImageUpload : true,
 				allowMediaUpload : true,
@@ -116,41 +176,6 @@
 			});
 		});
 	</script>
-</head>
-<body>
-	<div style="padding-bottom: 100px; padding-left: 50px;">
-
-		<div style="">
-			<h1>七牛云上传 API 版（Default）, 老版本 UI 的请移步 <a href="old.html" target="_blank">这里</a> </h1>
-			<form name="example" method="post">
-				<textarea name="content1" style="width:900px;height:200px;visibility:hidden;"></textarea>
-
-			</form>
-		</div>
-
-		<div style="">
-			<h1>通用php文件上传 API 版（Black）</h1>
-			<form name="example" method="post">
-				<textarea name="content2" style="width:900px;height:200px;visibility:hidden;"></textarea>
-			</form>
-		</div>
-
-		<div style="">
-			<h1>通用php文件上传 API 版（Grey）</h1>
-			<form name="example" method="post">
-				<textarea name="content3" style="width:900px;height:200px;visibility:hidden;"></textarea>
-
-			</form>
-		</div>
-
-		<div style="">
-			<h1>通用php文件上传 API 版（Blue）</h1>
-			<form name="example" method="post">
-				<textarea name="content4" style="width:900px;height:200px;visibility:hidden;"></textarea>
-
-			</form>
-		</div>
-	</div>
 </body>
 </html>
 

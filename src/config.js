@@ -37,6 +37,7 @@ K.options = {
 	//设置默认的css路径
 	cssPath : [], //String or Array
 	jsPath: [], //
+	showHelpGrid: false, // 是否给 p ul li div 显示轮廓线
 	cssData : '',
 	minWidth : 650,
 	minHeight : 300,
@@ -46,11 +47,11 @@ K.options = {
 		'source', 'undo', 'redo',  'preview', 'print', 'template', 'code', 'quote', 'cut', 'copy', 'paste',
 		'plainpaste', 'wordpaste', 'justifyleft', 'justifycenter', 'justifyright',
 		'justifyfull', 'insertorderedlist', 'insertunorderedlist', 'indent', 'outdent', 'subscript',
-		'superscript', 'clearhtml', 'quickformat', 'selectall', 'fullscreen', '/',
+		'superscript', 'clearhtml', 'quickformat', 'selectall', '/',
 		'formatblock', 'fontname', 'fontsize', 'forecolor', 'hilitecolor', 'bold',
 		'italic', 'underline', 'strikethrough', 'lineheight', 'removeformat', 'image', 'multiimage','graft',
 		'flash', 'media', 'insertfile', 'table', 'hr', 'emoticons', 'baidumap', 'pagebreak',
-		'anchor', 'link', 'unlink', 'about'
+		'anchor', 'link', 'unlink', 'about','fullscreen'
 	],
 
 	noDisableItems : ['source', 'fullscreen'],

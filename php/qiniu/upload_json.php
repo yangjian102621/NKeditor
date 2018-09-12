@@ -39,7 +39,7 @@ if ($base64) {
     if ($res) {
         $res = json_decode($res, true);
         $json->setCode(\JsonResult::CODE_SUCCESS);
-        $json->setData(QINIU_BUCKET_DOMAIN.$res['key']);
+        $json->setData(array('url' => QINIU_BUCKET_DOMAIN.$res['key']));
     } else {
         $json->setCode(\JsonResult::CODE_FAIL);
         $json->setMessage("上传涂鸦失败!");

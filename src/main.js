@@ -168,6 +168,23 @@ function _bindNewlineEvent() {
 		return ancestor.name;
 	}
 	K(doc).keydown(function(e) {
+
+		/**
+		 * 修复 bug： 如果编辑器的最底部的元素是块级元素，如 p, quoteblock, table，则没有办法实现在块级元素后面新增其他元素，
+		 * 只能在元素里面新增子元素, 这里通过在后面追加 <br/> 元素来解决
+		 */
+		if (e.which == 39) {
+			if (self.__startOffset == self.cmd.range.startOffset) {
+				//console.log("Reaching the bottom");
+				var tagName = getAncestorTagName(self.cmd.range);
+				if (tagName != 'body') {
+					self.appendHtml('<br />')
+				}
+			} else {
+				self.__startOffset = self.cmd.range.startOffset
+			}
+			return;
+		}
 		if (e.which != 13 || e.shiftKey || e.ctrlKey || e.altKey) {
 			return;
 		}
@@ -566,6 +583,7 @@ KEditor.prototype = {
 			bodyClass : self.bodyClass,
 			cssPath : self.cssPath,
 			jsPath: self.jsPath,
+			showHelpGrid: self.showHelpGrid,
 			cssData : self.cssData,
 			beforeGetHtml : function(html) {
 				html = self.beforeGetHtml(html);

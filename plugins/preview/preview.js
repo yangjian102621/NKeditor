@@ -85,10 +85,15 @@ KindEditor.plugin('preview', function(K) {
 			'	border:1px dotted #AAA;',
 			'	font-size:0;',
 			'	height:2px;',
-			'}',
-			'</style>'
+			'}'
 		];
 
+		if (self.options.showHelpGrid) {
+			arr.push('p,ul,ol,li,div{border: 1px dashed #c1c1c1;}');
+			arr.push('li{margin:5px 0px}');
+			arr.push('div,ul,ol{margin-bottom:10px}');
+		}
+		arr.push('</style>');
 		// 加载 css
 		if (!K.isArray(cssPath)) {
 			cssPath = [cssPath];
@@ -121,7 +126,6 @@ KindEditor.plugin('preview', function(K) {
 			}
 		});
 		arr.push('</body></html>');
-		console.log(self.fullHtml());
 		doc.write(arr.join('\n'));
 		doc.close();
 		K(doc.body).css('background-color', '#FFF');

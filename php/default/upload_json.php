@@ -71,7 +71,7 @@ if ($base64) {
 		$filename = date("YmdHis") . '_' . rand(10000, 99999) . '.png';
 		if (file_put_contents($basePath.$filename, base64_decode(str_replace($match[1], '', $imgData)))){
 			$json->setCode(JsonResult::CODE_SUCCESS);
-			$json->setData($baseUrl.$filename);
+			$json->setData(array('url' => $baseUrl.$filename));
 			$json->output();
 		}
 	}

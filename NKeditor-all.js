@@ -5,7 +5,7 @@
 * @author Roddy <luolonghao@gmail.com>
 * @website http://www.kindsoft.net/
 * @licence http://www.kindsoft.net/license.php
-* @version 5.0.2 (2018-09-11)
+* @version 5.0.2 (2018-09-12)
 *******************************************************************************/
 (function (window, undefined) {
 	if (window.KindEditor) {
@@ -19,7 +19,7 @@ if (!window.console) {
 if (!console.log) {
 	console.log = function () {};
 }
-var _VERSION = '5.0.2 (2018-09-11)',
+var _VERSION = '5.0.2 (2018-09-12)',
 	_ua = navigator.userAgent.toLowerCase(),
 	_IE = _ua.indexOf('msie') > -1 && _ua.indexOf('opera') == -1,
 	_NEWIE = _ua.indexOf('msie') == -1 && _ua.indexOf('trident') > -1,
@@ -262,6 +262,7 @@ K.options = {
 	indentChar : '\t',
 	cssPath : [],
 	jsPath: [],
+	showHelpGrid: false,
 	cssData : '',
 	minWidth : 650,
 	minHeight : 300,
@@ -271,11 +272,11 @@ K.options = {
 		'source', 'undo', 'redo',  'preview', 'print', 'template', 'code', 'quote', 'cut', 'copy', 'paste',
 		'plainpaste', 'wordpaste', 'justifyleft', 'justifycenter', 'justifyright',
 		'justifyfull', 'insertorderedlist', 'insertunorderedlist', 'indent', 'outdent', 'subscript',
-		'superscript', 'clearhtml', 'quickformat', 'selectall', 'fullscreen', '/',
+		'superscript', 'clearhtml', 'quickformat', 'selectall', '/',
 		'formatblock', 'fontname', 'fontsize', 'forecolor', 'hilitecolor', 'bold',
 		'italic', 'underline', 'strikethrough', 'lineheight', 'removeformat', 'image', 'multiimage','graft',
 		'flash', 'media', 'insertfile', 'table', 'hr', 'emoticons', 'baidumap', 'pagebreak',
-		'anchor', 'link', 'unlink', 'about'
+		'anchor', 'link', 'unlink', 'about','fullscreen'
 	],
 	noDisableItems : ['source', 'fullscreen'],
 	colorTable : [
@@ -3586,7 +3587,12 @@ var html, _direction = '';
 if ((html = document.getElementsByTagName('html'))) {
 	_direction = html[0].dir;
 }
-function _getInitHtml(themesPath, bodyClass, cssPath, cssData, jsPath) {
+function _getInitHtml(options) {
+	var themesPath = _undef(options.themesPath, ''),
+		bodyClass = options.bodyClass,
+		cssPath = options.cssPath,
+		jsPath = options.jsPath,
+		cssData = options.cssData;
 	var arr = [
 		(_direction === '' ? '<html>' : '<html dir="' + _direction + '">'),
 		'<head><meta charset="utf-8" /><title></title>',
@@ -3644,8 +3650,13 @@ function _getInitHtml(themesPath, bodyClass, cssPath, cssData, jsPath) {
 		'	font-size:0;',
 		'	height:2px;',
 		'}',
-		'</style>'
 	];
+	if (options.showHelpGrid) {
+		arr.push('p,ul,ol,li,div{border: 1px dashed #c1c1c1;}');
+		arr.push('li{margin:5px 0px}');
+		arr.push('div,ul,ol{margin-bottom:10px}');
+	}
+	arr.push('</style>');
 	if (!_isArray(cssPath)) {
 		cssPath = [cssPath];
 	}
@@ -3702,12 +3713,7 @@ _extend(KEdit, KWidget, {
 		self.beforeGetHtml = options.beforeGetHtml;
 		self.beforeSetHtml = options.beforeSetHtml;
 		self.afterSetHtml = options.afterSetHtml;
-		var themesPath = _undef(options.themesPath, ''),
-			bodyClass = options.bodyClass,
-			cssPath = options.cssPath,
-			jsPath = options.jsPath,
-			cssData = options.cssData,
-			isDocumentDomain = location.protocol != 'res:' && location.host.replace(/:\d+/, '') !== document.domain,
+		var isDocumentDomain = location.protocol != 'res:' && location.host.replace(/:\d+/, '') !== document.domain,
 			srcScript = ('document.open();' +
 				(isDocumentDomain ? 'document.domain="' + document.domain + '";' : '') +
 				'document.close();'),
@@ -3734,7 +3740,7 @@ _extend(KEdit, KWidget, {
 			if (isDocumentDomain) {
 				doc.domain = document.domain;
 			}
-			doc.write(_getInitHtml(themesPath, bodyClass, cssPath, cssData, jsPath));
+			doc.write(_getInitHtml(self.options));
 			doc.close();
 			self.win = self.iframe[0].contentWindow;
 			self.doc = doc;
@@ -4738,6 +4744,17 @@ function _bindNewlineEvent() {
 		return ancestor.name;
 	}
 	K(doc).keydown(function(e) {
+		if (e.which == 39) {
+			if (self.__startOffset == self.cmd.range.startOffset) {
+				var tagName = getAncestorTagName(self.cmd.range);
+				if (tagName != 'body') {
+					self.appendHtml('<br />')
+				}
+			} else {
+				self.__startOffset = self.cmd.range.startOffset
+			}
+			return;
+		}
 		if (e.which != 13 || e.shiftKey || e.ctrlKey || e.altKey) {
 			return;
 		}
@@ -5105,6 +5122,7 @@ KEditor.prototype = {
 			bodyClass : self.bodyClass,
 			cssPath : self.cssPath,
 			jsPath: self.jsPath,
+			showHelpGrid: self.showHelpGrid,
 			cssData : self.cssData,
 			beforeGetHtml : function(html) {
 				html = self.beforeGetHtml(html);
@@ -8001,7 +8019,7 @@ KindEditor.plugin('graft', function(K) {
 									dialog.hideLoading();
 									if (res.code == "000") {
 										K.options.errorMsgHandler(lang.uploadSuccess, "ok");
-										clickFn.call(self, res.item.url);
+										clickFn.call(self, res.data.url);
 										self.hideDialog().focus();
 									} else {
 										K.options.errorMsgHandler(lang.uploadFaild, "error");
@@ -8181,9 +8199,14 @@ KindEditor.plugin('preview', function(K) {
 			'	border:1px dotted #AAA;',
 			'	font-size:0;',
 			'	height:2px;',
-			'}',
-			'</style>'
+			'}'
 		];
+		if (self.options.showHelpGrid) {
+			arr.push('p,ul,ol,li,div{border: 1px dashed #c1c1c1;}');
+			arr.push('li{margin:5px 0px}');
+			arr.push('div,ul,ol{margin-bottom:10px}');
+		}
+		arr.push('</style>');
 		if (!K.isArray(cssPath)) {
 			cssPath = [cssPath];
 		}
@@ -8212,7 +8235,6 @@ KindEditor.plugin('preview', function(K) {
 			}
 		});
 		arr.push('</body></html>');
-		console.log(self.fullHtml());
 		doc.write(arr.join('\n'));
 		doc.close();
 		K(doc.body).css('background-color', '#FFF');
@@ -8557,9 +8579,28 @@ KindEditor.plugin('table', function(K) {
 						if (!K.IE) {
 							html += '<br />';
 						}
-						self.insertHtml(html);
-						self.select().hideDialog().focus();
-						self.addBookmark();
+						function getAncestorTag(range) {
+							var ancestor = K(range.commonAncestor());
+							while (ancestor) {
+								if (ancestor.type == 1 && !ancestor.isStyle()) {
+									break;
+								}
+								ancestor = ancestor.parent();
+							}
+							return ancestor;
+						}
+						var tag = getAncestorTag(self.cmd.range);
+						if (tag.name == 'p') {
+							tag.before(K(html));
+							tag.remove();
+							self.cmd.selection();
+							self.insertHtml('<br />');
+							self.select().hideDialog().focus();
+						} else {
+							self.insertHtml(html);
+							self.select().hideDialog().focus();
+							self.addBookmark();
+						}
 					}
 				}
 			}),

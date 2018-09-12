@@ -9,7 +9,12 @@ if ((html = document.getElementsByTagName('html'))) {
 	_direction = html[0].dir;
 }
 
-function _getInitHtml(themesPath, bodyClass, cssPath, cssData, jsPath) {
+function _getInitHtml(options) {
+	var themesPath = _undef(options.themesPath, ''),
+		bodyClass = options.bodyClass,
+		cssPath = options.cssPath,
+		jsPath = options.jsPath,
+		cssData = options.cssData;
 	var arr = [
 		(_direction === '' ? '<html>' : '<html dir="' + _direction + '">'),
 		'<head><meta charset="utf-8" /><title></title>',
@@ -68,8 +73,15 @@ function _getInitHtml(themesPath, bodyClass, cssPath, cssData, jsPath) {
 		'	font-size:0;',
 		'	height:2px;',
 		'}',
-		'</style>'
+
 	];
+
+	if (options.showHelpGrid) {
+		arr.push('p,ul,ol,li,div{border: 1px dashed #c1c1c1;}');
+		arr.push('li{margin:5px 0px}');
+		arr.push('div,ul,ol{margin-bottom:10px}');
+	}
+	arr.push('</style>');
 	if (!_isArray(cssPath)) {
 		cssPath = [cssPath];
 	}
@@ -134,12 +146,7 @@ _extend(KEdit, KWidget, {
 		self.beforeSetHtml = options.beforeSetHtml;
 		self.afterSetHtml = options.afterSetHtml;
 
-		var themesPath = _undef(options.themesPath, ''),
-			bodyClass = options.bodyClass,
-			cssPath = options.cssPath,
-			jsPath = options.jsPath,
-			cssData = options.cssData,
-			isDocumentDomain = location.protocol != 'res:' && location.host.replace(/:\d+/, '') !== document.domain,
+		var isDocumentDomain = location.protocol != 'res:' && location.host.replace(/:\d+/, '') !== document.domain,
 			srcScript = ('document.open();' +
 				(isDocumentDomain ? 'document.domain="' + document.domain + '";' : '') +
 				'document.close();'),
@@ -167,7 +174,7 @@ _extend(KEdit, KWidget, {
 			if (isDocumentDomain) {
 				doc.domain = document.domain;
 			}
-			doc.write(_getInitHtml(themesPath, bodyClass, cssPath, cssData, jsPath));
+			doc.write(_getInitHtml(self.options));
 			doc.close();
 			self.win = self.iframe[0].contentWindow;
 			self.doc = doc;

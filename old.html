@@ -4,8 +4,7 @@
 	<meta charset="utf-8" />
 	<title>NKeditor 在线编辑器 PHP demo</title>
 
-	<script charset="utf-8" src="NKeditor-all-min.js"></script>
-
+	<script charset="utf-8" src="NKeditor-all.js"></script>
 	<!-- 下面是外部插件不是必须引入的 -->
 	<script charset="utf-8" src="libs/jquery.min.js"></script>
 	<script charset="utf-8" src="libs/JDialog/JDialog.min.js"></script>
@@ -13,14 +12,8 @@
 	<script>
 		KindEditor.ready(function(K) {
 			K.create('textarea[name="content1"]', {
-
-				/**
-				 * 七牛云上传 API
-				 */
 				uploadJson : K.basePath+'php/qiniu/upload_json.php',
 				fileManagerJson : K.basePath+'php/qiniu/file_manager_json.php',
-				imageSearchJson : K.basePath+'php/qiniu/image_search_json.php', //图片搜索url
-				imageGrapJson : K.basePath+'php/qiniu/image_grap_json.php', //抓取选中的搜索图片地址
 				dialogOffset : 0, //对话框距离页面顶部的位置，默认为0居中，
 				allowFileManager : true,
 				allowImageUpload : true,
@@ -51,17 +44,9 @@
 	</script>
 </head>
 <body>
-	<div style="padding-bottom: 100px;">
-
-		<div style="">
-			<h1>七牛云上传 API 版（老版本 UI）, 将 themeType 参数设置成 default 就可以了</h1>
-			<form name="example" method="post">
-				<textarea name="content1" style="width:900px;height:200px;visibility:hidden;"></textarea>
-
-			</form>
-		</div>
-
-	</div>
+<form name="example" method="post" style="margin-top: 20px;">
+	<textarea name="content1" style="width:900px;height:200px;visibility:hidden;"></textarea>
+</form>
 </body>
 </html>
 

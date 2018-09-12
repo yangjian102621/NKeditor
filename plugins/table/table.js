@@ -292,9 +292,30 @@ KindEditor.plugin('table', function(K) {
 						if (!K.IE) {
 							html += '<br />';
 						}
-						self.insertHtml(html);
-						self.select().hideDialog().focus();
-						self.addBookmark();
+						// 取得range的block标签
+						function getAncestorTag(range) {
+							var ancestor = K(range.commonAncestor());
+							while (ancestor) {
+								if (ancestor.type == 1 && !ancestor.isStyle()) {
+									break;
+								}
+								ancestor = ancestor.parent();
+							}
+							return ancestor;
+						}
+						// 如果是在 p 标签中插入表格，则自动删除当前 p 标签
+						var tag = getAncestorTag(self.cmd.range);
+						if (tag.name == 'p') {
+							tag.before(K(html));
+							tag.remove();
+							self.cmd.selection();
+							self.insertHtml('<br />');
+							self.select().hideDialog().focus();
+						} else {
+							self.insertHtml(html);
+							self.select().hideDialog().focus();
+							self.addBookmark();
+						}
 					}
 				}
 			}),
