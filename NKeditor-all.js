@@ -5,7 +5,7 @@
 * @author Roddy <luolonghao@gmail.com>
 * @website http://www.kindsoft.net/
 * @licence http://www.kindsoft.net/license.php
-* @version 5.0.3 (2018-09-12)
+* @version 5.0.3 (2018-10-25)
 *******************************************************************************/
 (function (window, undefined) {
 	if (window.KindEditor) {
@@ -19,7 +19,7 @@ if (!window.console) {
 if (!console.log) {
 	console.log = function () {};
 }
-var _VERSION = '5.0.3 (2018-09-12)',
+var _VERSION = '5.0.3 (2018-10-25)',
 	_ua = navigator.userAgent.toLowerCase(),
 	_IE = _ua.indexOf('msie') > -1 && _ua.indexOf('opera') == -1,
 	_NEWIE = _ua.indexOf('msie') == -1 && _ua.indexOf('trident') > -1,
@@ -3662,7 +3662,6 @@ function _getInitHtml(options) {
 	}
 	if (_inArray(K.basePath+'themes/app.css', cssPath) < 0) {
 		cssPath.push(K.basePath+'themes/app.css');
-		cssPath.push(K.basePath+'plugins/code/prism.css');
 	}
 	_each(cssPath, function(i, path) {
 		if (path) {
@@ -3675,10 +3674,6 @@ function _getInitHtml(options) {
 	arr.push('</head><body ' + (bodyClass ? 'class="' + bodyClass + '"' : '') + '>');
 	if (!_isArray(jsPath)) {
 		jsPath = [jsPath];
-	}
-	if (_inArray(K.basePath+'plugins/code/prism.js', jsPath) < 0) {
-		jsPath.push(K.basePath+'plugins/code/prism.js');
-		jsPath.push(K.basePath+'plugins/code/pretty.js');
 	}
 	_each(jsPath, function(i, path) {
 		if (path) {
@@ -6371,6 +6366,7 @@ KindEditor.lang({
 	}
 }, 'zh-CN');
 KindEditor.options.langType = 'zh-CN';
+
 /*******************************************************************************
 * KindEditor - WYSIWYG HTML Editor for Internet
 * Copyright (C) 2006-2011 kindsoft.net

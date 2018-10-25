@@ -87,7 +87,6 @@ function _getInitHtml(options) {
 	}
 	if (_inArray(K.basePath+'themes/app.css', cssPath) < 0) {
 		cssPath.push(K.basePath+'themes/app.css');
-		cssPath.push(K.basePath+'plugins/code/prism.css');
 	}
 	_each(cssPath, function(i, path) {
 		if (path) {
@@ -101,11 +100,6 @@ function _getInitHtml(options) {
 
 	if (!_isArray(jsPath)) {
 		jsPath = [jsPath];
-	}
-	// 加载代码高亮的脚本
-	if (_inArray(K.basePath+'plugins/code/prism.js', jsPath) < 0) {
-		jsPath.push(K.basePath+'plugins/code/prism.js');
-		jsPath.push(K.basePath+'plugins/code/pretty.js');
 	}
 	_each(jsPath, function(i, path) {
 		if (path) {
