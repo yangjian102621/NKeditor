@@ -8,7 +8,7 @@
 define("QINIU_ACCESS_KEY", "_-BMslq1mPL_zY0KN2iLD1-ym4TcHhQUi0_dDFPB");
 define("QINIU_SECRET_KEY", "J_As9ApfpyCpk31l3hOAZe3QQTc8iYlEfdd6-5an");
 define("QINIU_TEST_BUCKET", "kindeditor");
-define("QINIU_BUCKET_DOMAIN", "http://ow93rpra1.bkt.clouddn.com/");
+define("QINIU_BUCKET_DOMAIN", "http://img.r9it.com/");
 error_reporting(0); //关闭报错输出，以免打乱 json 数据格式
 
 /**
