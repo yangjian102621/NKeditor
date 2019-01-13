@@ -7,7 +7,7 @@
 (function($) {
 
 	//判断浏览器是否支持html5
-	if ( !window.applicationCache )
+	if ( typeof FormData == "undefined" )
 		throw new Error("您当前的浏览器不支持HTML5,请先升级浏览器才能使用该上传插件!");
 
 	//image crop
