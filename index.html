@@ -55,6 +55,10 @@
 			</div>
 		</div>
 
+		<div class="row container text-left" style="margin-top: 20px;">
+			<button class="btn btn-primary" id="btn">获取编辑器内容</button>
+		</div>
+
 	</div>
 
 	<script charset="utf-8" src="NKeditor-all.js"></script>
@@ -173,6 +177,10 @@
 					}
 				}
 			});
+		});
+
+		$('#btn').click(function () {
+			alert($('textarea[name="content1"]').val());
 		});
 	</script>
 </body>
