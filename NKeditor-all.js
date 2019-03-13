@@ -1,11 +1,11 @@
 /*******************************************************************************
 * KindEditor - WYSIWYG HTML Editor for Internet
-* Copyright (C) 2006-2018 kindsoft.net
+* Copyright (C) 2006-2019 kindsoft.net
 *
 * @author Roddy <luolonghao@gmail.com>
 * @website http://www.kindsoft.net/
 * @licence http://www.kindsoft.net/license.php
-* @version 5.0.3 (2018-11-27)
+* @version 5.0.3 (2019-03-13)
 *******************************************************************************/
 (function (window, undefined) {
 	if (window.KindEditor) {
@@ -19,7 +19,7 @@ if (!window.console) {
 if (!console.log) {
 	console.log = function () {};
 }
-var _VERSION = '5.0.3 (2018-11-27)',
+var _VERSION = '5.0.3 (2019-03-13)',
 	_ua = navigator.userAgent.toLowerCase(),
 	_IE = _ua.indexOf('msie') > -1 && _ua.indexOf('opera') == -1,
 	_NEWIE = _ua.indexOf('msie') == -1 && _ua.indexOf('trident') > -1,
@@ -7837,10 +7837,6 @@ KindEditor.plugin('multiimage', function(K) {
 		});
 	}
 	self.plugin.multiImageDialog = function(options) {
-		if ( !window.applicationCache ) {
-			K.options.errorMsgHandler("您当前的浏览器不支持HTML5,请先升级浏览器才能使用该上传插件!", "error");
-			return;
-		}
 		var clickFn = options.clickFn;
 		var locker = K.locker();
 		locker.show();

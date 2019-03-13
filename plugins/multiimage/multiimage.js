@@ -37,10 +37,6 @@ KindEditor.plugin('multiimage', function(K) {
 	}
 	self.plugin.multiImageDialog = function(options) {
 
-		if ( !window.applicationCache ) {
-			K.options.errorMsgHandler("您当前的浏览器不支持HTML5,请先升级浏览器才能使用该上传插件!", "error");
-			return;
-		}
 		var clickFn = options.clickFn;
 		var locker = K.locker();
 		locker.show();

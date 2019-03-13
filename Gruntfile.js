@@ -91,14 +91,6 @@ grunt.initConfig({
 				{
 					src : '<%= pkg.filename %>-all.js',
 					dest : '<%= pkg.filename %>-all-min.js'
-				},
-				{
-					src : 'plugins/multiimage/BUpload.js',
-					dest : 'plugins/multiimage/BUpload.min.js'
-				},
-				{
-					src : 'plugins/filemanager/FManager.js',
-					dest : 'plugins/filemanager/FManager.min.js'
 				}
 			]
 
