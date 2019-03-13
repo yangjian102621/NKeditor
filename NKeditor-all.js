@@ -2807,8 +2807,10 @@ _extend(KCmd, {
 				range.collapse(false);
 			}
 			rng = range.get(true);
-			sel.removeAllRanges();
-			sel.addRange(rng);
+			if (sel != null) {
+				sel.sel.removeAllRanges();
+				sel.sel.addRange(rng);
+			}
 			if (doc !== document) {
 				var pos = K(rng.endContainer).pos();
 				win.scrollTo(pos.x, pos.y);

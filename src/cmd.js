@@ -274,8 +274,12 @@ _extend(KCmd, {
 				range.collapse(false);
 			}
 			rng = range.get(true);
-			sel.removeAllRanges();
-			sel.addRange(rng);
+
+			// Bugfix: firefox browser multiple image upload
+			if (sel != null) {
+				sel.sel.removeAllRanges();
+				sel.sel.addRange(rng);
+			}
 			// Bugfix: https://github.com/kindsoft/kindeditor/issues/54
 			if (doc !== document) {
 				var pos = K(rng.endContainer).pos();
