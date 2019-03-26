@@ -277,8 +277,8 @@ _extend(KCmd, {
 
 			// Bugfix: firefox browser multiple image upload
 			if (sel != null) {
-				sel.sel.removeAllRanges();
-				sel.sel.addRange(rng);
+				sel.removeAllRanges();
+				sel.addRange(rng);
 			}
 			// Bugfix: https://github.com/kindsoft/kindeditor/issues/54
 			if (doc !== document) {

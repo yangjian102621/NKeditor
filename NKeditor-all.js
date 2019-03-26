@@ -5,7 +5,7 @@
 * @author Roddy <luolonghao@gmail.com>
 * @website http://www.kindsoft.net/
 * @licence http://www.kindsoft.net/license.php
-* @version 5.0.3 (2019-03-13)
+* @version 5.0.3 (2019-03-26)
 *******************************************************************************/
 (function (window, undefined) {
 	if (window.KindEditor) {
@@ -19,7 +19,7 @@ if (!window.console) {
 if (!console.log) {
 	console.log = function () {};
 }
-var _VERSION = '5.0.3 (2019-03-13)',
+var _VERSION = '5.0.3 (2019-03-26)',
 	_ua = navigator.userAgent.toLowerCase(),
 	_IE = _ua.indexOf('msie') > -1 && _ua.indexOf('opera') == -1,
 	_NEWIE = _ua.indexOf('msie') == -1 && _ua.indexOf('trident') > -1,
@@ -2808,8 +2808,8 @@ _extend(KCmd, {
 			}
 			rng = range.get(true);
 			if (sel != null) {
-				sel.sel.removeAllRanges();
-				sel.sel.addRange(rng);
+				sel.removeAllRanges();
+				sel.addRange(rng);
 			}
 			if (doc !== document) {
 				var pos = K(rng.endContainer).pos();
